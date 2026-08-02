@@ -1,15 +1,24 @@
-import { i18n } from "../../i18n"
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 
 const NotFound: QuartzComponent = ({ cfg, ctx }: QuartzComponentProps) => {
   const url = new URL(`https://${cfg.baseUrl ?? "example.com"}`)
-  const baseDir = ctx.argv.serve ? "/" : url.pathname
+  const baseDir = ctx.argv.serve ? "/" : url.pathname.replace(/\/$/, "") + "/"
 
   return (
     <article class="popover-hint">
-      <h1>404</h1>
-      <p>{i18n(cfg.locale).pages.error.notFound}</p>
-      <a href={baseDir}>{i18n(cfg.locale).pages.error.home}</a>
+      <section class="notfound">
+        <div class="notfound__card popover-hint">
+          <p class="notfound__eyebrow">404 Error</p>
+          <h1 class="notfound__title">Flag Not Found</h1>
+          <p class="notfound__subtitle">
+            You've enumerated this directory, but there's nothing here. Try harder.
+          </p>
+          <a class="notfound__cta" href={baseDir}>
+            <span class="notfound__prompt">$</span>
+            <span>cd /home</span>
+          </a>
+        </div>
+      </section>
       <script
         dangerouslySetInnerHTML={{
           __html: `
