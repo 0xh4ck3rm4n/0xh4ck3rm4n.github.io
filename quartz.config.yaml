@@ -18,28 +18,28 @@ configuration:
     typography:
       header: Space Grotesk
       body: Manrope
-      code: IBM Plex Mono
+      code: JetBrains Mono
     colors:
       lightMode:
-        light: "#0b0710"
-        lightgray: "#1a1124"
-        gray: "#746a84"
-        darkgray: "#b6adc5"
-        dark: "#f2edf7"
-        secondary: "#cba6f7"
-        tertiary: "#179299"
-        highlight: "#cba6f71a"
-        textHighlight: "#f5c2e766"
+        light: "#050505"
+        lightgray: "#131313"
+        gray: "#707070"
+        darkgray: "#b8b8b8"
+        dark: "#ededed"
+        secondary: "#00ff66"
+        tertiary: "#66ffb3"
+        highlight: "#00ff6621"
+        textHighlight: "#00ff6659"
       darkMode:
-        light: "#0b0710"
-        lightgray: "#1a1124"
-        gray: "#746a84"
-        darkgray: "#b6adc5"
-        dark: "#f2edf7"
-        secondary: "#cba6f7"
-        tertiary: "#179299"
-        highlight: "#cba6f71a"
-        textHighlight: "#f5c2e766"
+        light: "#050505"
+        lightgray: "#131313"
+        gray: "#707070"
+        darkgray: "#b8b8b8"
+        dark: "#ededed"
+        secondary: "#00ff66"
+        tertiary: "#66ffb3"
+        highlight: "#00ff6621"
+        textHighlight: "#00ff6659"
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true

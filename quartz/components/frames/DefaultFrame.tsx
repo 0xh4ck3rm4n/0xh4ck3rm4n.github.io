@@ -130,6 +130,10 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
   return (
     <section class="post-grid" id="field-notes">
       <div class="post-grid-head">
+        <p class="post-grid-prompt">
+          <span class="post-grid-prompt__sigil">$</span> ls ~/writeups
+          <span class="post-grid-prompt__cursor" aria-hidden="true"></span>
+        </p>
         <h2 class="post-grid-title">Archive</h2>
         <p class="post-grid-sub">
           <strong data-result-count="true">{posts.length}</strong> posts
@@ -198,7 +202,9 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
                     <time datetime={post.date?.toISOString()}>{fmtDate(post.date)}</time>
                   </p>
                   <h3>
-                    <span class="post-card-title__text">{post.title}</span>
+                    <span class="post-card-title__text" data-decrypt-hover={post.title}>
+                      {post.title}
+                    </span>
                   </h3>
                   <p class="post-card-sub">{post.category}</p>
                   {post.description ? <p class="post-card-description">{post.description}</p> : null}
@@ -232,6 +238,41 @@ const PortalScript = () => (
     if (typeof window.addCleanup === "function")
       window.addCleanup(function () { el.removeEventListener(evt, fn, opts); });
   };
+
+  var SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890!<>-_\\/[]{}=+*^?#$%&";
+  function scramble(el, final, frameMs) {
+    if (el.__scrambleTimer) clearInterval(el.__scrambleTimer);
+    var frame = 0;
+    var totalFrames = Math.max(10, final.length * 2.4);
+    el.__scrambleTimer = setInterval(function () {
+      var revealCount = Math.floor((frame / totalFrames) * final.length);
+      var out = "";
+      for (var i = 0; i < final.length; i++) {
+        if (final[i] === " ") { out += " "; continue; }
+        out += i < revealCount ? final[i] : SCRAMBLE_CHARS[(Math.random() * SCRAMBLE_CHARS.length) | 0];
+      }
+      el.textContent = out;
+      frame++;
+      if (revealCount >= final.length) {
+        clearInterval(el.__scrambleTimer);
+        el.__scrambleTimer = null;
+        el.textContent = final;
+      }
+    }, frameMs || 32);
+  }
+
+  function initDecrypt() {
+    var els = Array.prototype.slice.call(document.querySelectorAll("[data-decrypt]"));
+    if (!els.length) return;
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    els.forEach(function (el, order) {
+      if (el.dataset.decrypted === "true") return;
+      el.dataset.decrypted = "true";
+      var final = el.getAttribute("data-decrypt") || el.textContent;
+      if (reduced) { el.textContent = final; return; }
+      setTimeout(function () { scramble(el, final, 30); }, order * 140);
+    });
+  }
 
   function initDrawer() {
     if (window.__portalMenuBound) return;
@@ -349,7 +390,8 @@ const PortalScript = () => (
       });
     }
     var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!reduced && "IntersectionObserver" in window) {
+    var scrollTimelineSupported = !!(window.CSS && CSS.supports && CSS.supports("animation-timeline: view()"));
+    if (!reduced && !scrollTimelineSupported && "IntersectionObserver" in window) {
       cards.forEach(function (c) { c.classList.add("reveal-pending"); });
       var io = new IntersectionObserver(function (entries, obs) {
         entries.forEach(function (en) {
@@ -365,13 +407,38 @@ const PortalScript = () => (
       cards.forEach(function (c) { io.observe(c); });
     }
     var list = o.querySelector(".post-grid-list");
-    if (list && window.matchMedia && window.matchMedia("(pointer: fine)").matches) {
+    if (!reduced && list && window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      var activeMagLink = null;
+      function resetMag(link) {
+        link.style.setProperty("--mag-x", "0px");
+        link.style.setProperty("--mag-y", "0px");
+      }
       on(list, "pointermove", function (e) {
         var link = e.target.closest ? e.target.closest(".post-card-link") : null;
-        if (!link) return;
+        if (!link) {
+          if (activeMagLink) { resetMag(activeMagLink); activeMagLink = null; }
+          return;
+        }
         var r = link.getBoundingClientRect();
         link.style.setProperty("--spot-x", ((e.clientX - r.left) / r.width) * 100 + "%");
         link.style.setProperty("--spot-y", ((e.clientY - r.top) / r.height) * 100 + "%");
+        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        var mx = Math.max(-8, Math.min(8, (e.clientX - cx) * 0.06));
+        var my = Math.max(-8, Math.min(8, (e.clientY - cy) * 0.06));
+        link.style.setProperty("--mag-x", mx + "px");
+        link.style.setProperty("--mag-y", my + "px");
+        if (activeMagLink && activeMagLink !== link) resetMag(activeMagLink);
+        activeMagLink = link;
+      });
+      on(list, "pointerleave", function () {
+        if (activeMagLink) { resetMag(activeMagLink); activeMagLink = null; }
+      });
+    }
+    if (!reduced) {
+      Array.prototype.forEach.call(o.querySelectorAll("[data-decrypt-hover]"), function (el) {
+        on(el, "mouseenter", function () {
+          scramble(el, el.getAttribute("data-decrypt-hover") || el.textContent, 26);
+        });
       });
     }
     Array.prototype.forEach.call(o.querySelectorAll(".post-card-body h3"), function (h) {
@@ -403,7 +470,29 @@ const PortalScript = () => (
     if (top) on(top, "click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
   }
 
-  function boot() { initDrawer(); initGrid(); initProgress(); }
+  function initCursorReticle() {
+    if (window.__portalReticleBound) return;
+    var el = document.querySelector("[data-cursor-reticle]");
+    if (!el) return;
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reduced || !fine) return;
+    window.__portalReticleBound = true;
+    var x = 0, y = 0, active = false;
+    on(window, "pointermove", function (e) {
+      x = e.clientX; y = e.clientY;
+      el.style.transform = "translate3d(" + x + "px," + y + "px,0)";
+      if (!active) { active = true; el.classList.add("is-active"); }
+      var target = e.target.closest ? e.target.closest("a, button, input, .post-card-link") : null;
+      el.classList.toggle("is-target", !!target);
+    }, { passive: true });
+    on(document, "pointerleave", function () {
+      active = false;
+      el.classList.remove("is-active");
+    });
+  }
+
+  function boot() { initDrawer(); initGrid(); initProgress(); initCursorReticle(); initDecrypt(); }
   boot();
   document.addEventListener("nav", boot);
 })();`,
@@ -427,6 +516,11 @@ const DefaultFrame: PageFrame = {
     return (
       <>
         <video class="site-background" src={`${basePath}/static/bg.mp4`} autoplay muted loop playsinline aria-hidden="true"></video>
+        <div class="site-grain" aria-hidden="true"></div>
+        <div class="cursor-reticle" data-cursor-reticle="true" aria-hidden="true">
+          <span class="cursor-reticle__h"></span>
+          <span class="cursor-reticle__v"></span>
+        </div>
         <header class="portal-nav">
           <div class="site-nav">
             <div class="site-nav__inner">
@@ -489,8 +583,16 @@ const DefaultFrame: PageFrame = {
                 <div class="home-masthead__copy">
                   <p>{SITE.mastheadLabel}</p>
                   <h1>
-                    {SITE.mastheadTitle}
-                    <span class="home-masthead__accent">{SITE.mastheadAccent}</span>
+                    <span class="decrypt-target" data-decrypt={SITE.mastheadTitle}>
+                      {SITE.mastheadTitle}
+                    </span>
+                    <span
+                      class="home-masthead__accent decrypt-target"
+                      data-decrypt={SITE.mastheadAccent}
+                    >
+                      {SITE.mastheadAccent}
+                    </span>
+                    <span class="home-masthead__cursor" aria-hidden="true"></span>
                   </h1>
                 </div>
               </section>
