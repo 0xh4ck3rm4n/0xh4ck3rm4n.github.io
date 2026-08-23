@@ -8,6 +8,12 @@ tags:
 
 # Gaurav Poudel
 
+<div class="dossier-band">
+  <span><em>CLEARANCE</em>PUBLIC</span>
+  <span><em>SUBJECT</em>G. POUDEL</span>
+  <span><em>STATUS</em>ACTIVE</span>
+</div>
+
 > **Cybersecurity student · Ethical Hacking & Cybersecurity · 4.0 GPA**
 >
 > Bagmati Zone, Nepal · [email](mailto:gaurav.poudel2061@gmail.com) · [LinkedIn](https://linkedin.com/in/ecstasyy) · [GitHub](https://github.com/0xh4ck3rm4n/blog)
@@ -21,6 +27,7 @@ Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) with hands-on p
 ## Experience
 
 ### Independent Security Research — `ecstasyy`
+
 **github.com/0xh4ck3rm4n/blog · Ongoing**
 
 - Performed and documented 13+ CTF challenge solves across PWN, reverse engineering, forensics, networking, cryptography, and hardware categories
@@ -39,37 +46,39 @@ Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) with hands-on p
 
 ## Projects
 
-| Project | Description |
-| --- | --- |
+| Project                      | Description                                                                                                                                                                                              |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **कृषि खेती (Krishi Kheti)** | AI Smart Farming Platform — FastAPI + PyTorch: crop disease detection, market price analysis, frost-risk sowing advisory, yield prediction (datasets: PlantVillage, FAO, Kalimati Market, OpenStreetMap) |
-| **Steganography Tool** | Hide/extract data within image files for forensics and covert channel analysis |
-| **decentralized-voting** | Tamper-proof, transparent election system on the Ethereum blockchain |
-| **eth raffle** | Decentralized raffle lottery on Ethereum using Chainlink VRF v2.5 for provably fair, verifiable randomness |
-| **eth defi stablecoin** | Over-collateralized, USD-pegged stablecoin protocol accepting WETH/WBTC collateral to mint GEC stablecoins |
-| **Taskify-App** | Task management web application |
-| **eth-mood-NFT** | On-chain and IPFS-integrated NFT collection |
+| **Steganography Tool**       | Hide/extract data within image files for forensics and covert channel analysis                                                                                                                           |
+| **decentralized-voting**     | Tamper-proof, transparent election system on the Ethereum blockchain                                                                                                                                     |
+| **eth raffle**               | Decentralized raffle lottery on Ethereum using Chainlink VRF v2.5 for provably fair, verifiable randomness                                                                                               |
+| **eth defi stablecoin**      | Over-collateralized, USD-pegged stablecoin protocol accepting WETH/WBTC collateral to mint GEC stablecoins                                                                                               |
+| **Taskify-App**              | Task management web application                                                                                                                                                                          |
+| **eth-mood-NFT**             | On-chain and IPFS-integrated NFT collection                                                                                                                                                              |
 
 ## Education
 
 ### Ethical Hacking and Cybersecurity — 4.0 GPA
+
 Softwarica College of IT & E-commerce (affiliated with Coventry University) · Kathmandu, Nepal · October 2025
 
 ### High School, Computer Science (Second Major: Economics)
+
 Samriddhi School · Kathmandu, Nepal · May 2019
 
 ## Certifications
 
-| Certification | Issuer | Date |
-| --- | --- | --- |
-| Cyber Apocalypse CTF 2026 (Competitor) | Hack The Box | July 2026 |
-| Certified LLM Security Expert (CLLMSE) | Red Team Leaders | 2026 |
-| Certified Network Security Practitioner (CNSP) | The SecOps Group | January 2025 |
-| Foundry Fundamentals | Cyfrin Updraft | September 2025 |
-| CS120: Bitcoin for Developers I | Saylor University | November 2024 |
-| Solidity Smart Contract Development | Cyfrin Updraft | April 2025 |
-| Introduction to Cybersecurity | Cisco | September 2021 |
-| IT Essentials | Cisco | April 2021 |
-| Blockchain Basics | LinkedIn | March 2024 |
+| Certification                                  | Issuer            | Date           |
+| ---------------------------------------------- | ----------------- | -------------- |
+| Cyber Apocalypse CTF 2026 (Competitor)         | Hack The Box      | July 2026      |
+| Certified LLM Security Expert (CLLMSE)         | Red Team Leaders  | 2026           |
+| Certified Network Security Practitioner (CNSP) | The SecOps Group  | January 2025   |
+| Foundry Fundamentals                           | Cyfrin Updraft    | September 2025 |
+| CS120: Bitcoin for Developers I                | Saylor University | November 2024  |
+| Solidity Smart Contract Development            | Cyfrin Updraft    | April 2025     |
+| Introduction to Cybersecurity                  | Cisco             | September 2021 |
+| IT Essentials                                  | Cisco             | April 2021     |
+| Blockchain Basics                              | LinkedIn          | March 2024     |
 
 ### Certification Gallery
 
@@ -94,8 +103,54 @@ Samriddhi School · Kathmandu, Nepal · May 2019
 
 ## Skills
 
-- **AI/ML:** PyTorch, FastAPI, machine learning pipelines
-- **Security Concepts:** OWASP Top 10, TCP/IP networking fundamentals, Linux
-- **Programming/Scripting:** Python, JavaScript, Bash Script, TypeScript
-- **Offensive Security & Networks:** Penetration testing, network security, web application security, red teaming, incident response, binary exploitation (PWN), reverse engineering, digital forensics, cryptography, CTF methodology
-- **Blockchain Security:** Solidity, Foundry, smart contract auditing fundamentals, Web3/DeFi
+<div class="skills-board">
+  <div class="skill-group">
+    <h4>AI / ML</h4>
+    <ul class="skill-chips">
+      <li>PyTorch</li>
+      <li>FastAPI</li>
+      <li>Machine learning pipelines</li>
+    </ul>
+  </div>
+  <div class="skill-group">
+    <h4>Security Concepts</h4>
+    <ul class="skill-chips">
+      <li>OWASP Top 10</li>
+      <li>TCP/IP networking fundamentals</li>
+      <li>Linux</li>
+    </ul>
+  </div>
+  <div class="skill-group">
+    <h4>Programming / Scripting</h4>
+    <ul class="skill-chips">
+      <li>Python</li>
+      <li>JavaScript</li>
+      <li>Bash Script</li>
+      <li>TypeScript</li>
+    </ul>
+  </div>
+  <div class="skill-group">
+    <h4>Offensive Security &amp; Networks</h4>
+    <ul class="skill-chips">
+      <li>Penetration testing</li>
+      <li>Network security</li>
+      <li>Web application security</li>
+      <li>Red teaming</li>
+      <li>Incident response</li>
+      <li>Binary exploitation (PWN)</li>
+      <li>Reverse engineering</li>
+      <li>Digital forensics</li>
+      <li>Cryptography</li>
+      <li>CTF methodology</li>
+    </ul>
+  </div>
+  <div class="skill-group">
+    <h4>Blockchain Security</h4>
+    <ul class="skill-chips">
+      <li>Solidity</li>
+      <li>Foundry</li>
+      <li>Smart contract auditing fundamentals</li>
+      <li>Web3/DeFi</li>
+    </ul>
+  </div>
+</div>

@@ -13,7 +13,11 @@ const SITE = {
     { name: "GitHub", url: "https://github.com/0xh4ck3rm4n/blog" },
     { name: "LinkedIn", url: "https://linkedin.com/in/ecstasyy" },
     { name: "X", url: "https://x.com/esctasyxo" },
-    { name: "Discord", url: "https://discord.com/users/mcdonaldsandwich", username: "mcdonaldsandwich" },
+    {
+      name: "Discord",
+      url: "https://discord.com/users/mcdonaldsandwich",
+      username: "mcdonaldsandwich",
+    },
   ],
   mastheadLabel: "cybersec · ctf · notes",
   mastheadTitle: "Giving up is not in the blood,",
@@ -22,6 +26,20 @@ const SITE = {
   homePrompt: "cd ~/home",
   aboutPrompt: "cd ~/about",
   rssPrompt: "open ~/rss.xml",
+  bootLines: [
+    "INITIALIZING SIGNAL…",
+    "LOADING PROFILE: G. POUDEL",
+    "MOUNTING ~/writeups",
+    "ACCESS GRANTED",
+  ],
+  terminalLines: [
+    { cmd: "whoami", out: "gaurav poudel // cybersecurity student · ctf player · builder" },
+    { cmd: "cat mission.txt", out: "break it, understand it, patch it, write it up." },
+    {
+      cmd: "ls ~/certs",
+      out: "athena-ctf-2026  cllmse-2026  cyber-apocalypse-2026  dataforgood-2026",
+    },
+  ],
 }
 
 function getDate(data: QuartzPluginData): Date | undefined {
@@ -61,9 +79,7 @@ function buildPosts(allFiles: QuartzPluginData[]): Post[] {
       const title = String(fm.title ?? f.title ?? slug.split("/").pop() ?? slug)
       const description = String(fm.description ?? f.description ?? "")
       const tags = Array.isArray(fm.tags) ? (fm.tags as string[]) : []
-      const category = String(
-        fm.category ?? slug.split("/")[0] ?? "notes",
-      )
+      const category = String(fm.category ?? slug.split("/")[0] ?? "notes")
       const difficulty = typeof fm.difficulty === "string" ? fm.difficulty : undefined
       const image = typeof fm.image === "string" ? fm.image : undefined
       return {
@@ -81,20 +97,50 @@ function buildPosts(allFiles: QuartzPluginData[]): Post[] {
 }
 
 const SearchIcon = (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
     <circle cx="11" cy="11" r="8"></circle>
     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
   </svg>
 )
 
 const FunnelIcon = (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
   </svg>
 )
 
 const UpIcon = (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
     <line x1="12" y1="19" x2="12" y2="6"></line>
     <polyline points="6 12 12 6 18 12"></polyline>
   </svg>
@@ -123,7 +169,13 @@ const SocialIcons: Record<string, JSX.Element> = {
   ),
 }
 
-function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProps["componentData"]; basePath: string }) {
+function ArchiveGrid({
+  componentData,
+  basePath,
+}: {
+  componentData: PageFrameProps["componentData"]
+  basePath: string
+}) {
   const posts = buildPosts(componentData.allFiles)
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort()
 
@@ -134,7 +186,7 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
           <span class="post-grid-prompt__sigil">$</span> ls ~/writeups
           <span class="post-grid-prompt__cursor" aria-hidden="true"></span>
         </p>
-        <h2 class="post-grid-title">Archive</h2>
+        <h2 class="post-grid-title">Active Case Files</h2>
         <p class="post-grid-sub">
           <strong data-result-count="true">{posts.length}</strong> posts
         </p>
@@ -150,7 +202,13 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
             autocomplete="off"
             data-filter-search="true"
           />
-          <button type="button" class="post-grid-search__clear" data-clear-search="true" aria-label="Clear search" hidden>
+          <button
+            type="button"
+            class="post-grid-search__clear"
+            data-clear-search="true"
+            aria-label="Clear search"
+            hidden
+          >
             ×
           </button>
           <kbd>/</kbd>
@@ -159,7 +217,13 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
           <button type="button" class="tag-filter clear filter-clear" data-clear-all="true" hidden>
             Clear all filters
           </button>
-          <button type="button" class="filter-toggle" data-toggle-tags="true" aria-expanded="false" aria-label="Toggle tags">
+          <button
+            type="button"
+            class="filter-toggle"
+            data-toggle-tags="true"
+            aria-expanded="false"
+            aria-label="Toggle tags"
+          >
             {FunnelIcon}
           </button>
         </div>
@@ -177,13 +241,21 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
 
       <ul class="post-grid-list">
         {posts.map((post, i) => {
-          const searchText = [post.title, post.category, post.description, post.slug, post.tags.join(" ")]
+          const searchText = [
+            post.title,
+            post.category,
+            post.description,
+            post.slug,
+            post.tags.join(" "),
+          ]
             .join(" ")
             .toLowerCase()
-          const diff = post.difficulty ? ` post-card-diff--${post.difficulty.toLowerCase()}` : ""
+          const sev = post.difficulty ? post.difficulty.toLowerCase() : ""
+          const diff = sev ? ` post-card-diff--${sev}` : ""
+          const caseId = String(i + 1).padStart(3, "0")
           return (
             <li
-              class="post-card"
+              class={`post-card${sev ? ` post-card--${sev}` : ""}`}
               data-tags={JSON.stringify(post.tags)}
               data-search={searchText}
               data-title={post.title}
@@ -192,6 +264,7 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
               <a class="post-card-link internal" href={`${basePath}/${post.slug}`}>
                 <div class="post-card-media">
                   {post.image ? <img src={post.image} alt="" loading="eager" /> : null}
+                  <span class="post-card-case-id">#{caseId}</span>
                   {post.difficulty ? (
                     <span class={`post-card-diff${diff}`}>{post.difficulty}</span>
                   ) : null}
@@ -207,7 +280,9 @@ function ArchiveGrid({ componentData, basePath }: { componentData: PageFrameProp
                     </span>
                   </h3>
                   <p class="post-card-sub">{post.category}</p>
-                  {post.description ? <p class="post-card-description">{post.description}</p> : null}
+                  {post.description ? (
+                    <p class="post-card-description">{post.description}</p>
+                  ) : null}
                   {post.tags.length > 0 ? (
                     <ul class="post-card-tags">
                       {post.tags.map((t) => (
@@ -470,6 +545,170 @@ const PortalScript = () => (
     if (top) on(top, "click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
   }
 
+  function initBoot() {
+    var el = document.querySelector("[data-boot]");
+    if (!el) return;
+    if (window.__signalBooted) { el.remove(); return; }
+    window.__signalBooted = true;
+    var already = false;
+    try { already = sessionStorage.getItem("signal-booted") === "1"; } catch (e) {}
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (already || reduced) { el.remove(); return; }
+    try { sessionStorage.setItem("signal-booted", "1"); } catch (e) {}
+    el.classList.add("is-active");
+    var lines = Array.prototype.slice.call(el.querySelectorAll("[data-boot-line]"));
+    var i = 0;
+    function finish() {
+      document.removeEventListener("keydown", skip);
+      document.removeEventListener("click", skip);
+      el.classList.add("is-done");
+      setTimeout(function () { el.remove(); }, 420);
+    }
+    function skip() { finish(); }
+    function showNext() {
+      if (i >= lines.length) { setTimeout(finish, 420); return; }
+      lines[i].classList.add("is-visible");
+      i++;
+      setTimeout(showNext, 240);
+    }
+    document.addEventListener("keydown", skip, { once: true });
+    document.addEventListener("click", skip, { once: true });
+    setTimeout(showNext, 260);
+  }
+
+  function initGraph() {
+    var canvas = document.querySelector("[data-signal-graph]");
+    if (!canvas || window.__signalGraphBound) return;
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || !canvas.getContext) return;
+    window.__signalGraphBound = true;
+    var ctx = canvas.getContext("2d");
+    var w = 0, h = 0;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var nodes = [];
+    var COUNT = 46;
+    var LINK_DIST = 150;
+    function resize() {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function seed() {
+      nodes = [];
+      for (var i = 0; i < COUNT; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.12,
+        });
+      }
+    }
+    resize();
+    seed();
+    on(window, "resize", resize, { passive: true });
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      }
+      ctx.lineWidth = 1;
+      for (var i = 0; i < nodes.length; i++) {
+        for (var j = i + 1; j < nodes.length; j++) {
+          var a = nodes[i], b = nodes[j];
+          var dx = a.x - b.x, dy = a.y - b.y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < LINK_DIST) {
+            ctx.strokeStyle = "rgba(57,255,157," + (0.14 * (1 - dist / LINK_DIST)).toFixed(3) + ")";
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.fillStyle = "rgba(57,255,157,0.55)";
+      for (var i = 0; i < nodes.length; i++) {
+        ctx.beginPath();
+        ctx.arc(nodes[i].x, nodes[i].y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    canvas.classList.add("is-ready");
+    requestAnimationFrame(frame);
+  }
+
+  function initClock() {
+    var el = document.querySelector("[data-hud-clock]");
+    if (!el || window.__signalClockBound) return;
+    window.__signalClockBound = true;
+    function pad(n) { return n < 10 ? "0" + n : String(n); }
+    function tick() {
+      var d = new Date();
+      el.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  function initTerminal() {
+    var body = document.querySelector("[data-terminal-lines]");
+    if (!body || window.__signalTerminalBound) return;
+    window.__signalTerminalBound = true;
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    var data;
+    try { data = JSON.parse(body.getAttribute("data-terminal-lines")); } catch (e) { return; }
+    if (!Array.isArray(data) || !data.length) return;
+    var staticEl = body.querySelector(".terminal-panel__static");
+    if (staticEl) staticEl.hidden = true;
+    var dyn = document.createElement("div");
+    dyn.className = "terminal-panel__dynamic";
+    body.appendChild(dyn);
+    var li = 0;
+    function typeLine() {
+      if (li >= data.length) {
+        var cursor = document.createElement("span");
+        cursor.className = "terminal-panel__cursor";
+        dyn.appendChild(cursor);
+        return;
+      }
+      var line = data[li];
+      var p = document.createElement("p");
+      var prompt = document.createElement("span");
+      prompt.className = "terminal-panel__prompt";
+      prompt.textContent = "$ ";
+      var cmdSpan = document.createElement("span");
+      p.appendChild(prompt);
+      p.appendChild(cmdSpan);
+      dyn.appendChild(p);
+      var cmd = line.cmd || "";
+      var ci = 0;
+      (function typeChar() {
+        if (ci <= cmd.length) {
+          cmdSpan.textContent = cmd.slice(0, ci);
+          ci++;
+          setTimeout(typeChar, 34);
+        } else {
+          var out = document.createElement("span");
+          out.className = "terminal-panel__out";
+          out.textContent = line.out || "";
+          p.appendChild(document.createElement("br"));
+          p.appendChild(out);
+          li++;
+          setTimeout(typeLine, 420);
+        }
+      })();
+    }
+    typeLine();
+  }
+
   function initCursorReticle() {
     if (window.__portalReticleBound) return;
     var el = document.querySelector("[data-cursor-reticle]");
@@ -492,7 +731,10 @@ const PortalScript = () => (
     });
   }
 
-  function boot() { initDrawer(); initGrid(); initProgress(); initCursorReticle(); initDecrypt(); }
+  function boot() {
+    initDrawer(); initGrid(); initProgress(); initCursorReticle(); initDecrypt();
+    initBoot(); initGraph(); initClock(); initTerminal();
+  }
   boot();
   document.addEventListener("nav", boot);
 })();`,
@@ -515,8 +757,22 @@ const DefaultFrame: PageFrame = {
 
     return (
       <>
-        <video class="site-background" src={`${basePath}/static/bg.mp4`} autoplay muted loop playsinline aria-hidden="true"></video>
+        <div class="site-graph-fallback" aria-hidden="true"></div>
+        <canvas class="site-graph" data-signal-graph="true" aria-hidden="true"></canvas>
         <div class="site-grain" aria-hidden="true"></div>
+        <div class="boot-sequence" data-boot="true" aria-hidden="true">
+          <div class="boot-sequence__inner">
+            {SITE.bootLines.map((line, i) => (
+              <p
+                class={`boot-sequence__line${i === SITE.bootLines.length - 1 ? " boot-sequence__line--ok" : ""}`}
+                data-boot-line="true"
+              >
+                &gt; {line}
+              </p>
+            ))}
+          </div>
+          <p class="boot-sequence__skip">press any key to skip</p>
+        </div>
         <div class="cursor-reticle" data-cursor-reticle="true" aria-hidden="true">
           <span class="cursor-reticle__h"></span>
           <span class="cursor-reticle__v"></span>
@@ -527,6 +783,13 @@ const DefaultFrame: PageFrame = {
               <a class="site-nav__identity" href={`${basePath}/`} aria-label={`${wordmark} home`}>
                 <img src={`${basePath}/static/icon.png`} alt={wordmark} width="48" height="48" />
               </a>
+              <div class="site-nav__hud" aria-hidden="true">
+                <span class="hud-status-dot"></span>
+                <span class="hud-status-label">LIVE</span>
+                <time class="hud-clock" data-hud-clock="true">
+                  00:00:00
+                </time>
+              </div>
               <nav class="site-nav__links" aria-label="Primary navigation">
                 <a href="#field-notes">Archive</a>
                 <a href={`${basePath}/about`}>About</a>
@@ -579,21 +842,47 @@ const DefaultFrame: PageFrame = {
         {isHome ? (
           <main id="main-content" class="site-main site-main--home">
             <div class="page-lead popover-hint">
-              <section class="home-masthead" aria-hidden="true">
-                <div class="home-masthead__copy">
-                  <p>{SITE.mastheadLabel}</p>
-                  <h1>
-                    <span class="decrypt-target" data-decrypt={SITE.mastheadTitle}>
-                      {SITE.mastheadTitle}
-                    </span>
-                    <span
-                      class="home-masthead__accent decrypt-target"
-                      data-decrypt={SITE.mastheadAccent}
-                    >
-                      {SITE.mastheadAccent}
-                    </span>
-                    <span class="home-masthead__cursor" aria-hidden="true"></span>
-                  </h1>
+              <section class="home-hero">
+                <div class="home-masthead">
+                  <div class="home-masthead__copy">
+                    <p>{SITE.mastheadLabel}</p>
+                    <h1>
+                      <span class="decrypt-target" data-decrypt={SITE.mastheadTitle}>
+                        {SITE.mastheadTitle}
+                      </span>
+                      <span
+                        class="home-masthead__accent decrypt-target"
+                        data-decrypt={SITE.mastheadAccent}
+                      >
+                        {SITE.mastheadAccent}
+                      </span>
+                      <span class="home-masthead__cursor" aria-hidden="true"></span>
+                    </h1>
+                    <p class="home-masthead__byline">{SITE.mastheadTitle2}</p>
+                  </div>
+                </div>
+                <div class="terminal-panel" aria-hidden="true">
+                  <div class="terminal-panel__bar">
+                    <span class="terminal-panel__dot"></span>
+                    <span class="terminal-panel__dot"></span>
+                    <span class="terminal-panel__dot"></span>
+                    <em>{SITE.hostname}</em>
+                  </div>
+                  <div
+                    class="terminal-panel__body"
+                    data-terminal-lines={JSON.stringify(SITE.terminalLines)}
+                  >
+                    <div class="terminal-panel__static">
+                      {SITE.terminalLines.map((l) => (
+                        <p>
+                          <span class="terminal-panel__prompt">$ </span>
+                          <span>{l.cmd}</span>
+                          <br />
+                          <span class="terminal-panel__out">{l.out}</span>
+                        </p>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -638,6 +927,10 @@ const DefaultFrame: PageFrame = {
         </button>
 
         <footer>
+          <p class="footer-status">
+            <span class="hud-status-dot" aria-hidden="true"></span>
+            SYSTEM OPERATIONAL
+          </p>
           <p class="footer-mark">{mark} / 攻</p>
           <p class="footer-credit">Giving up is not in the blood, sir. · © {year}</p>
           <div class="footer-socials">
