@@ -14,9 +14,37 @@ tags:
   <span><em>STATUS</em>ACTIVE</span>
 </div>
 
-> **Cybersecurity student · Ethical Hacking & Cybersecurity · 4.0 GPA**
->
-> Bagmati Zone, Nepal · [email](mailto:gaurav.poudel2061@gmail.com) · [LinkedIn](https://linkedin.com/in/ecstasyy) · [GitHub](https://github.com/0xh4ck3rm4n/blog)
+<div class="dossier-grid">
+  <div class="dossier-grid__statement">
+    <p class="dossier-lede">
+      <strong>Cybersecurity student</strong> · Ethical Hacking &amp; Cybersecurity ·
+      <span class="dossier-highlight">4.0 GPA</span>
+    </p>
+    <p>
+      Bagmati Zone, Nepal · <a href="mailto:gaurav.poudel2061@gmail.com">email</a> ·
+      <a href="https://linkedin.com/in/ecstasyy">LinkedIn</a> ·
+      <a href="https://github.com/0xh4ck3rm4n/blog">GitHub</a>
+    </p>
+  </div>
+  <div class="spec-sheet">
+    <div class="spec-sheet__row">
+      <span class="spec-sheet__key">FOCUS</span>
+      <span class="spec-sheet__val">Binary exploitation · Digital forensics · Web application security</span>
+    </div>
+    <div class="spec-sheet__row">
+      <span class="spec-sheet__key">CURRENTLY</span>
+      <span class="spec-sheet__val">Ethical Hacking &amp; Cybersecurity @ Softwarica College</span>
+    </div>
+    <div class="spec-sheet__row">
+      <span class="spec-sheet__key">BASED</span>
+      <span class="spec-sheet__val">Bagmati Zone, Nepal</span>
+    </div>
+    <div class="spec-sheet__row">
+      <span class="spec-sheet__key">STATUS</span>
+      <span class="spec-sheet__val">Active</span>
+    </div>
+  </div>
+</div>
 
 ---
 
@@ -82,11 +110,14 @@ Samriddhi School · Kathmandu, Nepal · May 2019
 
 ### Certification Gallery
 
-<div class="cert-grid">
+<div class="creds-featured">
   <figure>
     <img src="certs/cyber-apocalypse-2026.png" alt="Cyber Apocalypse CTF 2026" loading="lazy" />
     <figcaption>Cyber Apocalypse CTF 2026 · Team Rank #105 · 136/136 Solved</figcaption>
   </figure>
+</div>
+
+<div class="cert-grid">
   <figure>
     <img src="certs/cllmse-2026.png" alt="Certified LLM Security Expert" loading="lazy" />
     <figcaption>Certified LLM Security Expert (CLLMSE) · Red Team Leaders</figcaption>
@@ -109,7 +140,7 @@ Samriddhi School · Kathmandu, Nepal · May 2019
 
 <div class="skills-board">
   <div class="skill-group">
-    <h4>AI / ML</h4>
+    <h4>AI / ML <span class="skill-group__count">[03]</span></h4>
     <ul class="skill-chips">
       <li>PyTorch</li>
       <li>FastAPI</li>
@@ -117,7 +148,7 @@ Samriddhi School · Kathmandu, Nepal · May 2019
     </ul>
   </div>
   <div class="skill-group">
-    <h4>Security Concepts</h4>
+    <h4>Security Concepts <span class="skill-group__count">[03]</span></h4>
     <ul class="skill-chips">
       <li>OWASP Top 10</li>
       <li>TCP/IP networking fundamentals</li>
@@ -125,7 +156,7 @@ Samriddhi School · Kathmandu, Nepal · May 2019
     </ul>
   </div>
   <div class="skill-group">
-    <h4>Programming / Scripting</h4>
+    <h4>Programming / Scripting <span class="skill-group__count">[04]</span></h4>
     <ul class="skill-chips">
       <li>Python</li>
       <li>JavaScript</li>
@@ -134,7 +165,7 @@ Samriddhi School · Kathmandu, Nepal · May 2019
     </ul>
   </div>
   <div class="skill-group">
-    <h4>Offensive Security &amp; Networks</h4>
+    <h4>Offensive Security &amp; Networks <span class="skill-group__count">[10]</span></h4>
     <ul class="skill-chips">
       <li>Penetration testing</li>
       <li>Network security</li>
@@ -149,7 +180,7 @@ Samriddhi School · Kathmandu, Nepal · May 2019
     </ul>
   </div>
   <div class="skill-group">
-    <h4>Blockchain Security</h4>
+    <h4>Blockchain Security <span class="skill-group__count">[04]</span></h4>
     <ul class="skill-chips">
       <li>Solidity</li>
       <li>Foundry</li>

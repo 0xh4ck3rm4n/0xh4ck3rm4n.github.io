@@ -37,8 +37,26 @@ const SITE = {
     { cmd: "cat mission.txt", out: "break it, understand it, patch it, write it up." },
     {
       cmd: "ls ~/certs",
-      out: "athena-ctf-2026  cllmse-2026  cyber-apocalypse-2026  dataforgood-2026",
+      out: "athena-ctf-2026  cllmse-2026  cyber-apocalypse-2026  dataforgood-2026  brunnerctf-2026",
     },
+    { cmd: "cat stats.txt", out: "4.0 gpa // cnsp certified // 5 certs // 11 writeups shipped" },
+  ],
+  techniques: [
+    "OWASP TOP 10",
+    "PENETRATION TESTING",
+    "NETWORK SECURITY",
+    "WEB APPLICATION SECURITY",
+    "RED TEAMING",
+    "BINARY EXPLOITATION (PWN)",
+    "REVERSE ENGINEERING",
+    "DIGITAL FORENSICS",
+    "CRYPTOGRAPHY",
+    "CTF METHODOLOGY",
+    "INCIDENT RESPONSE",
+    "SOLIDITY",
+    "FOUNDRY",
+    "PYTHON",
+    "MACHINE LEARNING",
   ],
 }
 
@@ -146,6 +164,123 @@ const UpIcon = (
   </svg>
 )
 
+const CategoryIcons: Record<string, JSX.Element> = {
+  web: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z" />
+    </svg>
+  ),
+  forensics: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <line x1="20" y1="20" x2="15.5" y2="15.5" />
+    </svg>
+  ),
+  reversing: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <rect x="7" y="7" width="10" height="10" rx="1" />
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" />
+    </svg>
+  ),
+  network: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <circle cx="5" cy="6" r="2.2" />
+      <circle cx="19" cy="6" r="2.2" />
+      <circle cx="12" cy="18" r="2.2" />
+      <path d="M6.9 7.4 10.5 16M17.1 7.4 13.5 16M7.2 6h9.6" />
+    </svg>
+  ),
+  malware: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2.2 2.2M16.8 16.8 19 19M5 19l2.2-2.2M16.8 7.2 19 5" />
+    </svg>
+  ),
+  misics: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <path d="M4 6h16M4 12h16M4 18h10" />
+    </svg>
+  ),
+  writeup: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+      aria-hidden="true"
+    >
+      <path d="M5 3h9l5 5v13H5z" />
+      <path d="M14 3v5h5M8 13h8M8 17h8" />
+    </svg>
+  ),
+}
+
+function categoryIconFor(tags: string[]): JSX.Element {
+  for (const t of tags) {
+    const key = t.toLowerCase()
+    if (key === "writeup") continue
+    const icon = CategoryIcons[key]
+    if (icon) return icon
+  }
+  return CategoryIcons.writeup
+}
+
+function SectionHeader({
+  n,
+  label,
+  hint,
+}: {
+  n: string
+  label: string
+  hint: JSX.Element | string
+}) {
+  return (
+    <div class="section-header">
+      <span class="section-header__n">{n}</span>
+      <span class="section-header__label">{label}</span>
+      <span class="section-header__rule" aria-hidden="true"></span>
+      <span class="section-header__hint">{hint}</span>
+    </div>
+  )
+}
+
 const SocialIcons: Record<string, JSX.Element> = {
   GitHub: (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -186,10 +321,15 @@ function ArchiveGrid({
           <span class="post-grid-prompt__sigil">$</span> ls ~/writeups
           <span class="post-grid-prompt__cursor" aria-hidden="true"></span>
         </p>
-        <h2 class="post-grid-title">Active Case Files</h2>
-        <p class="post-grid-sub">
-          <strong data-result-count="true">{posts.length}</strong> posts
-        </p>
+        <SectionHeader
+          n="01"
+          label="Active Case Files"
+          hint={
+            <>
+              <strong data-result-count="true">{posts.length}</strong> posts · live from ~/writeups
+            </>
+          }
+        />
       </div>
 
       <div class="post-grid-tools">
@@ -263,12 +403,13 @@ function ArchiveGrid({
             >
               <a class="post-card-link internal" href={`${basePath}/${post.slug}`}>
                 <div class="post-card-media">
-                  {post.image ? <img src={post.image} alt="" loading="eager" /> : null}
+                  <span class="post-card-glyph" aria-hidden="true">
+                    {categoryIconFor(post.tags)}
+                  </span>
                   <span class="post-card-case-id">#{caseId}</span>
                   {post.difficulty ? (
                     <span class={`post-card-diff${diff}`}>{post.difficulty}</span>
                   ) : null}
-                  <span class="post-card-arrow">↗</span>
                 </div>
                 <div class="post-card-body">
                   <p class="post-card-meta">
@@ -290,6 +431,9 @@ function ArchiveGrid({
                       ))}
                     </ul>
                   ) : null}
+                  <p class="post-card-cta">
+                    READ WRITEUP <span class="post-card-cta__arrow">→</span>
+                  </p>
                 </div>
               </a>
             </li>
@@ -645,13 +789,14 @@ const PortalScript = () => (
   }
 
   function initClock() {
-    var el = document.querySelector("[data-hud-clock]");
-    if (!el || window.__signalClockBound) return;
+    var els = Array.prototype.slice.call(document.querySelectorAll("[data-hud-clock]"));
+    if (!els.length || window.__signalClockBound) return;
     window.__signalClockBound = true;
     function pad(n) { return n < 10 ? "0" + n : String(n); }
     function tick() {
       var d = new Date();
-      el.textContent = pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
+      var s = pad(d.getUTCHours()) + ":" + pad(d.getUTCMinutes()) + ":" + pad(d.getUTCSeconds());
+      els.forEach(function (el) { el.textContent = s; });
     }
     tick();
     setInterval(tick, 1000);
@@ -786,6 +931,23 @@ const DefaultFrame: PageFrame = {
           </div>
         </header>
 
+        <div class="signal-ticker" aria-hidden="true">
+          <div class="signal-ticker__track">
+            {SITE.techniques.map((t) => (
+              <span class="signal-ticker__item">
+                {t}
+                <span class="signal-ticker__dot">·</span>
+              </span>
+            ))}
+            {SITE.techniques.map((t) => (
+              <span class="signal-ticker__item signal-ticker__item--dup">
+                {t}
+                <span class="signal-ticker__dot">·</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
         <div class="site-drawer" id="site-drawer" aria-hidden="true" data-site-menu="true">
           <nav class="site-drawer__panel" aria-label="Site navigation">
             <div class="site-drawer__bar">
@@ -907,6 +1069,13 @@ const DefaultFrame: PageFrame = {
           </p>
           <p class="footer-mark">{mark} / 攻</p>
           <p class="footer-credit">Giving up is not in the blood, sir. · © {year}</p>
+          <p class="footer-tagline">
+            SIGNAL v2 · hand-tuned Quartz theme ·{" "}
+            <time class="hud-clock" data-hud-clock="true">
+              00:00:00
+            </time>{" "}
+            UTC
+          </p>
           <div class="footer-socials">
             {SITE.socials.map((s) => {
               const Icon = SocialIcons[s.name]
