@@ -2,6 +2,7 @@
 title: Free Play
 description: BrunnerCTF forensics challenge analyzing a 2009-era game save file and screenshot to recover a hidden flag.
 image: /static/brunner-logo.png
+event: BrunnerCTF
 tags:
   - writeup
   - forensics
@@ -9,12 +10,12 @@ difficulty: medium
 date: 2026-08-22
 ---
 
-| | |
-|---|---|
-| **Challenge** | Free Play |
-| **Category** | Forensics |
-| **Difficulty** | Medium |
-| **Flag** | [REDACTED] |
+|                |            |
+| -------------- | ---------- |
+| **Challenge**  | Free Play  |
+| **Category**   | Forensics  |
+| **Difficulty** | Medium     |
+| **Flag**       | [REDACTED] |
 
 ---
 

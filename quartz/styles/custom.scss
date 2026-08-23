@@ -1252,6 +1252,24 @@ body.menu-open .site-nav__identity img {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
+.post-card-event {
+  position: absolute;
+  bottom: 0.7rem;
+  left: 0.7rem;
+  z-index: 2;
+  color: var(--sig-core);
+  font-family: var(--codeFont);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #0c0c0cd1;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--brutal-radius);
+  padding: 0.22rem 0.5rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
 .post-card--easy .post-card-link.internal {
   border-left: 3px solid #5fe7ff80 !important;
 }

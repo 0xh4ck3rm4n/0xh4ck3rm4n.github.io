@@ -2,6 +2,7 @@
 title: Hackers Vault
 description: Web exploitation challenge abusing a race condition in the token refresh flow to bypass a role check and retrieve the flag.
 image: /static/netanix.png
+event: NxCTF
 tags:
   - writeup
   - web
@@ -9,11 +10,11 @@ difficulty: medium
 date: 2026-08-06
 ---
 
-| | |
-|---|---|
-| **Challenge** | Hackers Vault |
-| **Category** | Web Exploitation |
-| **Points** | 500 |
+|                 |                   |
+| --------------- | ----------------- |
+| **Challenge**   | Hackers Vault     |
+| **Category**    | Web Exploitation  |
+| **Points**      | 500               |
 | **Flag Format** | `softwarica{...}` |
 
 ---
@@ -80,11 +81,11 @@ https://vault-14dm.onrender.com/api/refresh
 
 So the API has three endpoints:
 
-| Endpoint | Method | Purpose |
-|----------|--------|---------|
-| `/api/login` | POST | Authenticate and get a token |
-| `/api/flag` | GET | Retrieve the flag (admin only) |
-| `/api/refresh` | POST | Refresh the token |
+| Endpoint       | Method | Purpose                        |
+| -------------- | ------ | ------------------------------ |
+| `/api/login`   | POST   | Authenticate and get a token   |
+| `/api/flag`    | GET    | Retrieve the flag (admin only) |
+| `/api/refresh` | POST   | Refresh the token              |
 
 ---
 
@@ -103,7 +104,10 @@ curl -s "$API/api/login" -X POST \
 **Result:**
 
 ```json
-{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDAxLCJzZXNzaW9uX2lkIjoiZTVieDdkOXdtaXYiLCJpYXQiOjE3ODQyMTUyMTEsImV4cCI6MTc4NDIxODgxMX0.6IlcpOr04tlhDP6gI-Imn_kxNOjoVnMzCFKtWxlwhek","role":"user"}
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDAxLCJzZXNzaW9uX2lkIjoiZTVieDdkOXdtaXYiLCJpYXQiOjE3ODQyMTUyMTEsImV4cCI6MTc4NDIxODgxMX0.6IlcpOr04tlhDP6gI-Imn_kxNOjoVnMzCFKtWxlwhek",
+  "role": "user"
+}
 ```
 
 The only valid credential is:
@@ -124,7 +128,7 @@ echo "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMDAxLCJzZXNzaW9uX2lkI
 **Payload:**
 
 ```json
-{"user_id":1001,"session_id":"e5bx7d9wmiv","iat":1784215211,"exp":1784218811}
+{ "user_id": 1001, "session_id": "e5bx7d9wmiv", "iat": 1784215211, "exp": 1784218811 }
 ```
 
 The JWT contains a `user_id` and `session_id`, but **not** the role. The role is stored server-side and returned separately.
@@ -144,7 +148,7 @@ curl -s "$API/api/flag" -H "Authorization: Bearer $TOKEN"
 **Result:**
 
 ```json
-{"error":"Insufficient privileges"}
+{ "error": "Insufficient privileges" }
 ```
 
 The `user` role is not enough. We need to escalate to `admin`.
@@ -210,8 +214,8 @@ softwarica{<redacted_flag>}
 
 ## Summary of Flags
 
-| Flag | Value |
-|------|-------|
+| Flag               | Value                         |
+| ------------------ | ----------------------------- |
 | **Challenge flag** | `softwarica{<redacted_flag>}` |
 
 ---

@@ -81,6 +81,7 @@ interface Post {
   difficulty?: string
   tags: string[]
   image?: string
+  event?: string
 }
 
 function buildPosts(allFiles: QuartzPluginData[]): Post[] {
@@ -100,6 +101,7 @@ function buildPosts(allFiles: QuartzPluginData[]): Post[] {
       const category = String(fm.category ?? slug.split("/")[0] ?? "notes")
       const difficulty = typeof fm.difficulty === "string" ? fm.difficulty : undefined
       const image = typeof fm.image === "string" ? fm.image : undefined
+      const event = typeof fm.event === "string" ? fm.event : undefined
       return {
         slug,
         title,
@@ -109,6 +111,7 @@ function buildPosts(allFiles: QuartzPluginData[]): Post[] {
         difficulty,
         tags,
         image,
+        event,
       }
     })
     .sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0))
@@ -387,6 +390,7 @@ function ArchiveGrid({
             post.description,
             post.slug,
             post.tags.join(" "),
+            post.event ?? "",
           ]
             .join(" ")
             .toLowerCase()
@@ -410,6 +414,7 @@ function ArchiveGrid({
                   {post.difficulty ? (
                     <span class={`post-card-diff${diff}`}>{post.difficulty}</span>
                   ) : null}
+                  {post.event ? <span class="post-card-event">{post.event}</span> : null}
                 </div>
                 <div class="post-card-body">
                   <p class="post-card-meta">

@@ -2,6 +2,7 @@
 title: Company Discount
 description: BrunnerCTF forensics/malware challenge analyzing a defanged .hta file delivering a company discount email scam.
 image: /static/brunner-logo.png
+event: BrunnerCTF
 tags:
   - writeup
   - forensics
@@ -10,12 +11,12 @@ difficulty: easy-medium
 date: 2026-08-22
 ---
 
-| | |
-|---|---|
-| **Challenge** | Company Discount |
-| **Category** | Forensics / Malware |
-| **Difficulty** | Easy–Medium |
-| **Flag** | [REDACTED] |
+|                |                     |
+| -------------- | ------------------- |
+| **Challenge**  | Company Discount    |
+| **Category**   | Forensics / Malware |
+| **Difficulty** | Easy–Medium         |
+| **Flag**       | [REDACTED]          |
 
 ---
 

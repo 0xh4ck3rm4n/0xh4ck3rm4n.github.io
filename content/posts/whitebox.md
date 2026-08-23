@@ -2,6 +2,7 @@
 title: Whitebox
 description: Hard reversing challenge inverting a Chow-style white-box AES (9 table rounds + final byte encoding) to recover the secret key-free.
 image: /static/netanix.png
+event: NxCTF
 tags:
   - writeup
   - reversing
@@ -9,12 +10,12 @@ difficulty: hard
 date: 2026-08-09
 ---
 
-| | |
-|---|---|
-| **Challenge** | Whitebox |
-| **Category** | Reversing / White-box Cryptography |
-| **Difficulty** | Hard |
-| **SHA256** | `583699eeb8b1a6d9c6992a160edf1bf40cdc3ad913d41d0b304f164d1b676ce6` |
+|                |                                                                    |
+| -------------- | ------------------------------------------------------------------ |
+| **Challenge**  | Whitebox                                                           |
+| **Category**   | Reversing / White-box Cryptography                                 |
+| **Difficulty** | Hard                                                               |
+| **SHA256**     | `583699eeb8b1a6d9c6992a160edf1bf40cdc3ad913d41d0b304f164d1b676ce6` |
 
 ---
 
@@ -60,11 +61,11 @@ whitebox: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV),
 readelf -S whitebox
 ```
 
-| Section | Address | Size |
-|---------|---------|------|
-| `.text` | `0x10c0` | 824 B |
-| `.rodata` | `0x2000` | 0x251b4 B |
-| `.data` | `0x29038` | — |
+| Section   | Address   | Size      |
+| --------- | --------- | --------- |
+| `.text`   | `0x10c0`  | 824 B     |
+| `.rodata` | `0x2000`  | 0x251b4 B |
+| `.data`   | `0x29038` | —         |
 
 ### Strings
 
@@ -211,7 +212,7 @@ The structure is a textbook **white-box AES**:
 - a final byte-wise round (SubBytes + AddRoundKey, no MixColumns) with an output encoding,
 - **no key constant anywhere** — the key is embedded in the tables.
 
-The description confirms it: *"It ships on real phones, real ATMs, real DRM stacks"* — that is white-box cryptography (Chow et al.).
+The description confirms it: _"It ships on real phones, real ATMs, real DRM stacks"_ — that is white-box cryptography (Chow et al.).
 
 We verified the tables are **not** plain AES T-tables (the byte sets don't match `{S[x], 2·S[x], 3·S[x]}`) and the final table is not an affine version of the S-box — the implementation uses **internal encodings** (Chow-style). That doesn't matter for solving: the transform is a pure composition of lookups and XORs, so it can be inverted directly.
 
@@ -354,15 +355,15 @@ All print `no.` — the recovered plaintext is provably the secret.
 
 ## Summary
 
-| Item | Value |
-|------|-------|
-| **Cipher** | White-box AES (Chow-style), 9 table rounds + final byte encoding |
-| **Key** | Folded into 144 lookup tables; no key constant in the binary |
-| **Inversion** | Final encoding undo + per-word meet-in-the-middle over 4 tables |
-| **Block 0** | `[REDACTED]` |
-| **Block 1** | `[REDACTED]` |
-| **Flag** | `[REDACTED]` |
-| **Verification** | `./whitebox` prints `ok.` |
+| Item             | Value                                                            |
+| ---------------- | ---------------------------------------------------------------- |
+| **Cipher**       | White-box AES (Chow-style), 9 table rounds + final byte encoding |
+| **Key**          | Folded into 144 lookup tables; no key constant in the binary     |
+| **Inversion**    | Final encoding undo + per-word meet-in-the-middle over 4 tables  |
+| **Block 0**      | `[REDACTED]`                                                     |
+| **Block 1**      | `[REDACTED]`                                                     |
+| **Flag**         | `[REDACTED]`                                                     |
+| **Verification** | `./whitebox` prints `ok.`                                        |
 
 ---
 

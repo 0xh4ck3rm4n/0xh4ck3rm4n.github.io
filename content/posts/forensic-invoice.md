@@ -2,6 +2,7 @@
 title: Forensic Invoice
 description: BrunnerCTF forensics/malware challenge analyzing a macro-enabled Office document with a malicious VBA payload.
 image: /static/brunner-logo.png
+event: BrunnerCTF
 tags:
   - writeup
   - forensics
@@ -10,12 +11,12 @@ difficulty: easy
 date: 2026-08-22
 ---
 
-| | |
-|---|---|
-| **Challenge** | Forensic Invoice |
-| **Category** | Forensics / Malware |
-| **Difficulty** | Easy |
-| **Flag** | [REDACTED] |
+|                |                     |
+| -------------- | ------------------- |
+| **Challenge**  | Forensic Invoice    |
+| **Category**   | Forensics / Malware |
+| **Difficulty** | Easy                |
+| **Flag**       | [REDACTED]          |
 
 ---
 

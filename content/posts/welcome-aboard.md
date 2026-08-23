@@ -2,6 +2,7 @@
 title: Welcome Aboard
 description: BrunnerCTF web challenge involving request smuggling through an employee wiki with multiple infrastructure layers.
 image: /static/brunner-logo.png
+event: BrunnerCTF
 tags:
   - writeup
   - web
@@ -9,12 +10,12 @@ difficulty: medium
 date: 2026-08-21
 ---
 
-| | |
-|---|---|
-| **Challenge** | Welcome Aboard |
-| **Category** | Web |
-| **Difficulty** | Medium |
-| **Flag** | [REDACTED] |
+|                |                |
+| -------------- | -------------- |
+| **Challenge**  | Welcome Aboard |
+| **Category**   | Web            |
+| **Difficulty** | Medium         |
+| **Flag**       | [REDACTED]     |
 
 ---
 
@@ -27,7 +28,7 @@ Welcome to the BrunnerCTF "Welcome Aboard" challenge! This web exploitation chal
 Your employee account has access to the Brunnerne Inc. Wiki, where you'll find onboarding guides and technical documentation. The platform sits behind multiple layers of infrastructure, and IT is confident every chunk reaches the backend, exactly as expected. Explore the wiki and see if everything behaves as intended.
 
 Two phrases in there did most of the work of pointing me at the answer:
-*"multiple layers of infrastructure"* (there's a proxy in front of an app) and *"every **chunk** reaches the backend"* (someone wants me to think about `Transfer-Encoding: chunked`). That's a request-smuggling nudge if I've ever seen one, but I didn't want to marry the theory before looking at the app.
+_"multiple layers of infrastructure"_ (there's a proxy in front of an app) and _"every **chunk** reaches the backend"_ (someone wants me to think about `Transfer-Encoding: chunked`). That's a request-smuggling nudge if I've ever seen one, but I didn't want to marry the theory before looking at the app.
 
 ## 2. Triage
 

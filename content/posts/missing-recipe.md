@@ -2,6 +2,7 @@
 title: The Missing Recipe
 description: BrunnerCTF forensics/network DFIR challenge reconstructing an attack from a ~40MB PCAP to recover a hidden flag.
 image: /static/brunner-logo.png
+event: BrunnerCTF
 tags:
   - writeup
   - forensics
@@ -10,12 +11,12 @@ difficulty: hard
 date: 2026-08-22
 ---
 
-| | |
-|---|---|
-| **Challenge** | The Missing Recipe |
-| **Category** | Forensics (Network / DFIR) |
-| **Difficulty** | Hard |
-| **Flag** | [REDACTED] |
+|                |                            |
+| -------------- | -------------------------- |
+| **Challenge**  | The Missing Recipe         |
+| **Category**   | Forensics (Network / DFIR) |
+| **Difficulty** | Hard                       |
+| **Flag**       | [REDACTED]                 |
 
 ---
 
@@ -31,12 +32,12 @@ $ tshark -r the-missing-recipe.pcap -q -z io,phs
 
 **Overview of the capture:**
 
-| Protocol | Traffic |
-|----------|---------|
-| DNS | ~2K queries, including exfiltration via subdomain |
-| HTTP | ~15 requests, some with suspicious User-Agent strings |
-| TCP | Established connections to external IPs |
-| TLS | Encrypted sessions to `api.brunnercorp.com` |
+| Protocol | Traffic                                               |
+| -------- | ----------------------------------------------------- |
+| DNS      | ~2K queries, including exfiltration via subdomain     |
+| HTTP     | ~15 requests, some with suspicious User-Agent strings |
+| TCP      | Established connections to external IPs               |
+| TLS      | Encrypted sessions to `api.brunnercorp.com`           |
 
 Key observations:
 
@@ -48,12 +49,12 @@ Key observations:
 
 ### Timeline correlation
 
-| Time (UTC) | Event | Significance |
-|------------|-------|--------------|
-| T1 | DNS query for `abc123.export.brunnercorp.com` | Initial exfiltration DNS probe |
-| T2 | TCP connection to `52.34.1.67:443` | Exfiltration server setup |
-| T3 | TLS handshake with SNI `api.brunnercorp.com` | Encrypted tunnel established |
-| T4 | HTTP POST to `/upload` with base64 payload | Recipe data exfiltrated |
+| Time (UTC) | Event                                         | Significance                   |
+| ---------- | --------------------------------------------- | ------------------------------ |
+| T1         | DNS query for `abc123.export.brunnercorp.com` | Initial exfiltration DNS probe |
+| T2         | TCP connection to `52.34.1.67:443`            | Exfiltration server setup      |
+| T3         | TLS handshake with SNI `api.brunnercorp.com`  | Encrypted tunnel established   |
+| T4         | HTTP POST to `/upload` with base64 payload    | Recipe data exfiltrated        |
 
 ### Follow the TLS stream
 

@@ -2,6 +2,7 @@
 title: Labyrinth
 description: Reverse engineering challenge inverting a 4-chunk 16-round Feistel network with AES S-boxes and an anti-debug ptrace key-poison.
 image: /static/netanix.png
+event: NxCTF
 tags:
   - writeup
   - reversing
@@ -9,13 +10,13 @@ difficulty: medium
 date: 2026-08-09
 ---
 
-| | |
-|---|---|
-| **Challenge** | Labyrinth |
-| **Category** | Reverse Engineering |
-| **Difficulty** | Medium |
-| **SHA256** | `88e76134...` |
-| **Flag** | `NxCTF{[REDACTED]}` |
+|                |                     |
+| -------------- | ------------------- |
+| **Challenge**  | Labyrinth           |
+| **Category**   | Reverse Engineering |
+| **Difficulty** | Medium              |
+| **SHA256**     | `88e76134...`       |
+| **Flag**       | `NxCTF{[REDACTED]}` |
 
 ---
 
@@ -95,6 +96,7 @@ $ echo 'NxCTF{[REDACTED]}' | ./labyrinth
 The forward transform of the recovered flag also matches the expected ciphertext byte-for-byte.
 
 ## Lessons
+
 - ZipCrypto passwords are often weak — a dictionary attack is the first move.
-- Anti-debug `ptrace` + key poisoning is a common RE obfuscation; identify the poison branch and invert the *clean* transform.
+- Anti-debug `ptrace` + key poisoning is a common RE obfuscation; identify the poison branch and invert the _clean_ transform.
 - Feistel networks with known S-boxes and keys are trivially invertible round-by-round.

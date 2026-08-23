@@ -2,6 +2,7 @@
 title: The Forgotten Incident
 description: Hard forensics/web challenge following a URL-encoded path traversal (CVE-2021-41773 pattern) through synthetic evidence artifacts to the hidden forensic store.
 image: /static/netanix.png
+event: NxCTF
 tags:
   - writeup
   - forensics
@@ -10,13 +11,13 @@ difficulty: hard
 date: 2026-08-11
 ---
 
-| | |
-|---|---|
-| **Challenge** | The Forgotten Incident — Case File 0417 |
-| **Category** | Forensics / Web |
-| **Difficulty** | Hard |
-| **Target** | https://forgotten-incident-lgn20oaf9-aces-projects-dac15168.vercel.app/ |
-| **Flag Format** | `NxCTF{...}` |
+|                 |                                                                         |
+| --------------- | ----------------------------------------------------------------------- |
+| **Challenge**   | The Forgotten Incident — Case File 0417                                 |
+| **Category**    | Forensics / Web                                                         |
+| **Difficulty**  | Hard                                                                    |
+| **Target**      | https://forgotten-incident-lgn20oaf9-aces-projects-dac15168.vercel.app/ |
+| **Flag Format** | `NxCTF{...}`                                                            |
 
 ---
 
@@ -39,19 +40,22 @@ The Forgotten Incident is a forensics/web challenge where the entire solution is
 
 The challenge page is a static "case file" landing page. Inspecting the HTML source reveals the full application map:
 
-| Endpoint | Method | Purpose | Interesting? |
-|----------|--------|---------|--------------|
-| `/` | GET | Case landing page | No |
-| `/assets/incident_capture.txt` | GET | Network transcript artifact | **Yes** |
-| `/assets/damaged_access.log` | GET | Reordered access log artifact | **Yes** |
-| `/portal/` | GET | Archive export portal (serverless function) | **Yes** |
-| `/api/submit` | POST | Flag verifier | Yes |
+| Endpoint                       | Method | Purpose                                     | Interesting? |
+| ------------------------------ | ------ | ------------------------------------------- | ------------ |
+| `/`                            | GET    | Case landing page                           | No           |
+| `/assets/incident_capture.txt` | GET    | Network transcript artifact                 | **Yes**      |
+| `/assets/damaged_access.log`   | GET    | Reordered access log artifact               | **Yes**      |
+| `/portal/`                     | GET    | Archive export portal (serverless function) | **Yes**      |
+| `/api/submit`                  | POST   | Flag verifier                               | Yes          |
 
 The HTML also shows a flag-submission form wired to `client.js`:
 
 ```javascript
-fetch('/api/submit', {method:'POST', headers:{'Content-Type':'application/json'},
-                      body:JSON.stringify({flag})});
+fetch("/api/submit", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ flag }),
+})
 ```
 
 ### Initial probes
@@ -104,7 +108,7 @@ T3 (23:17:03) → path traversal into portal-evidence   ← THE KEY REQUEST
 T4 (23:17:04) → favicon 404 (noise)
 ```
 
-The `favicon.ico` line is noise; the traversal request at `T3` is the pivot. The "missing final evidence record" is the *response* of a request that does **not** appear in the logs — we must reproduce it ourselves.
+The `favicon.ico` line is noise; the traversal request at `T3` is the pivot. The "missing final evidence record" is the _response_ of a request that does **not** appear in the logs — we must reproduce it ourselves.
 
 ---
 
@@ -169,11 +173,11 @@ A decoy — "Unrelated maintenance record." confirms it's not part of the incide
 
 ### Correlation with the artifacts
 
-| Time | Network Evidence (capture) | Access Log | Interpretation |
-|------|----------------------------|------------|----------------|
-| T2 | `GET /export/index.txt` | `23:17:02 /export/index.txt 200` | Initial archive browse |
-| T3 | `GET /export/%2e%2e/%2e%2e/portal-evidence/index.txt` | `23:17:03 ... 200` | Traversal into hidden store |
-| — | export metadata `storage=/portal-evidence/forensic` | *missing* | **Final evidence record never accessed in logs** |
+| Time | Network Evidence (capture)                            | Access Log                       | Interpretation                                   |
+| ---- | ----------------------------------------------------- | -------------------------------- | ------------------------------------------------ |
+| T2   | `GET /export/index.txt`                               | `23:17:02 /export/index.txt 200` | Initial archive browse                           |
+| T3   | `GET /export/%2e%2e/%2e%2e/portal-evidence/index.txt` | `23:17:03 ... 200`               | Traversal into hidden store                      |
+| —    | export metadata `storage=/portal-evidence/forensic`   | _missing_                        | **Final evidence record never accessed in logs** |
 
 The manifest and `forensic/` store are referenced but **never shown in the portal listing** and **never appear in the access log** — this is the missing final evidence record.
 
@@ -244,7 +248,7 @@ curl -s -X POST "$BASE/api/submit" -H 'Content-Type: application/json' \
 **Result:**
 
 ```json
-{"correct":true,"message":"CASE CLOSED — flag accepted."}
+{ "correct": true, "message": "CASE CLOSED — flag accepted." }
 ```
 
 ### Negative control
@@ -257,7 +261,7 @@ curl -s -X POST "$BASE/api/submit" -H 'Content-Type: application/json' \
 **Result:**
 
 ```json
-{"correct":false,"message":"That evidence does not close the case."}
+{ "correct": false, "message": "That evidence does not close the case." }
 ```
 
 The flag is accepted and a wrong flag is rejected — the recovered value is validated independently.
@@ -274,8 +278,8 @@ NxCTF{[REDACTED]}
 
 ## Summary of Flags
 
-| Flag | Value |
-|------|-------|
+| Flag               | Value               |
+| ------------------ | ------------------- |
 | **Challenge flag** | `NxCTF{[REDACTED]}` |
 
 ---
@@ -295,7 +299,7 @@ NxCTF{[REDACTED]}
 ## Key Takeaways
 
 1. **Read the artifacts before attacking** — the flag is not in a scan; it's buried in the application's synthetic evidence store, and the artifacts are the map.
-2. **URL-encoded path traversal** — `%2e%2e` (encoded `..`) against an Apache/2.4.49-style handler (CVE-2021-41773 pattern) is a logical traversal *within the archive namespace*, not a machine-file read.
+2. **URL-encoded path traversal** — `%2e%2e` (encoded `..`) against an Apache/2.4.49-style handler (CVE-2021-41773 pattern) is a logical traversal _within the archive namespace_, not a machine-file read.
 3. **The "missing record" is a directory-referencing chain** — the portal index never lists `forensic/`; only the export metadata references it. Follow metadata references, don't guess filenames.
 4. **Distinguish decoys from evidence** — `legacy-support.txt` ("Unrelated maintenance record") and UDP 5353 / favicon noise are deliberate decoys to filter out.
 5. **Validate the flag** — always confirm a recovered flag through the challenge's own submit endpoint before reporting it.
