@@ -1456,16 +1456,17 @@ body.menu-open .site-nav__identity img {
 
 /* ---------- Footer ---------- */
 footer {
-  color: var(--gray);
+  color: var(--portal-text);
   font-family: var(--codeFont);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   flex-direction: column;
   align-items: center;
   gap: 0.9rem;
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   padding: 2rem 1rem 2.5rem;
   display: flex;
+  opacity: 1;
 }
 footer p {
   color: inherit;
@@ -1476,21 +1477,24 @@ footer .footer-status {
   align-items: center;
   gap: 0.5rem;
   color: var(--sig-core);
-  font-weight: 500;
+  font-weight: 600;
 }
 footer .footer-mark {
   color: var(--secondary);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 footer .footer-credit {
   text-align: center;
+  letter-spacing: 0.02em;
+  font-weight: 500;
 }
 footer .footer-tagline {
-  color: var(--portal-dim);
+  color: var(--portal-muted);
   text-align: center;
   text-transform: none;
-  letter-spacing: 0.04em;
-  font-size: 0.62rem;
+  letter-spacing: 0.02em;
+  font-size: 0.7rem;
 }
 footer .footer-tagline .hud-clock {
   color: var(--sig-core);
