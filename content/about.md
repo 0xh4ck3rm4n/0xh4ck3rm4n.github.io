@@ -99,6 +99,10 @@ Samriddhi School · Kathmandu, Nepal · May 2019
     <img src="certs/dataforgood-2026.png" alt="DataForGood Nepal 2026 Hackathon" loading="lazy" />
     <figcaption>DataForGood Nepal 2026 Hackathon · Softwarica College</figcaption>
   </figure>
+  <figure>
+    <img src="certs/cert-309.png" alt="BrunnerCTF 2026 Team Certificate of Achievement" loading="lazy" />
+    <figcaption>BrunnerCTF 2026 · 2nd Place / 1,103 teams · Team roster incl. <code>ecst4sy</code></figcaption>
+  </figure>
 </div>
 
 ## Skills

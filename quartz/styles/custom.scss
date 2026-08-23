@@ -158,59 +158,6 @@ footer {
     100% 4px;
 }
 
-/* ---------- Cursor reticle (desktop only) ---------- */
-.cursor-reticle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-.cursor-reticle.is-active {
-  opacity: 1;
-}
-.cursor-reticle__h,
-.cursor-reticle__v {
-  position: absolute;
-  background: var(--portal-accent);
-  opacity: 0.7;
-  transition: background 0.15s ease;
-}
-.cursor-reticle__h {
-  top: 0;
-  left: -9px;
-  width: 18px;
-  height: 1px;
-}
-.cursor-reticle__v {
-  top: -9px;
-  left: 0;
-  width: 1px;
-  height: 18px;
-}
-.cursor-reticle.is-target .cursor-reticle__h {
-  left: -14px;
-  width: 28px;
-}
-.cursor-reticle.is-target .cursor-reticle__v {
-  top: -14px;
-  height: 28px;
-}
-@media (hover: none), (pointer: coarse) {
-  .cursor-reticle {
-    display: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cursor-reticle {
-    display: none;
-  }
-}
-
 /* ---------- Header / Nav ---------- */
 .portal-nav {
   z-index: 100;

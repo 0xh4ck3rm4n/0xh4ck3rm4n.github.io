@@ -28,12 +28,12 @@ const SITE = {
   rssPrompt: "open ~/rss.xml",
   bootLines: [
     "INITIALIZING SIGNAL…",
-    "LOADING PROFILE: G. POUDEL",
+    "LOADING PROFILE: ESCT4SY",
     "MOUNTING ~/writeups",
     "ACCESS GRANTED",
   ],
   terminalLines: [
-    { cmd: "whoami", out: "gaurav poudel // cybersecurity student · ctf player · builder" },
+    { cmd: "whoami", out: "esct4sy // cybersecurity student · ctf player · builder" },
     { cmd: "cat mission.txt", out: "break it, understand it, patch it, write it up." },
     {
       cmd: "ls ~/certs",
@@ -709,30 +709,8 @@ const PortalScript = () => (
     typeLine();
   }
 
-  function initCursorReticle() {
-    if (window.__portalReticleBound) return;
-    var el = document.querySelector("[data-cursor-reticle]");
-    if (!el) return;
-    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var fine = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (reduced || !fine) return;
-    window.__portalReticleBound = true;
-    var x = 0, y = 0, active = false;
-    on(window, "pointermove", function (e) {
-      x = e.clientX; y = e.clientY;
-      el.style.transform = "translate3d(" + x + "px," + y + "px,0)";
-      if (!active) { active = true; el.classList.add("is-active"); }
-      var target = e.target.closest ? e.target.closest("a, button, input, .post-card-link") : null;
-      el.classList.toggle("is-target", !!target);
-    }, { passive: true });
-    on(document, "pointerleave", function () {
-      active = false;
-      el.classList.remove("is-active");
-    });
-  }
-
   function boot() {
-    initDrawer(); initGrid(); initProgress(); initCursorReticle(); initDecrypt();
+    initDrawer(); initGrid(); initProgress(); initDecrypt();
     initBoot(); initGraph(); initClock(); initTerminal();
   }
   boot();
@@ -772,10 +750,6 @@ const DefaultFrame: PageFrame = {
             ))}
           </div>
           <p class="boot-sequence__skip">press any key to skip</p>
-        </div>
-        <div class="cursor-reticle" data-cursor-reticle="true" aria-hidden="true">
-          <span class="cursor-reticle__h"></span>
-          <span class="cursor-reticle__v"></span>
         </div>
         <header class="portal-nav">
           <div class="site-nav">
