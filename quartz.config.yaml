@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: en-US
-  baseUrl: 0xh4ck3rm4n.github.io
+  baseUrl: ecst4sy.is-a.dev
   ignorePatterns:
     - private
     - templates
