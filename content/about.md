@@ -62,6 +62,7 @@ Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) with hands-on p
 - Exploited a 64-bit ELF binary via a ret2win stack-based buffer overflow, documenting the full exploitation chain from static analysis to working exploit
 - Conducted hardware wiretap analysis to recover and analyze intercepted signal data
 - Competed in Hack The Box's Cyber Apocalypse CTF 2026, solving challenges under competitive time pressure
+- Competed with team `v1olet` in 0xV01D CTF and BrunnerCTF 2026, placing 2nd in both
 
 ### Steganography Tool (Python)
 

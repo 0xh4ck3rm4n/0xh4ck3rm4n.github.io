@@ -23,6 +23,22 @@ const SITE = {
   mastheadTitle: "Giving up is not in the blood,",
   mastheadAccent: " sir.",
   mastheadTitle2: "— Nims Dai Purja",
+  alias: "ecst4sy",
+  heroGreeting: "hey, i'm",
+  heroSubtitle: "currently: breaking things @ Softwarica College",
+  heroTags: ["cybersecurity", "ctf player", "builder", "ai/ml"],
+  aboutBio:
+    "Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) building offensive-security skills through CTF competition, coursework, and self-directed tooling. CNSP-certified, currently competing with team v1olet across HTB, BrunnerCTF, and independent CTFs.",
+  ctfLog: [
+    { event: "BrunnerCTF 2026", team: "v1olet", result: "2nd / 1,103 teams" },
+    { event: "0xV01D CTF", team: "v1olet", result: "2nd place" },
+    {
+      event: "Cyber Apocalypse CTF 2026 (HTB)",
+      team: "—",
+      result: "Team rank #105 · 136/136 solved",
+    },
+    { event: "Athena CTF 2026", team: "—", result: "Rank #39 · 24-hour jeopardy" },
+  ],
   homePrompt: "cd ~/home",
   aboutPrompt: "cd ~/about",
   rssPrompt: "open ~/rss.xml",
@@ -325,7 +341,7 @@ function ArchiveGrid({
           <span class="post-grid-prompt__cursor" aria-hidden="true"></span>
         </p>
         <SectionHeader
-          n="01"
+          n="03"
           label="Active Case Files"
           hint={
             <>
@@ -773,7 +789,7 @@ const PortalScript = () => (
           var dx = a.x - b.x, dy = a.y - b.y;
           var dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < LINK_DIST) {
-            ctx.strokeStyle = "rgba(57,255,157," + (0.14 * (1 - dist / LINK_DIST)).toFixed(3) + ")";
+            ctx.strokeStyle = "rgba(185,163,245," + (0.14 * (1 - dist / LINK_DIST)).toFixed(3) + ")";
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -781,7 +797,7 @@ const PortalScript = () => (
           }
         }
       }
-      ctx.fillStyle = "rgba(57,255,157,0.55)";
+      ctx.fillStyle = "rgba(185,163,245,0.55)";
       for (var i = 0; i < nodes.length; i++) {
         ctx.beginPath();
         ctx.arc(nodes[i].x, nodes[i].y, 1.6, 0, Math.PI * 2);
@@ -859,8 +875,30 @@ const PortalScript = () => (
     typeLine();
   }
 
+  function initHeroTypeline() {
+    var wrap = document.querySelector("[data-typeline]");
+    if (!wrap || window.__signalTypelineBound) return;
+    window.__signalTypelineBound = true;
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+    var text = wrap.getAttribute("data-typeline") || "";
+    var staticEl = wrap.querySelector(".hero-greet__static");
+    if (staticEl) staticEl.hidden = true;
+    var dyn = document.createElement("span");
+    dyn.className = "hero-greet__dynamic";
+    wrap.appendChild(dyn);
+    var ci = 0;
+    (function typeChar() {
+      if (ci <= text.length) {
+        dyn.textContent = text.slice(0, ci);
+        ci++;
+        setTimeout(typeChar, 38);
+      }
+    })();
+  }
+
   function boot() {
-    initDrawer(); initGrid(); initProgress(); initDecrypt();
+    initDrawer(); initGrid(); initProgress(); initDecrypt(); initHeroTypeline();
     initBoot(); initGraph(); initClock(); initTerminal();
   }
   boot();
@@ -915,6 +953,7 @@ const DefaultFrame: PageFrame = {
                 </time>
               </div>
               <nav class="site-nav__links" aria-label="Primary navigation">
+                <a href="#ctf-log">CTF</a>
                 <a href="#field-notes">Archive</a>
                 <a href={`${basePath}/about`}>About</a>
                 <a href={SITE.github} target="_blank" rel="noreferrer">
@@ -983,51 +1022,82 @@ const DefaultFrame: PageFrame = {
         {isHome ? (
           <main id="main-content" class="site-main site-main--home">
             <div class="page-lead popover-hint">
-              <section class="home-hero">
-                <div class="home-masthead">
-                  <div class="home-masthead__copy">
-                    <p>{SITE.mastheadLabel}</p>
-                    <h1>
-                      <span class="decrypt-target" data-decrypt={SITE.mastheadTitle}>
-                        {SITE.mastheadTitle}
-                      </span>
-                      <span
-                        class="home-masthead__accent decrypt-target"
-                        data-decrypt={SITE.mastheadAccent}
-                      >
-                        {SITE.mastheadAccent}
-                      </span>
-                      <span class="home-masthead__cursor" aria-hidden="true"></span>
-                    </h1>
-                    <p class="home-masthead__byline">{SITE.mastheadTitle2}</p>
-                  </div>
-                </div>
-                <div class="terminal-panel" aria-hidden="true">
-                  <div class="terminal-panel__bar">
-                    <span class="terminal-panel__dot"></span>
-                    <span class="terminal-panel__dot"></span>
-                    <span class="terminal-panel__dot"></span>
-                    <em>{SITE.hostname}</em>
-                  </div>
-                  <div
-                    class="terminal-panel__body"
-                    data-terminal-lines={JSON.stringify(SITE.terminalLines)}
-                  >
-                    <div class="terminal-panel__static">
-                      {SITE.terminalLines.map((l) => (
-                        <p>
-                          <span class="terminal-panel__prompt">$ </span>
-                          <span>{l.cmd}</span>
-                          <br />
-                          <span class="terminal-panel__out">{l.out}</span>
-                        </p>
-                      ))}
+              <section class="hero-greet">
+                <p class="hero-greet__eyebrow">{SITE.mastheadLabel}</p>
+                <h1 class="hero-greet__title">
+                  <span class="decrypt-target" data-decrypt={SITE.heroGreeting}>
+                    {SITE.heroGreeting}
+                  </span>{" "}
+                  <span class="hero-greet__name decrypt-target" data-decrypt={SITE.alias}>
+                    {SITE.alias}
+                  </span>
+                </h1>
+                <p class="hero-greet__subtitle">
+                  <span class="hero-greet__prompt">&gt;</span>{" "}
+                  <span data-typeline={SITE.heroSubtitle}>
+                    <span class="hero-greet__static">{SITE.heroSubtitle}</span>
+                  </span>
+                  <span class="hero-greet__cursor" aria-hidden="true"></span>
+                </p>
+                <ul class="hero-greet__tags">
+                  {SITE.heroTags.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+                <a href="#about-me" class="hero-scroll">
+                  <span aria-hidden="true">▽</span> scroll <span aria-hidden="true">▽</span>
+                </a>
+              </section>
+            </div>
+            <div class="page-content">
+              <section class="about-me" id="about-me">
+                <SectionHeader n="01" label="about_me" hint="whoami" />
+                <div class="about-me__grid">
+                  <p class="about-me__bio">{SITE.aboutBio}</p>
+                  <div class="terminal-panel" aria-hidden="true">
+                    <div class="terminal-panel__bar">
+                      <span class="terminal-panel__dot"></span>
+                      <span class="terminal-panel__dot"></span>
+                      <span class="terminal-panel__dot"></span>
+                      <em>{SITE.hostname}</em>
+                    </div>
+                    <div
+                      class="terminal-panel__body"
+                      data-terminal-lines={JSON.stringify(SITE.terminalLines)}
+                    >
+                      <div class="terminal-panel__static">
+                        {SITE.terminalLines.map((l) => (
+                          <p>
+                            <span class="terminal-panel__prompt">$ </span>
+                            <span>{l.cmd}</span>
+                            <br />
+                            <span class="terminal-panel__out">{l.out}</span>
+                          </p>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </section>
-            </div>
-            <div class="page-content">
+
+              <section class="ctf-log" id="ctf-log">
+                <SectionHeader n="02" label="ctf_log" hint="team v1olet" />
+                <div class="ctf-log__table">
+                  <div class="ctf-log__row ctf-log__row--head">
+                    <span>Event</span>
+                    <span>Team</span>
+                    <span>Result</span>
+                  </div>
+                  {SITE.ctfLog.map((row) => (
+                    <div class="ctf-log__row">
+                      <span class="ctf-log__event">{row.event}</span>
+                      <span class="ctf-log__team">{row.team}</span>
+                      <span class="ctf-log__result">{row.result}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
               <ArchiveGrid componentData={componentData} basePath={basePath} />
             </div>
             <div class="page-tail">
