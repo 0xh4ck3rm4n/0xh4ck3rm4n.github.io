@@ -3,7 +3,7 @@ import { PageFrame, PageFrameProps } from "./types"
 import { QuartzPluginData } from "../../plugins/vfile"
 
 /**
- * Site identity — edit these to match your own branding.
+ * Site identity - edit these to match your own branding.
  */
 const SITE = {
   hostname: "guest@dojo: ~",
@@ -22,22 +22,22 @@ const SITE = {
   mastheadLabel: "cybersec · ctf · notes",
   mastheadTitle: "Giving up is not in the blood,",
   mastheadAccent: " sir.",
-  mastheadTitle2: "— Nims Dai Purja",
+  mastheadTitle2: "- Nims Dai Purja",
   alias: "ecst4sy",
   heroGreeting: "hey, i'm",
   heroSubtitle: "currently: breaking things @ Softwarica College",
   heroTags: ["cybersecurity", "ctf player", "builder", "ai/ml"],
   aboutBio:
-    "Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) building offensive-security skills through CTF competition, coursework, and self-directed tooling. CNSP-certified, currently competing with team v1olet across HTB, BrunnerCTF, and independent CTFs.",
+    "I like taking systems apart to see why they break. Digital forensics, reverse engineering, and binary exploitation get most of my attention: reconstructing an incident from a packet capture, tracing a corrupted artifact back to what actually happened, or finding the one bug in a binary that turns into a working exploit. Cybersecurity student, CNSP-certified, and competing with team v1olet across HTB, BrunnerCTF, and independent CTFs.",
   ctfLog: [
     { event: "BrunnerCTF 2026", team: "v1olet", result: "2nd / 1,103 teams" },
     { event: "0xV01D CTF", team: "v1olet", result: "2nd place" },
     {
       event: "Cyber Apocalypse CTF 2026 (HTB)",
-      team: "—",
+      team: "v1olet",
       result: "Team rank #105 · 136/136 solved",
     },
-    { event: "Athena CTF 2026", team: "—", result: "Rank #39 · 24-hour jeopardy" },
+    { event: "Athena CTF 2026", team: "solo", result: "Rank #39 · 24-hour jeopardy" },
   ],
   homePrompt: "cd ~/home",
   aboutPrompt: "cd ~/about",

@@ -1,6 +1,6 @@
 ---
 title: Resume
-description: Gaurav Poudel — Cybersecurity student, CTF player, and builder of offensive-security tooling.
+description: Gaurav Poudel - Cybersecurity student, CTF player, and builder of offensive-security tooling.
 tags:
   - about
   - resume
@@ -54,7 +54,7 @@ Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) with hands-on p
 
 ## Experience
 
-### Independent Security Research — `ecstasyy`
+### Independent Security Research - `ecstasyy`
 
 **github.com/0xh4ck3rm4n/blog · Ongoing**
 
@@ -68,7 +68,7 @@ Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) with hands-on p
 
 - Developed a Python tool to hide and extract data within image files as part of applied security coursework, demonstrating practical understanding of data-hiding techniques relevant to forensics and covert channel analysis
 
-### Data for Good Hackathon — AI Smart Farming Platform (`Krishi Kheti`)
+### Data for Good Hackathon - AI Smart Farming Platform (`Krishi Kheti`)
 
 - Built and shipped an AI-powered platform (FastAPI, PyTorch) in a time-boxed hackathon environment, delivering crop disease detection, market price analysis, frost-risk sowing advisory, and yield prediction
 - Integrated and trained models against real-world datasets (PlantVillage, FAO, Kalimati Market, OpenStreetMap), demonstrating ability to work with unfamiliar external data under deadline pressure
@@ -77,7 +77,7 @@ Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) with hands-on p
 
 | Project                      | Description                                                                                                                                                                                              |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **कृषि खेती (Krishi Kheti)** | AI Smart Farming Platform — FastAPI + PyTorch: crop disease detection, market price analysis, frost-risk sowing advisory, yield prediction (datasets: PlantVillage, FAO, Kalimati Market, OpenStreetMap) |
+| **कृषि खेती (Krishi Kheti)** | AI Smart Farming Platform - FastAPI + PyTorch: crop disease detection, market price analysis, frost-risk sowing advisory, yield prediction (datasets: PlantVillage, FAO, Kalimati Market, OpenStreetMap) |
 | **Steganography Tool**       | Hide/extract data within image files for forensics and covert channel analysis                                                                                                                           |
 | **decentralized-voting**     | Tamper-proof, transparent election system on the Ethereum blockchain                                                                                                                                     |
 | **eth raffle**               | Decentralized raffle lottery on Ethereum using Chainlink VRF v2.5 for provably fair, verifiable randomness                                                                                               |
@@ -87,7 +87,7 @@ Cybersecurity student (Ethical Hacking & Cybersecurity, 4.0 GPA) with hands-on p
 
 ## Education
 
-### Ethical Hacking and Cybersecurity — 4.0 GPA
+### Ethical Hacking and Cybersecurity - 4.0 GPA
 
 Softwarica College of IT & E-commerce (affiliated with Coventry University) · Kathmandu, Nepal · October 2025
 

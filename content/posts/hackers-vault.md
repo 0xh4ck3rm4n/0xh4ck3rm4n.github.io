@@ -36,7 +36,7 @@ Hackers Vault is a web exploitation challenge that requires abusing a **race con
 
 The challenge description gives us the target and a hint:
 
-> "The Black Hat Group Vault" — try to access it and retrieve the message.
+> "The Black Hat Group Vault" - try to access it and retrieve the message.
 > Note: "From Our Team we have tried and only get the login user password but forgot which is the real one."
 
 **Targets:**
@@ -56,7 +56,7 @@ curl -sL 'https://api.netanixctf.xyz/uploads/1766246492958.txt' \
 cat /tmp/hackers_vault_hint.txt
 ```
 
-This file contains ~150 `username:password` pairs. Most are decoys — only one is valid.
+This file contains ~150 `username:password` pairs. Most are decoys - only one is valid.
 
 ### Inspect the frontend
 
@@ -157,11 +157,11 @@ The `user` role is not enough. We need to escalate to `admin`.
 
 Before finding the real bug, several approaches were tried and ruled out:
 
-- **Brute-forcing admin credentials** from the hint file — none worked.
-- **JWT `alg: none`** — the server rejected unsigned tokens.
-- **JWT secret cracking** — the HS256 secret was not crackable.
-- **Endpoint fuzzing** — only `/api/login`, `/api/flag`, and `/api/refresh` exist.
-- **Header manipulation** (`X-Forwarded-For`, `X-Original-URL`, etc.) — no effect.
+- **Brute-forcing admin credentials** from the hint file - none worked.
+- **JWT `alg: none`** - the server rejected unsigned tokens.
+- **JWT secret cracking** - the HS256 secret was not crackable.
+- **Endpoint fuzzing** - only `/api/login`, `/api/flag`, and `/api/refresh` exist.
+- **Header manipulation** (`X-Forwarded-For`, `X-Original-URL`, etc.) - no effect.
 
 ---
 
@@ -222,7 +222,7 @@ softwarica{<redacted_flag>}
 
 ## Key Takeaways
 
-1. **Race conditions** — a token refresh endpoint can create a brief window where authorization checks are bypassed. Always validate the role on every request, not just at login.
-2. **Credential lists** — a large list of decoy credentials is a common CTF pattern; the real one is often the only one that works.
-3. **Role vs. JWT** — when the role is stored server-side (not in the JWT), look for endpoints that change the session state (like refresh) as a potential bypass vector.
-4. **Read the flag** — the flag text itself often hints at the vulnerability (`r4c3_c0nd10n` = race condition).
+1. **Race conditions** - a token refresh endpoint can create a brief window where authorization checks are bypassed. Always validate the role on every request, not just at login.
+2. **Credential lists** - a large list of decoy credentials is a common CTF pattern; the real one is often the only one that works.
+3. **Role vs. JWT** - when the role is stored server-side (not in the JWT), look for endpoints that change the session state (like refresh) as a potential bypass vector.
+4. **Read the flag** - the flag text itself often hints at the vulnerability (`r4c3_c0nd10n` = race condition).

@@ -68,7 +68,7 @@ echo "10.129.3.34 fireflow.htb" >> /etc/hosts
 echo "10.129.3.34 flow.fireflow.htb" >> /etc/hosts
 ```
 
-The main page is a "FireFlow — Task Force Nightfall" dashboard. It contains a link to a **Langflow playground**:
+The main page is a "FireFlow - Task Force Nightfall" dashboard. It contains a link to a **Langflow playground**:
 
 ```
 https://flow.fireflow.htb/playground/7d84d636-af65-42e4-ac38-26e867052c25
@@ -78,7 +78,7 @@ This leaks a **flow_id**: `7d84d636-af65-42e4-ac38-26e867052c25`.
 
 ---
 
-## 2. Langflow RCE — CVE-2026-33017
+## 2. Langflow RCE - CVE-2026-33017
 
 ### What is the vulnerability?
 
@@ -106,7 +106,7 @@ We get a `job_id` back, confirming the endpoint works (it needs a `client_id` co
 
 The `data` parameter is a Langflow flow with a **Code node**. The node's `code` field contains Python that gets executed. We build a flow where the Code node runs a shell command and returns the output.
 
-**`/tmp/run_cmd.py`** — builds the malicious flow JSON:
+**`/tmp/run_cmd.py`** - builds the malicious flow JSON:
 
 ```python
 import json, sys
@@ -166,7 +166,7 @@ print(json.dumps({"data": {"nodes": [node], "edges": []}}))
 
 We send the malicious flow with `event_delivery=direct` so the result comes back in the HTTP response (the polling events endpoint can hang).
 
-**`/tmp/ffexec.sh`** — reusable RCE helper:
+**`/tmp/ffexec.sh`** - reusable RCE helper:
 
 ```bash
 #!/bin/bash
@@ -304,7 +304,7 @@ sshpass -p 'n1ghtm4r3_b4_n1ghtf4ll' ssh nightfall@10.129.3.34 \
 }
 ```
 
-Key finding: **`supported_algorithms: ["HS256", "none"]`** — the server accepts JWT with `alg: none`, which lets us forge tokens.
+Key finding: **`supported_algorithms: ["HS256", "none"]`** - the server accepts JWT with `alg: none`, which lets us forge tokens.
 
 ---
 
@@ -459,9 +459,9 @@ cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 cat /var/run/secrets/kubernetes.io/serviceaccount/namespace
 ```
 
-- **token** — a JWT authenticating us as `system:serviceaccount:default:mcp-sa`
-- **ca.crt** — the cluster's CA certificate
-- **namespace** — `default`
+- **token** - a JWT authenticating us as `system:serviceaccount:default:mcp-sa`
+- **ca.crt** - the cluster's CA certificate
+- **namespace** - `default`
 
 The API server is at `https://10.43.0.1:443` (ClusterIP, only reachable from inside the cluster).
 
@@ -504,7 +504,7 @@ kubectl --kubeconfig=kubeconfig.yaml auth can-i --list
 nodes/proxy   []   []   [get]
 ```
 
-We have **`get` on `nodes/proxy`** — this is the jackpot.
+We have **`get` on `nodes/proxy`** - this is the jackpot.
 
 ### What is `nodes/proxy`?
 
@@ -550,9 +550,9 @@ monitoring/prometheus-prometheus-node-exporter-nmntq -> ["node-exporter"]
 
 The **`prometheus-node-exporter`** pod is the ideal target because by design it needs:
 
-- **Root privileges** — to read system-level metrics
-- **Host filesystem mounted at `/host`** — to report disk usage
-- **hostPID / hostNetwork** — to monitor host processes and network
+- **Root privileges** - to read system-level metrics
+- **Host filesystem mounted at `/host`** - to report disk usage
+- **hostPID / hostNetwork** - to monitor host processes and network
 
 So if we exec into it, we get **root + direct access to the host filesystem**.
 
@@ -613,9 +613,9 @@ cat /host/root/root.txt
 
 ## Key Takeaways
 
-1. **CVE-2026-33017** — Langflow's `build_public_tmp` endpoint allows unauthenticated RCE via attacker-controlled flow data passed to `exec()`.
-2. **Password reuse** — the Langflow superuser password was reused for the `nightfall` SSH user.
-3. **JWT `alg: none`** — the MCP server accepted unsigned tokens, letting us forge an admin token.
-4. **MCP tool registration** — admin can register arbitrary Python code as a tool, giving RCE in the pod.
-5. **`nodes/proxy`** — a powerful K8s permission that lets us proxy to the kubelet and exec into any container, bypassing normal RBAC.
-6. **node-exporter** — a privileged pod with host filesystem access is the perfect pivot to root on the host.
+1. **CVE-2026-33017** - Langflow's `build_public_tmp` endpoint allows unauthenticated RCE via attacker-controlled flow data passed to `exec()`.
+2. **Password reuse** - the Langflow superuser password was reused for the `nightfall` SSH user.
+3. **JWT `alg: none`** - the MCP server accepted unsigned tokens, letting us forge an admin token.
+4. **MCP tool registration** - admin can register arbitrary Python code as a tool, giving RCE in the pod.
+5. **`nodes/proxy`** - a powerful K8s permission that lets us proxy to the kubelet and exec into any container, bypassing normal RBAC.
+6. **node-exporter** - a privileged pod with host filesystem access is the perfect pivot to root on the host.

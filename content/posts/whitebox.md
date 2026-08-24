@@ -24,12 +24,12 @@ date: 2026-08-09
 `whitebox` is a small Linux binary that validates a 32-character input against a secret. The secret is protected by a **white-box AES** implementation:
 
 1. The binary reads a 32-byte line, splits it into two 16-byte blocks, and runs each block through a table-driven cipher (`fcn.000012c0`).
-2. The cipher is **white-box AES**: 9 table rounds + a final byte encoding. The AES key is **not present as a constant** — it is folded into 144 lookup tables (Chow-style internal encodings).
+2. The cipher is **white-box AES**: 9 table rounds + a final byte encoding. The AES key is **not present as a constant** - it is folded into 144 lookup tables (Chow-style internal encodings).
 3. Because each round word is a clean XOR of 4 independent byte lookups (no XOR-splitting tables between rounds), the whole transform can be **inverted directly**:
    - undo the final per-position byte encoding (bijective),
    - then for each of the 9 rounds, solve each 32-bit word with a **meet-in-the-middle** over its 4 tables.
 4. Every round/word inverts to **exactly one solution**, so the plaintext is recovered deterministically.
-5. The recovered secret is `[REDACTED]` — verified against the binary (`ok.`).
+5. The recovered secret is `[REDACTED]` - verified against the binary (`ok.`).
 
 ---
 
@@ -53,7 +53,7 @@ whitebox: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV),
 ```
 
 - ELF64 x86-64, **PIE**, **stripped**, dynamically linked.
-- Imports: `puts, strlen, strcspn, memcmp, fgets, fflush, fwrite` — nothing crypto-looking.
+- Imports: `puts, strlen, strcspn, memcmp, fgets, fflush, fwrite` - nothing crypto-looking.
 
 ### Sections
 
@@ -65,7 +65,7 @@ readelf -S whitebox
 | --------- | --------- | --------- |
 | `.text`   | `0x10c0`  | 824 B     |
 | `.rodata` | `0x2000`  | 0x251b4 B |
-| `.data`   | `0x29038` | —         |
+| `.data`   | `0x29038` | -         |
 
 ### Strings
 
@@ -73,7 +73,7 @@ readelf -S whitebox
 strings whitebox
 ```
 
-Only the expected strings: `> `, `size mismatch.`, `ok.`, `no.` — **no key, no flag, no hint strings**. The secret is not stored as data.
+Only the expected strings: `> `, `size mismatch.`, `ok.`, `no.` - **no key, no flag, no hint strings**. The secret is not stored as data.
 
 ---
 
@@ -119,9 +119,9 @@ So the task reduces to: **invert the transform independently for two 16-byte blo
 
 This is the heart of the challenge. Key facts from the disassembly:
 
-- `r9  = 0x3060` — base of a large table region (0x24000 bytes).
-- `r11 = 0x27060` — a 16-byte permutation table.
-- `0x2060` — a byte table used by the final loop.
+- `r9  = 0x3060` - base of a large table region (0x24000 bytes).
+- `r11 = 0x27060` - a 16-byte permutation table.
+- `0x2060` - a byte table used by the final loop.
 
 ### The permutation table
 
@@ -151,7 +151,7 @@ cmp rbx, 0x24
 jne ...
 ```
 
-`rbx` takes values `0, 4, 8, ..., 0x20` — that is **9 iterations**, not 36 rounds. Each iteration is one table-driven round.
+`rbx` takes values `0, 4, 8, ..., 0x20` - that is **9 iterations**, not 36 rounds. Each iteration is one table-driven round.
 
 ### Inner structure (per round)
 
@@ -210,11 +210,11 @@ The structure is a textbook **white-box AES**:
 - 16-byte blocks,
 - 9 table rounds where each output word is the XOR of 4 byte-lookups (this is exactly how AES `MixColumns` is expressed with T-tables),
 - a final byte-wise round (SubBytes + AddRoundKey, no MixColumns) with an output encoding,
-- **no key constant anywhere** — the key is embedded in the tables.
+- **no key constant anywhere** - the key is embedded in the tables.
 
-The description confirms it: _"It ships on real phones, real ATMs, real DRM stacks"_ — that is white-box cryptography (Chow et al.).
+The description confirms it: _"It ships on real phones, real ATMs, real DRM stacks"_ - that is white-box cryptography (Chow et al.).
 
-We verified the tables are **not** plain AES T-tables (the byte sets don't match `{S[x], 2·S[x], 3·S[x]}`) and the final table is not an affine version of the S-box — the implementation uses **internal encodings** (Chow-style). That doesn't matter for solving: the transform is a pure composition of lookups and XORs, so it can be inverted directly.
+We verified the tables are **not** plain AES T-tables (the byte sets don't match `{S[x], 2·S[x], 3·S[x]}`) and the final table is not an affine version of the S-box - the implementation uses **internal encodings** (Chow-style). That doesn't matter for solving: the transform is a pure composition of lookups and XORs, so it can be inverted directly.
 
 ---
 
@@ -254,13 +254,13 @@ printf 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n' | LD_PRELOAD=./memcmp_hook.so ./whit
 HOOK: computed=086e9675bc87af13daa01530c0f2ef6c086e9675bc87af13daa01530c0f2ef6c expected=04a419fe...
 ```
 
-Our Python `transform(b'A'*16)` produced exactly `086e9675bc87af13daa01530c0f2ef6c` — **the reconstruction is correct**. We repeated this for several inputs (all matched).
+Our Python `transform(b'A'*16)` produced exactly `086e9675bc87af13daa01530c0f2ef6c` - **the reconstruction is correct**. We repeated this for several inputs (all matched).
 
 ---
 
 ## 5. Inverting the transform
 
-### Step 1 — undo the final encoding
+### Step 1 - undo the final encoding
 
 `out[pos] = O[pos*256 + state[P[pos]]]`. Each of the 16 per-position tables is a **bijection** (verified), so:
 
@@ -268,7 +268,7 @@ Our Python `transform(b'A'*16)` produced exactly `086e9675bc87af13daa01530c0f2ef
 state[P[pos]] = invO[pos][out[pos]]
 ```
 
-### Step 2 — invert the 9 rounds (meet-in-the-middle)
+### Step 2 - invert the 9 rounds (meet-in-the-middle)
 
 Each round word is:
 
@@ -296,7 +296,7 @@ def invert_word(target, tables):
     return res
 ```
 
-This is ~2¹⁷ work per word instead of 2³². For every round and every word, the MITM returned **exactly one solution** — the transform is a bijection, so the inversion is deterministic.
+This is ~2¹⁷ work per word instead of 2³². For every round and every word, the MITM returned **exactly one solution** - the transform is a bijection, so the inversion is deterministic.
 
 ---
 
@@ -315,7 +315,7 @@ Block 1 plaintext: [REDACTED]
 FLAG: [REDACTED]
 ```
 
-The flag is 32 characters, starts with `NxCTF{`, ends with `}` — all format checks pass.
+The flag is 32 characters, starts with `NxCTF{`, ends with `}` - all format checks pass.
 
 ---
 
@@ -349,7 +349,7 @@ echo "[REDACTED]" | ./whitebox   # wrong last char
 echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" | ./whitebox   # random
 ```
 
-All print `no.` — the recovered plaintext is provably the secret.
+All print `no.` - the recovered plaintext is provably the secret.
 
 ---
 
@@ -369,8 +369,8 @@ All print `no.` — the recovered plaintext is provably the secret.
 
 ## Key Takeaways
 
-1. **White-box crypto hides the key in tables** — never search for a key constant; the key material is baked into lookup tables with internal encodings.
-2. **Reconstruct the exact transform first** — trace the effective-address arithmetic precisely (subtable index = `16r + 4j + i`) before trying any cryptanalysis.
-3. **Direct inversion beats key extraction** — when a white-box round is a clean XOR of independent byte lookups (no XOR-splitting), meet-in-the-middle inverts each word in ~2¹⁷ instead of 2³².
-4. **Validate against the binary** — an LD_PRELOAD hook on `memcmp` turns the binary into an oracle for your reconstructed cipher; never claim a flag without running it.
-5. **The permutation table is the state-routing map** — `P = [0,5,10,15,4,9,14,3,8,13,2,7,12,1,6,11]` tells you exactly which 4 bytes feed each output word.
+1. **White-box crypto hides the key in tables** - never search for a key constant; the key material is baked into lookup tables with internal encodings.
+2. **Reconstruct the exact transform first** - trace the effective-address arithmetic precisely (subtable index = `16r + 4j + i`) before trying any cryptanalysis.
+3. **Direct inversion beats key extraction** - when a white-box round is a clean XOR of independent byte lookups (no XOR-splitting), meet-in-the-middle inverts each word in ~2¹⁷ instead of 2³².
+4. **Validate against the binary** - an LD_PRELOAD hook on `memcmp` turns the binary into an oracle for your reconstructed cipher; never claim a flag without running it.
+5. **The permutation table is the state-routing map** - `P = [0,5,10,15,4,9,14,3,8,13,2,7,12,1,6,11]` tells you exactly which 4 bytes feed each output word.

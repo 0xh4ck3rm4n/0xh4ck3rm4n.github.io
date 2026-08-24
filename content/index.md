@@ -18,9 +18,9 @@ $ cat mission.txt
 
 ## What's here
 
-- **CTF writeups** — detailed walkthroughs from HackTheBox, HTB Labs, and more
-- **Research notes** — Android internals, web security, blockchain, infra
-- **Labs** — challenges I build and host
+- **CTF writeups** - detailed walkthroughs from HackTheBox, HTB Labs, and more
+- **Research notes** - Android internals, web security, blockchain, infra
+- **Labs** - challenges I build and host
 
 ## About me
 

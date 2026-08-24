@@ -77,7 +77,7 @@ brunner{00ps_th4t_p4g3_w4s_1nt3rn4l}
 
 ## 5. Key takeaways
 
-1. **Request smuggling** — ambiguity between `Transfer-Encoding: chunked` and `Content-Length` can bypass proxies and access protected endpoints.
-2. **Decoy credentials** — CTF challenge hint files always contain many decoy usernames:passwords; only one is real.
-3. **Wiki enumeration** — onboarding documents and infrastructure diagrams often contain Smuggling nudges.
-4. **Always validate** — verify every request path through both the proxy and the back-end server.
+1. **Request smuggling** - ambiguity between `Transfer-Encoding: chunked` and `Content-Length` can bypass proxies and access protected endpoints.
+2. **Decoy credentials** - CTF challenge hint files always contain many decoy usernames:passwords; only one is real.
+3. **Wiki enumeration** - onboarding documents and infrastructure diagrams often contain Smuggling nudges.
+4. **Always validate** - verify every request path through both the proxy and the back-end server.

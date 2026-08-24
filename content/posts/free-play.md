@@ -21,7 +21,7 @@ date: 2026-08-22
 
 ## TL;DR (Summary)
 
-BrunnerCTF "Free Play" is a forensics challenge examining a 2009-era game save file and associated screenshots recovered from a corporate laptop audit. The flag is hidden within the save file's data structure — not in the game visuals itself. HR recovered the save file and a screenshot from the backup share; the task is to figure out what is "so special" about this save file.
+BrunnerCTF "Free Play" is a forensics challenge examining a 2009-era game save file and associated screenshots recovered from a corporate laptop audit. The flag is hidden within the save file's data structure - not in the game visuals itself. HR recovered the save file and a screenshot from the backup share; the task is to figure out what is "so special" about this save file.
 
 ## 1. Challenge description
 
@@ -49,7 +49,7 @@ $ file screenshot.png
 $ exiftool screenshot.png
 ```
 
-**Result:** Screenshot is a red herring — no relevant metadata; the flag is in the save file data.
+**Result:** Screenshot is a red herring - no relevant metadata; the flag is in the save file data.
 
 ## 3. Recovering the flag
 
@@ -59,7 +59,7 @@ $ exiftool screenshot.png
 $ strings savefile.sav | grep -i "brunner"
 ```
 
-**Result:** Yields `brstrong_force_in_you` or similar — need to check exact format.
+**Result:** Yields `brstrong_force_in_you` or similar - need to check exact format.
 
 ### Detailed binary inspection
 
@@ -81,7 +81,7 @@ brunner{strong_force_in_you}
 
 ## 4. Key takeaways
 
-1. **Game save files as forensic evidence** — serialized game state can contain embedded strings, passwords, or flags.
-2. **`strings` is your friend** — always run `strings` on any binary or save file found during an audit.
-3. **Screenshots are often red herrings** — the flag is rarely inside the visual content; look at the data structure instead.
-4. **Handout details matter** — the flag format `brunner{...}` is a direct hint at the structure of the hidden string.
+1. **Game save files as forensic evidence** - serialized game state can contain embedded strings, passwords, or flags.
+2. **`strings` is your friend** - always run `strings` on any binary or save file found during an audit.
+3. **Screenshots are often red herrings** - the flag is rarely inside the visual content; look at the data structure instead.
+4. **Handout details matter** - the flag format `brunner{...}` is a direct hint at the structure of the hidden string.

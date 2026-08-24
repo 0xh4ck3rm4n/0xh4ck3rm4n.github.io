@@ -55,7 +55,7 @@ test ebp, ebp            ; poison flag
 cmovne r11d, eax         ; key ^= 0xdeadbeef when traced
 ```
 
-So under a debugger every round key is XORed with `0xdeadbeef` and the answer is poisoned — the binary "remembers visitors and poisons their answer". Analysis must be done statically or on a clean run.
+So under a debugger every round key is XORed with `0xdeadbeef` and the answer is poisoned - the binary "remembers visitors and poisons their answer". Analysis must be done statically or on a clean run.
 
 ## 4. The transform
 
@@ -97,6 +97,6 @@ The forward transform of the recovered flag also matches the expected ciphertext
 
 ## Lessons
 
-- ZipCrypto passwords are often weak — a dictionary attack is the first move.
+- ZipCrypto passwords are often weak - a dictionary attack is the first move.
 - Anti-debug `ptrace` + key poisoning is a common RE obfuscation; identify the poison branch and invert the _clean_ transform.
 - Feistel networks with known S-boxes and keys are trivially invertible round-by-round.

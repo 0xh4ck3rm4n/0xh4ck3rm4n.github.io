@@ -24,7 +24,7 @@ date: 2026-08-22
 
 BrunnerCTF "The Missing Recipe" is a network forensics/DFIR challenge where a ~40MB PCAP capture of Brunner Corporation's research network contains the evidence of an attack that exfiltrated a confidential internal recipe and inappropriate images. Using the SOC's full network capture, we reconstruct the attack timeline, identify the protocols and exfiltration method, and recover the flag hidden in the network traffic.
 
-## 1. Recon — what protocols are even in here
+## 1. Recon - what protocols are even in here
 
 ```bash
 $ tshark -r the-missing-recipe.pcap -q -z io,phs
@@ -41,7 +41,7 @@ $ tshark -r the-missing-recipe.pcap -q -z io,phs
 
 Key observations:
 
-- DNS queries for subdomains like `abc123.export.brunnercorp.com` — classic exfiltration-through-DNS pattern.
+- DNS queries for subdomains like `abc123.export.brunnercorp.com` - classic exfiltration-through-DNS pattern.
 - TCP connection to `52.34.1.67:443` with TLS SNI `api.brunnercorp.com`.
 - HTTP POST to `/upload` with `Content-Type: application/octet-stream` and a large base64-encoded payload.
 
@@ -88,7 +88,7 @@ brunner{k33p_53nd1ng_th3_me55ag3s}
 
 ## 4. Key takeaways
 
-1. **DNS exfiltration** — attackers often use DNS queries with random subdomains to sneak data out of restricted networks.
-2. **TLS key logging** — `tls.keylog` files enable decryption of encrypted traffic for forensic analysis.
-3. **PCAP correlation** — combining TCP-level, TLS-level, and application-level analysis reveals the full attack chain.
-4. **Recipe protection** — internal documents and recipes should be stored on air-gapped or highly segmented systems; network monitoring is critical for detecting exfiltration.
+1. **DNS exfiltration** - attackers often use DNS queries with random subdomains to sneak data out of restricted networks.
+2. **TLS key logging** - `tls.keylog` files enable decryption of encrypted traffic for forensic analysis.
+3. **PCAP correlation** - combining TCP-level, TLS-level, and application-level analysis reveals the full attack chain.
+4. **Recipe protection** - internal documents and recipes should be stored on air-gapped or highly segmented systems; network monitoring is critical for detecting exfiltration.

@@ -41,7 +41,7 @@ $ file *.hta
 ...: HTML document, ASCII text
 ```
 
-The file is an HTML Application (HTA) — a Windows scripting host format that can execute VBScript/JScript.
+The file is an HTML Application (HTA) - a Windows scripting host format that can execute VBScript/JScript.
 
 ### VBA / macro analysis
 
@@ -81,7 +81,7 @@ brunner{wh00ps_l3ts_1gn0r3_th1s_4nd_h0p3_1T_d03snt_n0t1c3}
 
 ## 4. Key takeaways
 
-1. **HTA files** — HTML Applications can contain obfuscated VBA/macros; always inspect the source.
-2. **Defanged files** — challenges may provide "safe" versions of malware; you can usually inspect the source without executing.
-3. **oletools** — `olevba` and `oledump` are essential for Ole/Office threat analysis.
-4. **Antivirus false positives** — challenge files are deliberately defanged and safe to analyze on a development machine.
+1. **HTA files** - HTML Applications can contain obfuscated VBA/macros; always inspect the source.
+2. **Defanged files** - challenges may provide "safe" versions of malware; you can usually inspect the source without executing.
+3. **oletools** - `olevba` and `oledump` are essential for Ole/Office threat analysis.
+4. **Antivirus false positives** - challenge files are deliberately defanged and safe to analyze on a development machine.
