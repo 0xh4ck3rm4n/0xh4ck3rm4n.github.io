@@ -778,6 +778,28 @@ body.menu-open .site-nav__identity img {
 .ctf-log__event {
   color: var(--portal-text);
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.ctf-log__row--live {
+  background: #b9a3f50d;
+}
+.ctf-log__row--live .ctf-log__result {
+  color: var(--portal-accent);
+}
+.ctf-log__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--portal-accent);
+  font-family: var(--codeFont);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--brutal-radius);
+  padding: 0.1rem 0.4rem;
 }
 .ctf-log__team,
 .ctf-log__result {

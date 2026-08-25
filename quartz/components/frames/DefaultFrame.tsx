@@ -30,14 +30,31 @@ const SITE = {
   aboutBio:
     "I like taking systems apart to see why they break. Digital forensics, reverse engineering, and binary exploitation get most of my attention: reconstructing an incident from a packet capture, tracing a corrupted artifact back to what actually happened, or finding the one bug in a binary that turns into a working exploit. Cybersecurity student, CNSP-certified, and competing with team v1olet across HTB, BrunnerCTF, and independent CTFs.",
   ctfLog: [
-    { event: "BrunnerCTF 2026", team: "v1olet", result: "2nd / 1,103 teams" },
-    { event: "0xV01D CTF", team: "v1olet", result: "2nd place" },
+    {
+      event: "Netanix CTF",
+      team: "solo",
+      result: "Rank #5 · 46,959 pts",
+      live: true,
+    },
+    {
+      event: "BrunnerCTF 2026",
+      team: "v1olet",
+      result: "2nd / 1,103 teams",
+      live: false,
+    },
+    { event: "0xV01D CTF", team: "v1olet", result: "2nd place", live: false },
     {
       event: "Cyber Apocalypse CTF 2026 (HTB)",
       team: "v1olet",
       result: "Team rank #105 · 136/136 solved",
+      live: false,
     },
-    { event: "Athena CTF 2026", team: "solo", result: "Rank #39 · 24-hour jeopardy" },
+    {
+      event: "Athena CTF 2026",
+      team: "solo",
+      result: "Rank #39 · 24-hour jeopardy",
+      live: false,
+    },
   ],
   homePrompt: "cd ~/home",
   aboutPrompt: "cd ~/about",
@@ -1081,7 +1098,7 @@ const DefaultFrame: PageFrame = {
               </section>
 
               <section class="ctf-log" id="ctf-log">
-                <SectionHeader n="02" label="ctf_log" hint="team v1olet" />
+                <SectionHeader n="02" label="ctf_log" hint="results" />
                 <div class="ctf-log__table">
                   <div class="ctf-log__row ctf-log__row--head">
                     <span>Event</span>
@@ -1089,8 +1106,16 @@ const DefaultFrame: PageFrame = {
                     <span>Result</span>
                   </div>
                   {SITE.ctfLog.map((row) => (
-                    <div class="ctf-log__row">
-                      <span class="ctf-log__event">{row.event}</span>
+                    <div class={`ctf-log__row${row.live ? " ctf-log__row--live" : ""}`}>
+                      <span class="ctf-log__event">
+                        {row.event}
+                        {row.live ? (
+                          <span class="ctf-log__live" aria-label="ongoing">
+                            <span class="hud-status-dot" aria-hidden="true"></span>
+                            LIVE
+                          </span>
+                        ) : null}
+                      </span>
                       <span class="ctf-log__team">{row.team}</span>
                       <span class="ctf-log__result">{row.result}</span>
                     </div>
