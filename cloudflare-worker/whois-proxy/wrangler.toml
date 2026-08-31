@@ -1,0 +1,11 @@
+name = "whois-proxy"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+# Comma-separated list of origins allowed to call this worker from a browser.
+# Add your dev server origin too (e.g. "http://localhost:8123") while testing locally.
+ALLOWED_ORIGINS = "https://ecst4sy.is-a.dev,https://0xh4ck3rm4n.github.io,http://localhost:8123"
+
+# WHOIS_API_KEY is set as a secret, NOT here:
+#   wrangler secret put WHOIS_API_KEY

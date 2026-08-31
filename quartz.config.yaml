@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Your Dojo
+  pageTitle: ecst4sy - portfolio
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: false

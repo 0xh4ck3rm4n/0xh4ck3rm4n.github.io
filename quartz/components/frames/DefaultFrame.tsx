@@ -6,9 +6,8 @@ import { QuartzPluginData } from "../../plugins/vfile"
  * Site identity - edit these to match your own branding.
  */
 const SITE = {
-  hostname: "guest@dojo: ~",
   github: "https://github.com/0xh4ck3rm4n/blog",
-  email: "gaurav.poudel2061@gmail.com",
+  email: "ecstasyy@v1olet.xyz",
   socials: [
     { name: "GitHub", url: "https://github.com/0xh4ck3rm4n/blog" },
     { name: "LinkedIn", url: "https://linkedin.com/in/ecstasyy" },
@@ -19,16 +18,11 @@ const SITE = {
       username: "mcdonaldsandwich",
     },
   ],
-  mastheadLabel: "cybersec · ctf · notes",
-  mastheadTitle: "Giving up is not in the blood,",
-  mastheadAccent: " sir.",
-  mastheadTitle2: "- Nims Dai Purja",
   alias: "ecst4sy",
-  heroGreeting: "hey, i'm",
-  heroSubtitle: "currently: breaking things @ Softwarica College",
-  heroTags: ["cybersecurity", "ctf player", "builder", "ai/ml"],
+  currentlyLine: "currently: breaking things @ Softwarica College",
   aboutBio:
     "I like taking systems apart to see why they break. Digital forensics, reverse engineering, and binary exploitation get most of my attention: reconstructing an incident from a packet capture, tracing a corrupted artifact back to what actually happened, or finding the one bug in a binary that turns into a working exploit. Cybersecurity student, CNSP-certified, and competing with team v1olet across HTB, BrunnerCTF, and independent CTFs.",
+  quote: "Giving up is not in the blood, sir. — Nims Dai Purja",
   ctfLog: [
     {
       event: "Netanix CTF",
@@ -56,41 +50,110 @@ const SITE = {
       live: false,
     },
   ],
-  homePrompt: "cd ~/home",
-  aboutPrompt: "cd ~/about",
-  rssPrompt: "open ~/rss.xml",
-  bootLines: [
-    "INITIALIZING SIGNAL…",
-    "LOADING PROFILE: ESCT4SY",
-    "MOUNTING ~/writeups",
-    "ACCESS GRANTED",
-  ],
-  terminalLines: [
-    { cmd: "whoami", out: "esct4sy // cybersecurity student · ctf player · builder" },
-    { cmd: "cat mission.txt", out: "break it, understand it, patch it, write it up." },
-    {
-      cmd: "ls ~/certs",
-      out: "athena-ctf-2026  cllmse-2026  cyber-apocalypse-2026  dataforgood-2026  brunnerctf-2026",
-    },
-    { cmd: "cat stats.txt", out: "4.0 gpa // cnsp certified // 5 certs // 11 writeups shipped" },
-  ],
   techniques: [
-    "OWASP TOP 10",
-    "PENETRATION TESTING",
-    "NETWORK SECURITY",
-    "WEB APPLICATION SECURITY",
-    "RED TEAMING",
-    "BINARY EXPLOITATION (PWN)",
-    "REVERSE ENGINEERING",
-    "DIGITAL FORENSICS",
-    "CRYPTOGRAPHY",
-    "CTF METHODOLOGY",
-    "INCIDENT RESPONSE",
-    "SOLIDITY",
-    "FOUNDRY",
-    "PYTHON",
-    "MACHINE LEARNING",
+    "OWASP Top 10",
+    "Penetration Testing",
+    "Network Security",
+    "Web Application Security",
+    "Red Teaming",
+    "Binary Exploitation (PWN)",
+    "Reverse Engineering",
+    "Digital Forensics",
+    "Cryptography",
+    "Incident Response",
+    "Solidity",
+    "Foundry",
+    "Python",
+    "Machine Learning",
   ],
+  bootLines: [
+    "SIGNAL 98 (c) esct4sy systems",
+    "Verifying DMI pool data........ OK",
+    "Loading profile: ESCT4SY.SYS",
+    "Mounting ~/writeups as D:",
+    "Starting SIGNAL 98...",
+  ],
+  todoItems: [
+    { text: "Solve today's pwn warmup before lunch", done: false },
+    { text: "Rotate HTB VPN + lab credentials", done: true },
+    { text: "Review PR: auth middleware rate-limiting", done: false },
+    { text: "Write up Fireflow (Langflow RCE) properly", done: false },
+    { text: "Reply to v1olet re: BrunnerCTF finals prep", done: false },
+  ],
+  needOptions: ["Web penetration testing", "Mobile penetration testing", "Hire me as a CTF player"],
+  budgetOptions: ["< $500", "$500 - $2,000", "$2,000 - $5,000", "Let's talk"],
+}
+
+/**
+ * WHOIS Lookup app: URL of the Cloudflare Worker that proxies WhoisJSON.
+ * The worker holds the API key as a private secret so it never ships in
+ * this site's client-side JS. Deploy it first (see
+ * cloudflare-worker/whois-proxy/README.md), then paste its URL here.
+ * TODO: set after `wrangler deploy`
+ */
+const WHOIS_PROXY_URL = "https://whois-proxy.ecst4sy.workers.dev"
+
+interface MusicTrack {
+  title: string
+  artist: string
+  src: string
+}
+
+const MUSIC_TRACKS: MusicTrack[] = [
+  { title: "All I Want is You", artist: "Miguel", src: "/static/music/01-all-i-want-is-you.mp3" },
+  {
+    title: "Weird Fishes / Arpeggi",
+    artist: "Radiohead",
+    src: "/static/music/02-weird-fishes-arpeggi.mp3",
+  },
+  {
+    title: "The Less I Know The Better",
+    artist: "Tame Impala",
+    src: "/static/music/03-the-less-i-know-the-better.mp3",
+  },
+  {
+    title: "Softcore",
+    artist: "The Neighbourhood",
+    src: "/static/music/04-softcore.mp3",
+  },
+  {
+    title: "Sex, Drugs, Etc.",
+    artist: "Beach Weather",
+    src: "/static/music/05-sex-drugs-etc.mp3",
+  },
+]
+
+function buildAboutText(): string {
+  const ctfLines = SITE.ctfLog
+    .map((row) => `- ${row.event} (${row.team}) - ${row.result}${row.live ? "  [LIVE]" : ""}`)
+    .join("\n")
+  return [
+    "ABOUT ME",
+    "========",
+    "",
+    `Hi, I'm Gaurav (${SITE.alias}) - cybersecurity student, CTF player, and builder.`,
+    "",
+    SITE.aboutBio,
+    "",
+    SITE.currentlyLine,
+    "",
+    "--------------------------------",
+    "RECENT CTF RESULTS",
+    "--------------------------------",
+    ctfLines,
+    "",
+    "--------------------------------",
+    "SKILLS",
+    "--------------------------------",
+    SITE.techniques.join(", "),
+    "",
+    `"${SITE.quote}"`,
+  ].join("\n")
+}
+
+function resolveHref(basePath: string, href: string): string {
+  if (href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto:")) return href
+  return `${basePath}${href}`
 }
 
 function getDate(data: QuartzPluginData): Date | undefined {
@@ -148,6 +211,15 @@ function buildPosts(allFiles: QuartzPluginData[]): Post[] {
       }
     })
     .sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0))
+}
+
+function filenameFor(post: Post): string {
+  const year = post.date ? post.date.getFullYear() : new Date().getFullYear()
+  const slug = (post.slug.split("/").pop() || post.slug).replace(/[^a-z0-9]+/gi, "_")
+  const ext = post.category.toLowerCase().startsWith("writeup")
+    ? "writeup"
+    : post.category.toLowerCase()
+  return `${year}_${slug}.${ext}`
 }
 
 const SearchIcon = (
@@ -317,29 +389,6 @@ function SectionHeader({
   )
 }
 
-const SocialIcons: Record<string, JSX.Element> = {
-  GitHub: (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2 0-.4-.5-1.6.2-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.2 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z" />
-    </svg>
-  ),
-  LinkedIn: (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
-    </svg>
-  ),
-  X: (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93Zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41Z" />
-    </svg>
-  ),
-  Discord: (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51 13.98 13.98 0 0 0-.64 1.28 18.27 18.27 0 0 0-5.5 0 13.98 13.98 0 0 0-.64-1.28 19.74 19.74 0 0 0-4.93 1.51C.53 9.1-.32 13.7.1 18.25a19.9 19.9 0 0 0 6.07 3.07 14.5 14.5 0 0 0 1.3-2.11c-.71-.27-1.4-.59-2.05-.95l.5-.39c3.99 1.84 8.31 1.84 12.26 0l.5.39c-.65.36-1.35.68-2.06.95a14.5 14.5 0 0 0 1.3 2.11 19.83 19.83 0 0 0 6.07-3.07c.51-5.22-.86-9.78-3.67-13.88ZM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.95-2.42 2.16-2.42 1.21 0 2.18 1.09 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Zm7.96 0c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.95-2.42 2.16-2.42 1.21 0 2.18 1.09 2.16 2.42 0 1.34-.95 2.42-2.16 2.42Z" />
-    </svg>
-  ),
-}
-
 function ArchiveGrid({
   componentData,
   basePath,
@@ -349,6 +398,7 @@ function ArchiveGrid({
 }) {
   const posts = buildPosts(componentData.allFiles)
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort()
+  const year = new Date().getFullYear()
 
   return (
     <section class="post-grid" id="field-notes">
@@ -359,10 +409,10 @@ function ArchiveGrid({
         </p>
         <SectionHeader
           n="03"
-          label="Active Case Files"
+          label="CTF Writeups"
           hint={
             <>
-              <strong data-result-count="true">{posts.length}</strong> posts · live from ~/writeups
+              <strong data-result-count="true">{posts.length}</strong> items
             </>
           }
         />
@@ -450,6 +500,7 @@ function ArchiveGrid({
                   {post.event ? <span class="post-card-event">{post.event}</span> : null}
                 </div>
                 <div class="post-card-body">
+                  <p class="post-card-filename">{filenameFor(post)}</p>
                   <p class="post-card-meta">
                     <time datetime={post.date?.toISOString()}>{fmtDate(post.date)}</time>
                   </p>
@@ -470,7 +521,7 @@ function ArchiveGrid({
                     </ul>
                   ) : null}
                   <p class="post-card-cta">
-                    READ WRITEUP <span class="post-card-cta__arrow">→</span>
+                    Open <span class="post-card-cta__arrow">→</span>
                   </p>
                 </div>
               </a>
@@ -482,7 +533,66 @@ function ArchiveGrid({
       <p class="post-grid-empty" data-empty-state="true" role="status" hidden>
         No signal found. Try a broader search or clear the active tags.
       </p>
+
+      <div class="post-grid-status">
+        <span>{posts.length} objects</span>
+        <span>(c) esct4sy {year}</span>
+      </div>
     </section>
+  )
+}
+
+/**
+ * Every window's titlebar: icon + title + exactly two controls — collapse and close.
+ * closeHref makes close a real link (used on content pages); omit it for desktop apps,
+ * which close via the window manager's data-win-close handler instead.
+ */
+function WinTitlebar({
+  icon,
+  title,
+  closeHref,
+  collapsible = true,
+}: {
+  icon?: string
+  title: string
+  closeHref?: string
+  collapsible?: boolean
+}) {
+  return (
+    <div class="win98-titlebar" data-drag-handle="true">
+      {icon ? (
+        <span class="win98-titlebar__icon" aria-hidden="true">
+          {icon}
+        </span>
+      ) : null}
+      <span class="win98-titlebar__title">{title}</span>
+      <div class="win98-titlebar__controls">
+        {collapsible ? (
+          <button type="button" class="win98-btn" data-win-collapse="true" aria-label="Collapse">
+            ▾
+          </button>
+        ) : null}
+        {closeHref ? (
+          <a
+            class="win98-btn win98-btn--close"
+            href={closeHref}
+            aria-label="Close"
+            title="Back to desktop"
+          >
+            ×
+          </a>
+        ) : (
+          <button
+            type="button"
+            class="win98-btn win98-btn--close"
+            data-win-close="true"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -516,53 +626,6 @@ const PortalScript = () => (
         el.textContent = final;
       }
     }, frameMs || 32);
-  }
-
-  function initDecrypt() {
-    var els = Array.prototype.slice.call(document.querySelectorAll("[data-decrypt]"));
-    if (!els.length) return;
-    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    els.forEach(function (el, order) {
-      if (el.dataset.decrypted === "true") return;
-      el.dataset.decrypted = "true";
-      var final = el.getAttribute("data-decrypt") || el.textContent;
-      if (reduced) { el.textContent = final; return; }
-      setTimeout(function () { scramble(el, final, 30); }, order * 140);
-    });
-  }
-
-  function initDrawer() {
-    if (window.__portalMenuBound) return;
-    window.__portalMenuBound = true;
-    var btn = function () { return document.querySelector('[data-menu-toggle="true"]'); };
-    var menu = function () { return document.querySelector('[data-site-menu="true"]'); };
-    function setOpen(v) {
-      var b = btn(), m = menu();
-      if (!b || !m) return;
-      b.setAttribute("aria-expanded", String(v));
-      m.setAttribute("aria-hidden", String(!v));
-      document.body.classList.toggle("menu-open", v);
-      if (v) {
-        var panel = m.querySelector(".site-drawer__panel");
-        var focusables = panel ? Array.prototype.slice.call(panel.querySelectorAll("a, button")) : [];
-        if (focusables.length) focusables[0].focus();
-      }
-    }
-    function toggle() {
-      var b = btn();
-      setOpen(!b || b.getAttribute("aria-expanded") !== "true");
-    }
-    document.addEventListener("click", function (e) {
-      var b = btn(), m = menu();
-      if (!b || !m) return;
-      if (b.contains(e.target)) { e.stopPropagation(); toggle(); return; }
-      if (m.getAttribute("aria-hidden") === "false") {
-        var panel = m.querySelector(".site-drawer__panel");
-        if (!panel || !panel.contains(e.target)) setOpen(false);
-      }
-    });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
-    document.addEventListener("nav", function () { setOpen(false); });
   }
 
   function initGrid() {
@@ -619,12 +682,6 @@ const PortalScript = () => (
       if (clearSearch) on(clearSearch, "click", function () {
         searchInput.value = ""; q = ""; clearSearch.hidden = true; apply(); searchInput.focus();
       });
-      on(document, "keydown", function (e) {
-        if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
-        var a = document.activeElement;
-        if (a && ["INPUT", "TEXTAREA", "SELECT"].indexOf(a.tagName) !== -1) return;
-        e.preventDefault(); searchInput.focus();
-      });
     }
     tagBtns.forEach(function (b) {
       var t = b.getAttribute("data-tag");
@@ -647,50 +704,6 @@ const PortalScript = () => (
       });
     }
     var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var scrollTimelineSupported = !!(window.CSS && CSS.supports && CSS.supports("animation-timeline: view()"));
-    if (!reduced && !scrollTimelineSupported && "IntersectionObserver" in window) {
-      cards.forEach(function (c) { c.classList.add("reveal-pending"); });
-      var io = new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (en) {
-          if (!en.isIntersecting) return;
-          var el = en.target;
-          var idx = Number(el.dataset.revealIndex || 0);
-          el.style.transitionDelay = Math.min(idx, 5) * 60 + "ms";
-          el.classList.add("is-revealed");
-          obs.unobserve(el);
-          setTimeout(function () { el.style.transitionDelay = ""; el.classList.remove("reveal-pending", "is-revealed"); }, 800);
-        });
-      }, { rootMargin: "0px 0px -6% 0px", threshold: 0.08 });
-      cards.forEach(function (c) { io.observe(c); });
-    }
-    var list = o.querySelector(".post-grid-list");
-    if (!reduced && list && window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      var activeMagLink = null;
-      function resetMag(link) {
-        link.style.setProperty("--mag-x", "0px");
-        link.style.setProperty("--mag-y", "0px");
-      }
-      on(list, "pointermove", function (e) {
-        var link = e.target.closest ? e.target.closest(".post-card-link") : null;
-        if (!link) {
-          if (activeMagLink) { resetMag(activeMagLink); activeMagLink = null; }
-          return;
-        }
-        var r = link.getBoundingClientRect();
-        link.style.setProperty("--spot-x", ((e.clientX - r.left) / r.width) * 100 + "%");
-        link.style.setProperty("--spot-y", ((e.clientY - r.top) / r.height) * 100 + "%");
-        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-        var mx = Math.max(-8, Math.min(8, (e.clientX - cx) * 0.06));
-        var my = Math.max(-8, Math.min(8, (e.clientY - cy) * 0.06));
-        link.style.setProperty("--mag-x", mx + "px");
-        link.style.setProperty("--mag-y", my + "px");
-        if (activeMagLink && activeMagLink !== link) resetMag(activeMagLink);
-        activeMagLink = link;
-      });
-      on(list, "pointerleave", function () {
-        if (activeMagLink) { resetMag(activeMagLink); activeMagLink = null; }
-      });
-    }
     if (!reduced) {
       Array.prototype.forEach.call(o.querySelectorAll("[data-decrypt-hover]"), function (el) {
         on(el, "mouseenter", function () {
@@ -698,16 +711,6 @@ const PortalScript = () => (
         });
       });
     }
-    Array.prototype.forEach.call(o.querySelectorAll(".post-card-body h3"), function (h) {
-      var s = h.querySelector(".post-card-title__text");
-      if (!s) return;
-      var w = s.scrollWidth - h.clientWidth;
-      if (w > 4) {
-        h.classList.add("is-scrollable");
-        s.style.setProperty("--scroll", "-" + w + "px");
-        s.style.setProperty("--scroll-dur", Math.max(1.2, w / 45) + "s");
-      }
-    });
     apply();
   }
 
@@ -758,165 +761,630 @@ const PortalScript = () => (
     setTimeout(showNext, 260);
   }
 
-  function initGraph() {
-    var canvas = document.querySelector("[data-signal-graph]");
-    if (!canvas || window.__signalGraphBound) return;
-    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || !canvas.getContext) return;
-    window.__signalGraphBound = true;
-    var ctx = canvas.getContext("2d");
-    var w = 0, h = 0;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var nodes = [];
-    var COUNT = 46;
-    var LINK_DIST = 150;
-    function resize() {
-      w = window.innerWidth;
-      h = window.innerHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    function seed() {
-      nodes = [];
-      for (var i = 0; i < COUNT; i++) {
-        nodes.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: (Math.random() - 0.5) * 0.12,
-          vy: (Math.random() - 0.5) * 0.12,
-        });
-      }
-    }
-    resize();
-    seed();
-    on(window, "resize", resize, { passive: true });
-    function frame() {
-      ctx.clearRect(0, 0, w, h);
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < 0 || n.x > w) n.vx *= -1;
-        if (n.y < 0 || n.y > h) n.vy *= -1;
-      }
-      ctx.lineWidth = 1;
-      for (var i = 0; i < nodes.length; i++) {
-        for (var j = i + 1; j < nodes.length; j++) {
-          var a = nodes[i], b = nodes[j];
-          var dx = a.x - b.x, dy = a.y - b.y;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < LINK_DIST) {
-            ctx.strokeStyle = "rgba(185,163,245," + (0.14 * (1 - dist / LINK_DIST)).toFixed(3) + ")";
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        }
-      }
-      ctx.fillStyle = "rgba(185,163,245,0.55)";
-      for (var i = 0; i < nodes.length; i++) {
-        ctx.beginPath();
-        ctx.arc(nodes[i].x, nodes[i].y, 1.6, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      requestAnimationFrame(frame);
-    }
-    canvas.classList.add("is-ready");
-    requestAnimationFrame(frame);
-  }
-
   function initClock() {
     var els = Array.prototype.slice.call(document.querySelectorAll("[data-hud-clock]"));
     if (!els.length || window.__signalClockBound) return;
     window.__signalClockBound = true;
+    var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     function pad(n) { return n < 10 ? "0" + n : String(n); }
     function tick() {
       var d = new Date();
-      var s = pad(d.getUTCHours()) + ":" + pad(d.getUTCMinutes()) + ":" + pad(d.getUTCSeconds());
-      els.forEach(function (el) { el.textContent = s; });
+      var time24 = pad(d.getUTCHours()) + ":" + pad(d.getUTCMinutes()) + ":" + pad(d.getUTCSeconds());
+      var h12 = d.getHours() % 12; if (h12 === 0) h12 = 12;
+      var ampm = d.getHours() >= 12 ? "PM" : "AM";
+      var timeLocal = h12 + ":" + pad(d.getMinutes()) + " " + ampm;
+      els.forEach(function (el) {
+        var mode = el.getAttribute("data-hud-clock");
+        if (mode === "full") {
+          el.textContent = DAYS[d.getUTCDay()] + ", " + MONTHS[d.getUTCMonth()] + " " + d.getUTCDate() + " · " + time24 + " UTC";
+        } else if (mode === "ampm") {
+          el.textContent = timeLocal;
+        } else {
+          el.textContent = time24;
+        }
+      });
     }
     tick();
     setInterval(tick, 1000);
   }
 
-  function initTerminal() {
-    var body = document.querySelector("[data-terminal-lines]");
-    if (!body || window.__signalTerminalBound) return;
-    window.__signalTerminalBound = true;
-    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-    var data;
-    try { data = JSON.parse(body.getAttribute("data-terminal-lines")); } catch (e) { return; }
-    if (!Array.isArray(data) || !data.length) return;
-    var staticEl = body.querySelector(".terminal-panel__static");
-    if (staticEl) staticEl.hidden = true;
-    var dyn = document.createElement("div");
-    dyn.className = "terminal-panel__dynamic";
-    body.appendChild(dyn);
-    var li = 0;
-    function typeLine() {
-      if (li >= data.length) {
-        var cursor = document.createElement("span");
-        cursor.className = "terminal-panel__cursor";
-        dyn.appendChild(cursor);
-        return;
-      }
-      var line = data[li];
-      var p = document.createElement("p");
-      var prompt = document.createElement("span");
-      prompt.className = "terminal-panel__prompt";
-      prompt.textContent = "$ ";
-      var cmdSpan = document.createElement("span");
-      p.appendChild(prompt);
-      p.appendChild(cmdSpan);
-      dyn.appendChild(p);
-      var cmd = line.cmd || "";
-      var ci = 0;
-      (function typeChar() {
-        if (ci <= cmd.length) {
-          cmdSpan.textContent = cmd.slice(0, ci);
-          ci++;
-          setTimeout(typeChar, 34);
-        } else {
-          var out = document.createElement("span");
-          out.className = "terminal-panel__out";
-          out.textContent = line.out || "";
-          p.appendChild(document.createElement("br"));
-          p.appendChild(out);
-          li++;
-          setTimeout(typeLine, 420);
-        }
-      })();
+  /* ---------- WebOS window manager ---------- */
+  function initWebOS() {
+    var desktop = document.querySelector(".win98-desktop");
+    if (!desktop || desktop.dataset.webosBound === "true") return;
+    desktop.dataset.webosBound = "true";
+
+    var taskbarApps = document.querySelector("[data-taskbar-apps]");
+    var zTop = 100;
+    var activeWin = null;
+    var winRegistry = {};
+
+    function clamp(n, min, max) { return Math.min(Math.max(n, min), max); }
+
+    function updateTaskbarPressed() {
+      Object.keys(winRegistry).forEach(function (id) {
+        var rec = winRegistry[id];
+        if (rec.taskbarBtn) rec.taskbarBtn.classList.toggle("is-pressed", id === activeWin);
+      });
     }
-    typeLine();
+
+    function focusWindow(id) {
+      var rec = winRegistry[id];
+      if (!rec || rec.el.hidden) return;
+      zTop += 1;
+      rec.el.style.zIndex = String(zTop);
+      Array.prototype.forEach.call(desktop.querySelectorAll(".win98-window"), function (w) {
+        w.classList.toggle("is-active", w === rec.el);
+      });
+      activeWin = id;
+      updateTaskbarPressed();
+    }
+
+    function openWindow(id) {
+      var rec = winRegistry[id];
+      if (!rec) return;
+      rec.el.hidden = false;
+      rec.el.classList.remove("is-collapsed");
+      if (rec.taskbarBtn) rec.taskbarBtn.hidden = false;
+      focusWindow(id);
+    }
+
+    function focusTopmostVisible() {
+      var bestId = null, bestZ = -1;
+      Object.keys(winRegistry).forEach(function (id) {
+        var rec = winRegistry[id];
+        if (rec.el.hidden) return;
+        var z = parseInt(rec.el.style.zIndex, 10) || 0;
+        if (z > bestZ) { bestZ = z; bestId = id; }
+      });
+      if (bestId) focusWindow(bestId);
+    }
+
+    function closeWindow(id) {
+      var rec = winRegistry[id];
+      if (!rec) return;
+      rec.el.hidden = true;
+      if (rec.taskbarBtn) rec.taskbarBtn.hidden = true;
+      if (activeWin === id) { activeWin = null; focusTopmostVisible(); }
+      updateTaskbarPressed();
+    }
+
+    function makeDraggable(rec) {
+      var handle = rec.el.querySelector("[data-drag-handle]");
+      if (!handle) return;
+      var dragging = false, offX = 0, offY = 0;
+      on(handle, "pointerdown", function (e) {
+        if (e.target.closest && e.target.closest("button")) return;
+        focusWindow(rec.id);
+        dragging = true;
+        var r = rec.el.getBoundingClientRect();
+        var dRect = desktop.getBoundingClientRect();
+        offX = e.clientX - r.left;
+        offY = e.clientY - r.top;
+        try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+        e.preventDefault();
+      });
+      on(handle, "pointermove", function (e) {
+        if (!dragging) return;
+        var dRect = desktop.getBoundingClientRect();
+        var w = rec.el.offsetWidth, h = rec.el.offsetHeight;
+        var newLeft = clamp(e.clientX - dRect.left - offX, -w + 80, dRect.width - 80);
+        var newTop = clamp(e.clientY - dRect.top - offY, 0, dRect.height - 20);
+        var SNAP = 14;
+        if (Math.abs(newLeft) < SNAP) newLeft = 0;
+        if (Math.abs(newTop) < SNAP) newTop = 0;
+        if (Math.abs(dRect.width - (newLeft + w)) < SNAP) newLeft = dRect.width - w;
+        if (Math.abs(dRect.height - (newTop + h)) < SNAP) newTop = dRect.height - h;
+        rec.el.style.left = newLeft + "px";
+        rec.el.style.top = newTop + "px";
+      });
+      function stop(e) {
+        dragging = false;
+        try { handle.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+      on(handle, "pointerup", stop);
+      on(handle, "pointercancel", stop);
+    }
+
+    function makeResizable(rec) {
+      var handle = rec.el.querySelector("[data-resize-handle]");
+      if (!handle) return;
+      var resizing = false, startW = 0, startH = 0, startX = 0, startY = 0;
+      on(handle, "pointerdown", function (e) {
+        focusWindow(rec.id);
+        resizing = true;
+        startW = rec.el.offsetWidth; startH = rec.el.offsetHeight;
+        startX = e.clientX; startY = e.clientY;
+        try { handle.setPointerCapture(e.pointerId); } catch (err) {}
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      on(handle, "pointermove", function (e) {
+        if (!resizing) return;
+        var w = Math.max(260, startW + (e.clientX - startX));
+        var h = Math.max(180, startH + (e.clientY - startY));
+        rec.el.style.width = w + "px";
+        rec.el.style.height = h + "px";
+      });
+      function stop(e) {
+        resizing = false;
+        try { handle.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+      on(handle, "pointerup", stop);
+      on(handle, "pointercancel", stop);
+    }
+
+    function registerWindow(el) {
+      var id = el.getAttribute("data-window");
+      var rec = { id: id, el: el, taskbarBtn: null };
+      winRegistry[id] = rec;
+
+      var closeBtn = el.querySelector("[data-win-close]");
+      if (closeBtn) on(closeBtn, "click", function (e) { e.stopPropagation(); closeWindow(id); });
+      on(el, "pointerdown", function () { if (!rec.el.hidden) focusWindow(id); });
+
+      makeDraggable(rec);
+      makeResizable(rec);
+
+      var taskbarBtn = taskbarApps ? taskbarApps.querySelector('[data-taskbar-btn="' + id + '"]') : null;
+      if (taskbarBtn) {
+        rec.taskbarBtn = taskbarBtn;
+        on(taskbarBtn, "click", function () {
+          if (rec.el.hidden) { openWindow(id); return; }
+          if (activeWin === id) { rec.el.classList.toggle("is-collapsed"); return; }
+          rec.el.classList.remove("is-collapsed");
+          focusWindow(id);
+        });
+      }
+      return rec;
+    }
+
+    Array.prototype.forEach.call(desktop.querySelectorAll(".win98-window[data-window]"), function (el) {
+      registerWindow(el);
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-win-close-target]"), function (btn) {
+      on(btn, "click", function (e) {
+        e.preventDefault();
+        closeWindow(btn.getAttribute("data-win-close-target"));
+      });
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll("[data-win-collapse]"), function (btn) {
+      on(btn, "click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var win = btn.closest(".win98-window");
+        if (!win) return;
+        var collapsing = !win.classList.contains("is-collapsed");
+        win.classList.toggle("is-collapsed", collapsing);
+        if (collapsing) {
+          win.dataset.prevHeight = win.style.height || "";
+          win.style.height = "";
+        } else if (win.dataset.prevHeight) {
+          win.style.height = win.dataset.prevHeight;
+        }
+      });
+    });
+
+    var defaultOpenId = desktop.getAttribute("data-default-open");
+    if (defaultOpenId && winRegistry[defaultOpenId]) focusWindow(defaultOpenId);
+
+    // Desktop icon select / open
+    var iconSelected = null;
+    Array.prototype.forEach.call(desktop.querySelectorAll("[data-icon]"), function (icon) {
+      on(icon, "click", function (e) {
+        e.stopPropagation();
+        if (iconSelected) iconSelected.classList.remove("is-selected");
+        icon.classList.add("is-selected");
+        iconSelected = icon;
+      });
+      on(icon, "dblclick", function (e) {
+        e.preventDefault();
+        var id = icon.getAttribute("data-open-window");
+        if (id) openWindow(id);
+      });
+    });
+    on(desktop, "click", function (e) {
+      if (e.target === desktop || e.target.classList.contains("win98-icons")) {
+        if (iconSelected) { iconSelected.classList.remove("is-selected"); iconSelected = null; }
+      }
+    });
+
+    // Start menu
+    var startBtn = document.querySelector("[data-start-toggle]");
+    var startMenu = document.querySelector("[data-start-menu]");
+    if (startBtn && startMenu) {
+      on(startBtn, "click", function (e) {
+        e.stopPropagation();
+        var willOpen = startMenu.hidden;
+        startMenu.hidden = !willOpen;
+        startBtn.classList.toggle("is-pressed", willOpen);
+      });
+      Array.prototype.forEach.call(startMenu.querySelectorAll("[data-open-window]"), function (item) {
+        on(item, "click", function () {
+          openWindow(item.getAttribute("data-open-window"));
+          startMenu.hidden = true;
+          startBtn.classList.remove("is-pressed");
+        });
+      });
+      on(document, "click", function (e) {
+        if (!startMenu.hidden && !startMenu.contains(e.target) && e.target !== startBtn) {
+          startMenu.hidden = true;
+          startBtn.classList.remove("is-pressed");
+        }
+      });
+    }
+
+    // Any element (e.g. a file icon inside a folder window) that should just
+    // open/focus an already-registered window on click.
+    Array.prototype.forEach.call(document.querySelectorAll("[data-quick-open]"), function (btn) {
+      on(btn, "click", function () {
+        openWindow(btn.getAttribute("data-quick-open"));
+      });
+    });
   }
 
-  function initHeroTypeline() {
-    var wrap = document.querySelector("[data-typeline]");
-    if (!wrap || window.__signalTypelineBound) return;
-    window.__signalTypelineBound = true;
-    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
-    var text = wrap.getAttribute("data-typeline") || "";
-    var staticEl = wrap.querySelector(".hero-greet__static");
-    if (staticEl) staticEl.hidden = true;
-    var dyn = document.createElement("span");
-    dyn.className = "hero-greet__dynamic";
-    wrap.appendChild(dyn);
-    var ci = 0;
-    (function typeChar() {
-      if (ci <= text.length) {
-        dyn.textContent = text.slice(0, ci);
-        ci++;
-        setTimeout(typeChar, 38);
+  /* ---------- Resume / CV: pulls the real /about page content, no iframe ---------- */
+  function initResumeViewer() {
+    var mount = document.querySelector("[data-resume-mount]");
+    if (!mount || mount.dataset.loaded === "true") return;
+    mount.dataset.loaded = "true";
+    var url = mount.getAttribute("data-resume-mount");
+    fetch(url)
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var src = doc.querySelector(".win98-window--page .win98-body");
+        if (src) {
+          mount.innerHTML = src.innerHTML;
+        } else {
+          mount.textContent = "Couldn't load résumé content.";
+        }
+      })
+      .catch(function () {
+        mount.textContent = "Couldn't load résumé content.";
+      });
+  }
+
+  /* ---------- Music Player ---------- */
+  function initMusicPlayer() {
+    var list = document.querySelector("[data-music-list]");
+    var audio = document.querySelector("[data-music-audio]");
+    if (!list || !audio || list.dataset.bound === "true") return;
+    list.dataset.bound = "true";
+    var rows = Array.prototype.slice.call(list.querySelectorAll("[data-music-row]"));
+    var nowTrack = document.querySelector("[data-music-now-track]");
+    var status = document.querySelector("[data-music-status]");
+    var progress = document.querySelector("[data-music-progress]");
+    var glyph = document.querySelector("[data-music-glyph]");
+    var current = -1;
+
+    function pad(n) { return n < 10 ? "0" + n : String(n); }
+    function fmtTime(sec) {
+      if (!isFinite(sec) || sec < 0) return "--:--";
+      var m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+      return m + ":" + pad(s);
+    }
+    function setRowPlaying(idx, playing) {
+      rows.forEach(function (r, i) {
+        r.classList.toggle("is-current", i === idx);
+        var playEl = r.querySelector("[data-music-play]");
+        if (!playEl) return;
+        playEl.textContent = i === idx && playing ? "❚❚" : "▶";
+      });
+    }
+    function playRow(idx) {
+      var row = rows[idx];
+      if (!row) return;
+      var src = row.getAttribute("data-music-src");
+      if (current === idx && !audio.paused) {
+        audio.pause();
+        setRowPlaying(idx, false);
+        if (status) status.textContent = "Paused";
+        return;
       }
-    })();
+      if (current !== idx) {
+        audio.src = src;
+        current = idx;
+      }
+      var playPromise = audio.play();
+      if (playPromise && playPromise.catch) {
+        playPromise.catch(function () {
+          if (status) status.textContent = "Couldn't load audio — add the track to /static/music/";
+        });
+      }
+      setRowPlaying(idx, true);
+      if (nowTrack) nowTrack.textContent = row.querySelector(".win98-music-row__title").textContent + " — " + row.querySelector(".win98-music-row__artist").textContent;
+      if (status) status.textContent = "Playing…";
+      if (glyph) glyph.classList.add("is-spinning");
+    }
+    rows.forEach(function (row, idx) {
+      on(row, "click", function () { playRow(idx); });
+      var durEl = row.querySelector("[data-music-duration]");
+      var probe = new Audio();
+      probe.preload = "metadata";
+      probe.src = row.getAttribute("data-music-src");
+      on(probe, "loadedmetadata", function () {
+        if (durEl) durEl.textContent = fmtTime(probe.duration);
+      });
+      on(probe, "error", function () {
+        if (durEl) durEl.textContent = "—";
+      });
+    });
+    on(audio, "timeupdate", function () {
+      if (progress && audio.duration) progress.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+    });
+    on(audio, "ended", function () {
+      setRowPlaying(current, false);
+      if (progress) progress.style.width = "0%";
+      var next = current + 1 < rows.length ? current + 1 : 0;
+      playRow(next);
+    });
+    on(audio, "error", function () {
+      if (status) status.textContent = "Audio file not found — drop your mp3s in /static/music/";
+      if (glyph) glyph.classList.remove("is-spinning");
+      setRowPlaying(current, false);
+    });
+    on(audio, "pause", function () {
+      if (glyph) glyph.classList.remove("is-spinning");
+    });
+    on(audio, "play", function () {
+      if (glyph) glyph.classList.add("is-spinning");
+    });
+  }
+
+  /* ---------- Paint ---------- */
+  function initPaint() {
+    var canvas = document.querySelector("[data-paint-canvas]");
+    if (!canvas || canvas.dataset.bound === "true") return;
+    canvas.dataset.bound = "true";
+    var ctx = canvas.getContext("2d");
+    var win = canvas.closest(".win98-window");
+    var color = "#000000";
+    var size = 4;
+    var tool = "brush";
+    var drawing = false;
+    var last = null;
+
+    function resize() {
+      var rect = canvas.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var img = null;
+      if (canvas.width > 0 && canvas.height > 0) {
+        try { img = ctx.getImageData(0, 0, canvas.width, canvas.height); } catch (e) {}
+      }
+      canvas.width = Math.max(1, rect.width * dpr);
+      canvas.height = Math.max(1, rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, rect.width, rect.height);
+      if (img) { try { ctx.putImageData(img, 0, 0); } catch (e) {} }
+    }
+    resize();
+    on(window, "resize", resize, { passive: true });
+    if (win) {
+      var ro = new ResizeObserver(function () { resize(); });
+      ro.observe(canvas);
+    }
+
+    function pos(e) {
+      var rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+    function startDraw(e) {
+      drawing = true;
+      last = pos(e);
+      try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+    function draw(e) {
+      if (!drawing) return;
+      var p = pos(e);
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.lineWidth = size;
+      ctx.strokeStyle = tool === "eraser" ? "#ffffff" : color;
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      last = p;
+    }
+    function endDraw(e) {
+      drawing = false;
+      try { canvas.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    on(canvas, "pointerdown", startDraw);
+    on(canvas, "pointermove", draw);
+    on(canvas, "pointerup", endDraw);
+    on(canvas, "pointercancel", endDraw);
+
+    var paintRoot = canvas.closest(".win98-window");
+    if (!paintRoot) return;
+    Array.prototype.forEach.call(paintRoot.querySelectorAll("[data-paint-color]"), function (btn) {
+      on(btn, "click", function () {
+        color = btn.getAttribute("data-paint-color");
+        tool = "brush";
+        Array.prototype.forEach.call(paintRoot.querySelectorAll("[data-paint-color]"), function (b) { b.classList.remove("is-active"); });
+        btn.classList.add("is-active");
+        Array.prototype.forEach.call(paintRoot.querySelectorAll("[data-paint-tool]"), function (b) { b.classList.toggle("is-active", b.getAttribute("data-paint-tool") === "brush"); });
+      });
+    });
+    Array.prototype.forEach.call(paintRoot.querySelectorAll("[data-paint-size]"), function (btn) {
+      on(btn, "click", function () {
+        size = parseInt(btn.getAttribute("data-paint-size"), 10) || 4;
+        Array.prototype.forEach.call(paintRoot.querySelectorAll("[data-paint-size]"), function (b) { b.classList.remove("is-active"); });
+        btn.classList.add("is-active");
+      });
+    });
+    Array.prototype.forEach.call(paintRoot.querySelectorAll("[data-paint-tool]"), function (btn) {
+      on(btn, "click", function () {
+        tool = btn.getAttribute("data-paint-tool");
+        Array.prototype.forEach.call(paintRoot.querySelectorAll("[data-paint-tool]"), function (b) { b.classList.remove("is-active"); });
+        btn.classList.add("is-active");
+      });
+    });
+    var clearBtn = paintRoot.querySelector("[data-paint-clear]");
+    if (clearBtn) on(clearBtn, "click", function () {
+      var rect = canvas.getBoundingClientRect();
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, rect.width, rect.height);
+    });
+  }
+
+  /* ---------- Hire Me form (mailto fallback, no backend) ---------- */
+  function initHireMe() {
+    var form = document.querySelector("[data-hireme-form]");
+    if (!form || form.dataset.bound === "true") return;
+    form.dataset.bound = "true";
+    var hint = document.querySelector("[data-hireme-hint]");
+    on(form, "submit", function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var name = (data.get("name") || "").toString();
+      var email = (data.get("email") || "").toString();
+      var need = (data.get("need") || "").toString();
+      var budget = (data.get("budget") || "").toString();
+      var message = (data.get("message") || "").toString();
+      var to = form.getAttribute("data-mailto") || "";
+      var subject = encodeURIComponent("Project inquiry: " + (need || "general"));
+      var body = encodeURIComponent(
+        "From: " + name + " (" + email + ")\\n" +
+        "Need: " + need + "\\n" +
+        "Budget: " + budget + "\\n\\n" +
+        message
+      );
+      if (hint) hint.textContent = "Opening your mail client…";
+      window.location.href = "mailto:" + to + "?subject=" + subject + "&body=" + body;
+    });
+  }
+
+  /* ---------- WHOIS Lookup (proxied through a Cloudflare Worker) ---------- */
+  function initWhois() {
+    var root = document.querySelector('[data-window="whois"]');
+    if (!root || root.dataset.whoisBound === "true") return;
+    var input = root.querySelector("[data-whois-input]");
+    var goBtn = root.querySelector("[data-whois-lookup]");
+    var status = root.querySelector("[data-whois-status]");
+    var result = root.querySelector("[data-whois-result]");
+    if (!input || !goBtn || !status || !result) return;
+    root.dataset.whoisBound = "true";
+
+    var proxyUrl = root.getAttribute("data-whois-proxy") || "";
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+    function row(label, value) {
+      if (value === null || value === undefined || value === "") return "";
+      return (
+        '<div class="win98-whois-row"><span class="win98-whois-row__label">' +
+        escapeHtml(label) +
+        '</span><span class="win98-whois-row__value">' +
+        escapeHtml(value) +
+        "</span></div>"
+      );
+    }
+    function isRedacted(s) {
+      return typeof s === "string" && /redacted/i.test(s);
+    }
+
+    function renderResult(data) {
+      var html = "";
+      html += row("Domain", data.name);
+      html += row("Registered", data.registered === false ? "No" : "Yes");
+      if (data.registrar && data.registrar.name) html += row("Registrar", data.registrar.name);
+      html += row("Created", data.created);
+      html += row("Last Changed", data.changed);
+      html += row("Expires", data.expires);
+      if (data.age && typeof data.age.years === "number") {
+        html += row("Domain Age", data.age.years + " years (" + data.age.days + " days)");
+      }
+      if (data.expiration) {
+        if (data.expiration.isExpired) html += row("Expiry Status", "Expired");
+        else if (typeof data.expiration.daysLeft === "number") {
+          html += row(
+            "Expiry Status",
+            data.expiration.daysLeft + " days left" + (data.expiration.isExpiringSoon ? " (soon!)" : "")
+          );
+        }
+      }
+      if (Array.isArray(data.status) && data.status.length) html += row("Status", data.status.join(", "));
+      if (Array.isArray(data.nameserver) && data.nameserver.length) {
+        html += row("Name Servers", data.nameserver.join(", "));
+      }
+      if (data.dnssec) html += row("DNSSEC", data.dnssec);
+      if (data.ips) html += row("IP Address", data.ips);
+      var owner =
+        data.contacts && Array.isArray(data.contacts.owner) ? data.contacts.owner[0] : null;
+      if (owner) {
+        if (owner.organization && !isRedacted(owner.organization)) {
+          html += row("Registrant Org", owner.organization);
+        }
+        if (owner.country && !isRedacted(owner.country)) html += row("Registrant Country", owner.country);
+      }
+      if (!html) html = '<p class="win98-whois-status">No data returned for this domain.</p>';
+      result.innerHTML = html;
+    }
+
+    function lookup() {
+      var domain = (input.value || "").trim().toLowerCase();
+      if (!domain) {
+        status.hidden = false;
+        status.textContent = "Enter a domain first.";
+        result.hidden = true;
+        return;
+      }
+      if (!proxyUrl) {
+        status.hidden = false;
+        status.textContent = "WHOIS proxy isn't configured yet — see cloudflare-worker/whois-proxy/README.md.";
+        result.hidden = true;
+        return;
+      }
+      status.hidden = false;
+      status.textContent = "Looking up " + domain + "…";
+      result.hidden = true;
+      goBtn.disabled = true;
+      fetch(proxyUrl + "?domain=" + encodeURIComponent(domain))
+        .then(function (r) {
+          return r.json().then(function (data) {
+            return { ok: r.ok, data: data };
+          });
+        })
+        .then(function (res) {
+          goBtn.disabled = false;
+          if (!res.ok) {
+            status.hidden = false;
+            status.textContent = (res.data && res.data.error) || "Lookup failed.";
+            result.hidden = true;
+            return;
+          }
+          status.hidden = true;
+          result.hidden = false;
+          renderResult(res.data);
+        })
+        .catch(function () {
+          goBtn.disabled = false;
+          status.hidden = false;
+          status.textContent = "Network error — couldn't reach the WHOIS proxy.";
+          result.hidden = true;
+        });
+    }
+
+    on(goBtn, "click", lookup);
+    on(input, "keydown", function (e) {
+      if (e.key === "Enter") lookup();
+    });
   }
 
   function boot() {
-    initDrawer(); initGrid(); initProgress(); initDecrypt(); initHeroTypeline();
-    initBoot(); initGraph(); initClock(); initTerminal();
+    initGrid(); initProgress(); initBoot(); initClock(); initWebOS();
+    initMusicPlayer(); initPaint(); initHireMe(); initResumeViewer(); initWhois();
   }
   boot();
   document.addEventListener("nav", boot);
@@ -934,267 +1402,559 @@ const DefaultFrame: PageFrame = {
         ? ""
         : new URL(`https://${cfg.baseUrl}`).pathname.replace(/\/$/, "")
     const isHome = componentData.fileData.slug === "index"
-    const wordmark = cfg.pageTitle
-    const mark = (wordmark || "dojo").toUpperCase().split(" ")[0] || "DOJO"
-    const year = new Date().getFullYear()
+    const wordmark = SITE.alias || "dojo"
+
+    const bootScreen = (
+      <div class="boot-sequence" data-boot="true" aria-hidden="true">
+        <div class="boot-sequence__inner">
+          {SITE.bootLines.map((line, i) => (
+            <p
+              class={`boot-sequence__line${i === SITE.bootLines.length - 1 ? " boot-sequence__line--ok" : ""}`}
+              data-boot-line="true"
+            >
+              &gt; {line}
+            </p>
+          ))}
+        </div>
+        <p class="boot-sequence__skip">press any key to skip</p>
+      </div>
+    )
+
+    if (!isHome) {
+      const title = (componentData.fileData.frontmatter?.title as string) ?? wordmark
+      return (
+        <>
+          {bootScreen}
+          <div class="win98-page-shell">
+            <div class="win98-window win98-window--page is-active">
+              <WinTitlebar icon="📝" title={`${title} - Notepad`} closeHref={`${basePath}/`} />
+              <div class="win98-body">
+                <div class="page-lead popover-hint">
+                  {beforeBody.map((BodyComponent) => (
+                    <BodyComponent {...componentData} />
+                  ))}
+                </div>
+                <div class="page-content">
+                  <Content {...componentData} />
+                </div>
+                <div class="page-tail">
+                  {afterBody.map((BodyComponent) => (
+                    <BodyComponent {...componentData} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="win98-taskbar">
+            <a class="win98-start" href={`${basePath}/`}>
+              <span aria-hidden="true">🗔</span> Start
+            </a>
+            <div class="win98-taskbar__divider" aria-hidden="true"></div>
+            <div class="win98-taskbar__apps">
+              <button type="button" class="win98-taskbar__app is-pressed" disabled>
+                📝 {title}
+              </button>
+            </div>
+            <div class="win98-tray">
+              <span data-hud-clock="ampm">--:-- --</span>
+            </div>
+          </div>
+
+          <div class="reading-progress" aria-hidden="true">
+            <span class="reading-progress__bar" data-reading-bar="true"></span>
+          </div>
+          <button
+            type="button"
+            class="back-to-top"
+            data-back-to-top="true"
+            aria-label="Back to top"
+            title="Back to top"
+            hidden
+          >
+            {UpIcon}
+          </button>
+
+          <PortalScript />
+        </>
+      )
+    }
 
     return (
       <>
-        <div class="site-graph-fallback" aria-hidden="true"></div>
-        <canvas class="site-graph" data-signal-graph="true" aria-hidden="true"></canvas>
-        <div class="site-grain" aria-hidden="true"></div>
-        <div class="boot-sequence" data-boot="true" aria-hidden="true">
-          <div class="boot-sequence__inner">
-            {SITE.bootLines.map((line, i) => (
-              <p
-                class={`boot-sequence__line${i === SITE.bootLines.length - 1 ? " boot-sequence__line--ok" : ""}`}
-                data-boot-line="true"
-              >
-                &gt; {line}
-              </p>
-            ))}
-          </div>
-          <p class="boot-sequence__skip">press any key to skip</p>
-        </div>
-        <header class="portal-nav">
-          <div class="site-nav">
-            <div class="site-nav__inner">
-              <a class="site-nav__identity" href={`${basePath}/`} aria-label={`${wordmark} home`}>
-                <img src={`${basePath}/static/icon.png`} alt={wordmark} width="48" height="48" />
-              </a>
-              <div class="site-nav__hud" aria-hidden="true">
-                <span class="hud-status-dot"></span>
-                <span class="hud-status-label">LIVE</span>
-                <time class="hud-clock" data-hud-clock="true">
-                  00:00:00
-                </time>
-              </div>
-              <nav class="site-nav__links" aria-label="Primary navigation">
-                <a href="#ctf-log">CTF</a>
-                <a href="#field-notes">Archive</a>
-                <a href={`${basePath}/about`}>About</a>
-                <a href={SITE.github} target="_blank" rel="noreferrer">
-                  GitHub ↗
-                </a>
-              </nav>
-              <button
-                class="site-nav__menu-button"
-                type="button"
-                aria-label="Open navigation"
-                aria-expanded="false"
-                aria-controls="site-drawer"
-                data-menu-toggle="true"
-              >
-                <span></span>
-                <span></span>
+        {bootScreen}
+
+        <div class="win98-desktop" data-default-open="about">
+          <ul class="win98-icons" aria-label="Desktop icons">
+            <li>
+              <button type="button" class="win98-icon" data-icon="true" data-open-window="about">
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  📝
+                </span>
+                <span class="win98-icon__label">About Me.txt</span>
               </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="win98-icon"
+                data-icon="true"
+                data-open-window="ctfwriteups"
+              >
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  🗂️
+                </span>
+                <span class="win98-icon__label">CTF Writeups</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="win98-icon" data-icon="true" data-open-window="hireme">
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  📇
+                </span>
+                <span class="win98-icon__label">Hire Me</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="win98-icon" data-icon="true" data-open-window="resume">
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  📄
+                </span>
+                <span class="win98-icon__label">Resume / CV</span>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="win98-icon"
+                data-icon="true"
+                data-open-window="wikipedia"
+              >
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  📖
+                </span>
+                <span class="win98-icon__label">Wikipedia</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="win98-icon" data-icon="true" data-open-window="whois">
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  🔎
+                </span>
+                <span class="win98-icon__label">WHOIS</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="win98-icon" data-icon="true" data-open-window="paint">
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  🎨
+                </span>
+                <span class="win98-icon__label">Paint</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="win98-icon" data-icon="true" data-open-window="music">
+                <span class="win98-icon__glyph" aria-hidden="true">
+                  🎵
+                </span>
+                <span class="win98-icon__label">Music Player</span>
+              </button>
+            </li>
+          </ul>
+
+          {/* About Me.txt — Notepad */}
+          <div
+            class="win98-window"
+            data-window="about"
+            style="right:60px;top:40px;width:460px;height:400px;"
+          >
+            <WinTitlebar icon="📝" title="About Me.txt - Notepad" />
+            <div class="win98-menuline" aria-hidden="true">
+              <span>File</span>
+              <span>Edit</span>
+              <span>Search</span>
+              <span>Help</span>
             </div>
+            <div class="win98-body">
+              <pre>{buildAboutText()}</pre>
+            </div>
+            <div class="win98-resize-handle" data-resize-handle="true"></div>
           </div>
-        </header>
 
-        <div class="signal-ticker" aria-hidden="true">
-          <div class="signal-ticker__track">
-            {SITE.techniques.map((t) => (
-              <span class="signal-ticker__item">
-                {t}
-                <span class="signal-ticker__dot">·</span>
-              </span>
-            ))}
-            {SITE.techniques.map((t) => (
-              <span class="signal-ticker__item signal-ticker__item--dup">
-                {t}
-                <span class="signal-ticker__dot">·</span>
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div class="site-drawer" id="site-drawer" aria-hidden="true" data-site-menu="true">
-          <nav class="site-drawer__panel" aria-label="Site navigation">
-            <div class="site-drawer__bar">
-              <span class="site-drawer__dot"></span>
-              <span class="site-drawer__dot"></span>
-              <span class="site-drawer__dot"></span>
-              <em>{SITE.hostname}</em>
-            </div>
-            <div class="site-drawer__links">
-              <a href={`${basePath}/`}>
-                <span class="site-drawer__prompt">$</span> {SITE.homePrompt}
-              </a>
-              <a href={`${basePath}/about`}>
-                <span class="site-drawer__prompt">$</span> {SITE.aboutPrompt}
-              </a>
-              <a href={`${basePath}/index.xml`}>
-                <span class="site-drawer__prompt">$</span> {SITE.rssPrompt}
-              </a>
-            </div>
-            <div class="site-drawer__foot">
-              <span class="site-drawer__prompt">$</span>
-              <span class="site-drawer__cursor" aria-hidden="true"></span>
-              <span>esc / click outside to close</span>
-            </div>
-          </nav>
-        </div>
-
-        {isHome ? (
-          <main id="main-content" class="site-main site-main--home">
-            <div class="page-lead popover-hint">
-              <section class="hero-greet">
-                <p class="hero-greet__eyebrow">{SITE.mastheadLabel}</p>
-                <h1 class="hero-greet__title">
-                  <span class="decrypt-target" data-decrypt={SITE.heroGreeting}>
-                    {SITE.heroGreeting}
-                  </span>{" "}
-                  <span class="hero-greet__name decrypt-target" data-decrypt={SITE.alias}>
-                    {SITE.alias}
-                  </span>
-                </h1>
-                <p class="hero-greet__subtitle">
-                  <span class="hero-greet__prompt">&gt;</span>{" "}
-                  <span data-typeline={SITE.heroSubtitle}>
-                    <span class="hero-greet__static">{SITE.heroSubtitle}</span>
-                  </span>
-                  <span class="hero-greet__cursor" aria-hidden="true"></span>
-                </p>
-                <ul class="hero-greet__tags">
-                  {SITE.heroTags.map((t) => (
-                    <li>{t}</li>
-                  ))}
-                </ul>
-                <a href="#about-me" class="hero-scroll">
-                  <span aria-hidden="true">▽</span> scroll <span aria-hidden="true">▽</span>
-                </a>
-              </section>
-            </div>
-            <div class="page-content">
-              <section class="about-me" id="about-me">
-                <SectionHeader n="01" label="about_me" hint="whoami" />
-                <div class="about-me__grid">
-                  <p class="about-me__bio">{SITE.aboutBio}</p>
-                  <div class="terminal-panel" aria-hidden="true">
-                    <div class="terminal-panel__bar">
-                      <span class="terminal-panel__dot"></span>
-                      <span class="terminal-panel__dot"></span>
-                      <span class="terminal-panel__dot"></span>
-                      <em>{SITE.hostname}</em>
-                    </div>
-                    <div
-                      class="terminal-panel__body"
-                      data-terminal-lines={JSON.stringify(SITE.terminalLines)}
-                    >
-                      <div class="terminal-panel__static">
-                        {SITE.terminalLines.map((l) => (
-                          <p>
-                            <span class="terminal-panel__prompt">$ </span>
-                            <span>{l.cmd}</span>
-                            <br />
-                            <span class="terminal-panel__out">{l.out}</span>
-                          </p>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="ctf-log" id="ctf-log">
-                <SectionHeader n="02" label="ctf_log" hint="results" />
-                <div class="ctf-log__table">
-                  <div class="ctf-log__row ctf-log__row--head">
-                    <span>Event</span>
-                    <span>Team</span>
-                    <span>Result</span>
-                  </div>
-                  {SITE.ctfLog.map((row) => (
-                    <div class={`ctf-log__row${row.live ? " ctf-log__row--live" : ""}`}>
-                      <span class="ctf-log__event">
-                        {row.event}
-                        {row.live ? (
-                          <span class="ctf-log__live" aria-label="ongoing">
-                            <span class="hud-status-dot" aria-hidden="true"></span>
-                            LIVE
-                          </span>
-                        ) : null}
-                      </span>
-                      <span class="ctf-log__team">{row.team}</span>
-                      <span class="ctf-log__result">{row.result}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
+          {/* CTF Writeups — folder (real content) */}
+          <div
+            class="win98-window"
+            data-window="ctfwriteups"
+            hidden
+            style="left:170px;top:70px;width:660px;height:480px;"
+          >
+            <WinTitlebar icon="🗂️" title="CTF Writeups" />
+            <div class="win98-body win98-folder-body">
               <ArchiveGrid componentData={componentData} basePath={basePath} />
             </div>
-            <div class="page-tail">
-              <div class="site-flair" aria-hidden="true"></div>
-            </div>
-          </main>
-        ) : (
-          <main id="main-content" class="site-main site-main--content">
-            <div class="page-lead popover-hint">
-              {beforeBody.map((BodyComponent) => (
-                <BodyComponent {...componentData} />
-              ))}
-            </div>
-            <div class="page-content">
-              <Content {...componentData} />
-            </div>
-            <div class="page-tail">
-              {afterBody.map((BodyComponent) => (
-                <BodyComponent {...componentData} />
-              ))}
-              <div class="site-flair" aria-hidden="true"></div>
-            </div>
-          </main>
-        )}
-
-        <div class="reading-progress" aria-hidden="true">
-          <span class="reading-progress__bar" data-reading-bar="true"></span>
-        </div>
-        <button
-          type="button"
-          class="back-to-top"
-          data-back-to-top="true"
-          aria-label="Back to top"
-          title="Back to top"
-          hidden
-        >
-          {UpIcon}
-        </button>
-
-        <footer>
-          <p class="footer-status">
-            <span class="hud-status-dot" aria-hidden="true"></span>
-            SYSTEM OPERATIONAL
-          </p>
-          <p class="footer-mark">{mark} / 攻</p>
-          <p class="footer-credit">Giving up is not in the blood, sir. · © {year}</p>
-          <p class="footer-tagline">
-            SIGNAL v2 · hand-tuned Quartz theme ·{" "}
-            <time class="hud-clock" data-hud-clock="true">
-              00:00:00
-            </time>{" "}
-            UTC
-          </p>
-          <div class="footer-socials">
-            {SITE.socials.map((s) => {
-              const Icon = SocialIcons[s.name]
-              return Icon ? (
-                <a
-                  key={s.name}
-                  class="footer-social"
-                  href={s.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={s.name}
-                  title={s.username ?? s.name}
-                >
-                  {Icon}
-                </a>
-              ) : null
-            })}
+            <div class="win98-resize-handle" data-resize-handle="true"></div>
           </div>
-        </footer>
+
+          {/* Hire Me — contact form */}
+          <div
+            class="win98-window win98-window--hireme"
+            data-window="hireme"
+            hidden
+            style="left:540px;top:56px;width:420px;height:520px;"
+          >
+            <WinTitlebar icon="📇" title="Hire Me" />
+            <div class="win98-body win98-hireme-body">
+              <form class="hireme-form" data-hireme-form="true" data-mailto={SITE.email}>
+                <div class="hireme-form__row hireme-form__row--send">
+                  <div>
+                    <span class="hireme-form__label">Email to</span>
+                    <span class="hireme-form__static">{SITE.email}</span>
+                  </div>
+                  <button type="submit" class="hireme-send">
+                    Send
+                  </button>
+                </div>
+                <label class="hireme-field">
+                  <span>
+                    Your Name<em>*</em>
+                  </span>
+                  <input type="text" name="name" placeholder="Fill in your name" required />
+                </label>
+                <label class="hireme-field">
+                  <span>
+                    Your Email<em>*</em>
+                  </span>
+                  <input type="email" name="email" placeholder="Fill in your email" required />
+                </label>
+                <label class="hireme-field">
+                  <span>
+                    What do you need<em>*</em>
+                  </span>
+                  <select name="need" required>
+                    <option value="" disabled selected>
+                      Select…
+                    </option>
+                    {SITE.needOptions.map((opt) => (
+                      <option value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </label>
+                <label class="hireme-field">
+                  <span>
+                    Budget<em>*</em>
+                  </span>
+                  <select name="budget" required>
+                    <option value="" disabled selected>
+                      Select…
+                    </option>
+                    {SITE.budgetOptions.map((opt) => (
+                      <option value={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </label>
+                <label class="hireme-field hireme-field--message">
+                  <span>Message</span>
+                  <textarea name="message" placeholder="Tell me about your project"></textarea>
+                </label>
+                <p class="hireme-form__hint" data-hireme-hint="true"></p>
+              </form>
+              <div class="hireme-socials">
+                {SITE.socials.map((s) => (
+                  <a href={s.url} target="_blank" rel="noreferrer">
+                    {s.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <div class="win98-resize-handle" data-resize-handle="true"></div>
+          </div>
+
+          {/* Things to do today — sticky note, open by default */}
+          <div
+            class="win98-window win98-window--sticky"
+            data-window="todo"
+            style="right:600px;top:70px;width:230px;height:230px;"
+          >
+            <WinTitlebar title="Things to do today" />
+            <div class="win98-sticky-body">
+              <ul>
+                {SITE.todoItems.map((item) => (
+                  <li class={item.done ? "is-done" : ""}>- {item.text}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Resume / CV — pulls the real /about content in directly, no iframe */}
+          <div
+            class="win98-window"
+            data-window="resume"
+            hidden
+            style="left:230px;top:60px;width:640px;height:520px;"
+          >
+            <WinTitlebar icon="📄" title="Resume.pdf" />
+            <div
+              class="win98-body win98-resume-body"
+              data-resume-mount={resolveHref(basePath, "/about")}
+            >
+              <p class="win98-loading">Loading résumé…</p>
+            </div>
+            <div class="win98-resize-handle" data-resize-handle="true"></div>
+          </div>
+
+          {/* Wikipedia */}
+          <div
+            class="win98-window"
+            data-window="wikipedia"
+            hidden
+            style="left:280px;top:60px;width:680px;height:500px;"
+          >
+            <WinTitlebar icon="📖" title="Internet Explorer - Wikipedia" />
+            <div class="win98-toolbar">
+              <span class="win98-toolbar__address-label">Address</span>
+              <div class="win98-toolbar__address">https://www.wikipedia.org/</div>
+              <span class="win98-toolbar__go" aria-hidden="true">
+                ➜ Go
+              </span>
+            </div>
+            <div class="win98-body win98-ie-body">
+              <iframe src="https://www.wikipedia.org/" title="Wikipedia" loading="lazy"></iframe>
+            </div>
+            <div class="win98-resize-handle" data-resize-handle="true"></div>
+          </div>
+
+          {/* WHOIS Lookup — proxied through a Cloudflare Worker so the API key never ships client-side */}
+          <div
+            class="win98-window"
+            data-window="whois"
+            data-whois-proxy={WHOIS_PROXY_URL}
+            hidden
+            style="right:120px;top:110px;width:440px;height:480px;"
+          >
+            <WinTitlebar icon="🔎" title="WHOIS Lookup" />
+            <div class="win98-toolbar">
+              <span class="win98-toolbar__address-label">Domain</span>
+              <div class="win98-toolbar__address">
+                <input
+                  type="text"
+                  class="win98-whois-input"
+                  data-whois-input="true"
+                  placeholder="example.com"
+                  autocomplete="off"
+                  spellcheck={false}
+                />
+              </div>
+              <button type="button" class="win98-toolbar__go" data-whois-lookup="true">
+                🔎 Lookup
+              </button>
+            </div>
+            <div class="win98-body win98-whois-body">
+              <p class="win98-whois-status" data-whois-status="true">
+                Enter a domain and hit Lookup.
+              </p>
+              <div class="win98-whois-result" data-whois-result="true" hidden></div>
+            </div>
+            <div class="win98-resize-handle" data-resize-handle="true"></div>
+          </div>
+
+          {/* Paint */}
+          <div
+            class="win98-window"
+            data-window="paint"
+            hidden
+            style="left:310px;top:90px;width:560px;height:440px;"
+          >
+            <WinTitlebar icon="🎨" title="untitled - Paint" />
+            <div class="win98-paint-toolbar">
+              <div class="win98-paint-tools">
+                <button
+                  type="button"
+                  class="win98-paint-tool is-active"
+                  data-paint-tool="brush"
+                  title="Brush"
+                >
+                  🖌️
+                </button>
+                <button
+                  type="button"
+                  class="win98-paint-tool"
+                  data-paint-tool="eraser"
+                  title="Eraser"
+                >
+                  🧽
+                </button>
+                <button type="button" class="win98-paint-clear" data-paint-clear="true">
+                  Clear
+                </button>
+              </div>
+              <div class="win98-paint-sizes">
+                {[2, 4, 8, 14].map((size) => (
+                  <button
+                    type="button"
+                    class={`win98-paint-size${size === 4 ? " is-active" : ""}`}
+                    data-paint-size={size}
+                    aria-label={`Brush size ${size}`}
+                  >
+                    <span style={`width:${size}px;height:${size}px;`}></span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div class="win98-paint-body">
+              <div class="win98-paint-palette">
+                {[
+                  "#000000",
+                  "#808080",
+                  "#800000",
+                  "#808000",
+                  "#008000",
+                  "#008080",
+                  "#000080",
+                  "#800080",
+                  "#ffffff",
+                  "#c0c0c0",
+                  "#ff0000",
+                  "#ffff00",
+                  "#00ff00",
+                  "#00ffff",
+                  "#0000ff",
+                  "#ff00ff",
+                ].map((color, i) => (
+                  <button
+                    type="button"
+                    class={`win98-paint-color${i === 0 ? " is-active" : ""}`}
+                    data-paint-color={color}
+                    style={`background:${color};`}
+                    aria-label={`Color ${color}`}
+                  ></button>
+                ))}
+              </div>
+              <canvas class="win98-paint-canvas" data-paint-canvas="true"></canvas>
+            </div>
+            <div class="win98-resize-handle" data-resize-handle="true"></div>
+          </div>
+
+          {/* Music Player — open by default */}
+          <div
+            class="win98-window win98-window--music"
+            data-window="music"
+            style="right:80px;top:480px;width:520px;height:280px;"
+          >
+            <WinTitlebar icon="🎵" title="Music Player" />
+            <div class="win98-music-body">
+              <ul class="win98-music-list" data-music-list="true">
+                {MUSIC_TRACKS.map((t, i) => (
+                  <li
+                    class="win98-music-row"
+                    data-music-row={i}
+                    data-music-src={resolveHref(basePath, t.src)}
+                  >
+                    <span class="win98-music-row__play" data-music-play="true" aria-hidden="true">
+                      ▶
+                    </span>
+                    <span class="win98-music-row__duration" data-music-duration="true">
+                      --:--
+                    </span>
+                    <span class="win98-music-row__title">{t.title}</span>
+                    <span class="win98-music-row__artist">{t.artist}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="win98-music-now">
+                <span class="win98-music-now__glyph" aria-hidden="true" data-music-glyph="true">
+                  ♪
+                </span>
+                <p class="win98-music-now__track" data-music-now-track="true">
+                  Select a track
+                </p>
+                <div class="win98-music-progress">
+                  <div class="win98-music-progress__bar" data-music-progress="true"></div>
+                </div>
+                <p class="win98-music-now__status" data-music-status="true"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <audio data-music-audio="true" preload="none"></audio>
+
+        <div class="win98-taskbar">
+          <button type="button" class="win98-start" data-start-toggle="true">
+            <span aria-hidden="true">🗔</span> Start
+          </button>
+          <div class="win98-taskbar__divider" aria-hidden="true"></div>
+          <div class="win98-taskbar__apps" data-taskbar-apps="true">
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="about">
+              📝 About Me.txt
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="todo">
+              🗒️ Things to do today
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="music">
+              🎵 Music Player
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="ctfwriteups" hidden>
+              🗂️ CTF Writeups
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="hireme" hidden>
+              📇 Hire Me
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="resume" hidden>
+              📄 Resume / CV
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="wikipedia" hidden>
+              📖 Wikipedia
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="whois" hidden>
+              🔎 WHOIS Lookup
+            </button>
+            <button type="button" class="win98-taskbar__app" data-taskbar-btn="paint" hidden>
+              🎨 Paint
+            </button>
+          </div>
+          <div class="win98-tray">
+            <span data-hud-clock="ampm">--:-- --</span>
+          </div>
+        </div>
+
+        <div class="win98-startmenu" data-start-menu="true" hidden>
+          <div class="win98-startmenu__rail" aria-hidden="true">
+            {wordmark.toUpperCase()} 98
+          </div>
+          <div class="win98-startmenu__items">
+            <button type="button" class="win98-startmenu__item" data-open-window="about">
+              <span aria-hidden="true">📝</span> About Me.txt
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="ctfwriteups">
+              <span aria-hidden="true">🗂️</span> CTF Writeups
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="hireme">
+              <span aria-hidden="true">📇</span> Hire Me
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="resume">
+              <span aria-hidden="true">📄</span> Resume / CV
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="wikipedia">
+              <span aria-hidden="true">📖</span> Wikipedia
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="whois">
+              <span aria-hidden="true">🔎</span> WHOIS Lookup
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="paint">
+              <span aria-hidden="true">🎨</span> Paint
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="music">
+              <span aria-hidden="true">🎵</span> Music Player
+            </button>
+            <button type="button" class="win98-startmenu__item" data-open-window="todo">
+              <span aria-hidden="true">🗒️</span> Things to do today
+            </button>
+            <div class="win98-startmenu__sep" aria-hidden="true"></div>
+            <a class="win98-startmenu__item" href={SITE.github} target="_blank" rel="noreferrer">
+              <span aria-hidden="true">🔧</span> View source on GitHub
+            </a>
+          </div>
+        </div>
 
         <PortalScript />
       </>

@@ -12,3 +12,6 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 .turbo/
+
+# Copyrighted audio for the local Music Player app - never published
+quartz/static/music/*.mp3

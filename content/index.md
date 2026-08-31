@@ -1,5 +1,5 @@
 ---
-title: Your Dojo
+title: ecst4sy - portfolio
 description: Breaking, learning, documenting.
 tags:
   - home

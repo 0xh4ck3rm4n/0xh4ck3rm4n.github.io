@@ -21,7 +21,7 @@ tags:
       <span class="dossier-highlight">4.0 GPA</span>
     </p>
     <p>
-      Bagmati Zone, Nepal · <a href="mailto:gaurav.poudel2061@gmail.com">email</a> ·
+      Bagmati Zone, Nepal · <a href="mailto:ecstasyy@v1olet.xyz">email</a> ·
       <a href="https://linkedin.com/in/ecstasyy">LinkedIn</a> ·
       <a href="https://github.com/0xh4ck3rm4n/blog">GitHub</a>
     </p>

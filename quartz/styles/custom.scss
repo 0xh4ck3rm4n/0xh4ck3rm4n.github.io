@@ -1,4 +1,5 @@
 @use "./variables.scss" as *;
+@use "./webos.scss";
 
 /* ============================================================
    SIGNAL - lavender console theme for a cybersecurity portfolio
@@ -2082,54 +2083,54 @@ h1.article-title {
   }
 }
 
-/* Code blocks */
+/* Code blocks (Win98 Notepad-style: light sunken panel, dark readable tokens) */
 .page-content article pre {
-  -webkit-backdrop-filter: blur(18px) saturate(1.15);
-  backdrop-filter: blur(18px) saturate(1.15);
-  background: linear-gradient(150deg, #b9a3f50f, #ffffff03 55%), #100c1885 !important;
-  border: 1px solid #b9a3f529 !important;
-  border-radius: var(--brutal-radius) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: #f6f0ff !important;
+  border: 2px solid !important;
+  border-color: #8f7bb3 #fff #fff #8f7bb3 !important;
+  border-radius: 4px !important;
   margin: 1.5rem 0;
   position: relative;
   overflow: hidden;
   box-shadow:
-    inset 0 1px #ffffff0a,
-    0 1.2rem 3rem #00000040;
+    inset 1px 1px 0 #6b5a92,
+    inset -1px -1px 0 #fff !important;
 }
 .page-content article code {
-  color: var(--portal-accent);
-  background: var(--portal-panel-raised);
+  color: #5a1fb0;
+  background: #ece2fa;
 }
 .page-content article pre code {
-  color: var(--portal-text);
+  color: #241639 !important;
   background: 0 0;
 }
-[saved-theme="dark"] .page-content article code[data-theme] span {
-  color: var(--portal-muted);
-}
 .page-content article code[data-theme] span[data-token-type="function"] {
-  color: var(--portal-mauve) !important;
+  color: #6b3fa0 !important;
 }
 .page-content article code[data-theme] span[data-token-type="keyword"] {
-  color: var(--portal-accent) !important;
+  color: #a3560f !important;
 }
 .page-content article code[data-theme] span[data-token-type="string"] {
-  color: var(--portal-teal) !important;
+  color: #1f7a52 !important;
 }
 .page-content article code[data-theme] span[data-token-type="comment"] {
-  color: #a9a3d0 !important;
+  color: #6b5a92 !important;
   font-style: italic;
 }
 .page-content article code[data-theme] span[data-token-type="operator"],
 .page-content article code[data-theme] span[data-token-type="punctuation"] {
-  color: #cbb6e8 !important;
+  color: #4a3670 !important;
 }
 .page-content article code[data-theme] span[data-token-type="normal"],
 .page-content article code[data-theme] span[data-token-type="value"] {
-  color: var(--portal-lavender) !important;
+  color: #241639 !important;
 }
 .page-content article .clipboard-button {
-  border-color: #ffffff33;
+  border-color: #8f7bb3;
+  background: #ece2fa;
+  color: #241639;
 }
 .page-content article img {
   border-radius: var(--brutal-radius);
@@ -2286,6 +2287,464 @@ h1.article-title {
   }
   .home-masthead__copy {
     opacity: 1;
+    animation: none;
+  }
+}
+
+/* ============================================================
+   SIGNAL-OS: daylman-style retro desktop layer (lavender theme)
+   ============================================================ */
+:root {
+  --chrome-hi: #b9a3f566;
+  --chrome-lo: #04030780;
+  --chrome-face: linear-gradient(180deg, #1b1526, #120c19);
+  --chrome-face-raised: linear-gradient(180deg, #221a30, #171021);
+  --menubar-h: 2.5rem;
+  --amber-chip: #ffb454;
+}
+
+/* ---------- Desktop wallpaper: painted lavender wash, daylman-style ---------- */
+.site-graph-fallback {
+  background-image:
+    radial-gradient(48% 38% at 18% 12%, #b9a3f540, transparent 60%),
+    radial-gradient(55% 45% at 85% 8%, #f0b8ff2e, transparent 65%),
+    radial-gradient(60% 50% at 30% 92%, #6d4fd12e, transparent 65%),
+    radial-gradient(70% 55% at 90% 88%, #8b6fd126, transparent 65%),
+    radial-gradient(circle, #b9a3f51c 1px, transparent 1.4px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    30px 30px;
+  filter: saturate(1.1);
+}
+
+/* ---------- Menu bar: macOS-style top bar, daylman's chrome ---------- */
+.menubar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--menubar-h);
+  background: linear-gradient(180deg, #17111fee, #100b18f2);
+  border-bottom: 1px solid var(--portal-line-strong);
+  box-shadow:
+    inset 0 1px var(--chrome-hi),
+    0 2px 0 var(--chrome-lo);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.menubar__inner {
+  height: 100%;
+  width: min(100% - 2rem, 76rem);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+.menubar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--portal-text);
+  text-decoration: none;
+  font-family: var(--codeFont);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+.menubar__brand-glyph {
+  color: var(--sig-core);
+}
+.menubar__links {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+.menubar__links a {
+  color: var(--portal-muted);
+  text-decoration: none;
+  font-family: var(--codeFont);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+.menubar__links a:hover {
+  color: var(--portal-accent);
+}
+.menubar__tray {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--portal-dim);
+  font-family: var(--codeFont);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+}
+.menubar__tray-label {
+  color: var(--sig-core);
+  font-weight: 600;
+}
+.menubar__clock {
+  color: var(--portal-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.menubar__menu-button {
+  display: none;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+  border-radius: 50%;
+  place-content: center;
+  gap: 0.32rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0.6rem;
+}
+.menubar__menu-button span {
+  background: var(--portal-text);
+  width: 1.05rem;
+  height: 1px;
+  display: block;
+}
+@media (max-width: 720px) {
+  .menubar__links,
+  .menubar__tray-label {
+    display: none;
+  }
+  .menubar__menu-button {
+    display: grid;
+  }
+}
+
+/* ---------- Reusable "OS window" chrome: shared by widgets, notepad, explorer ---------- */
+.os-window {
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--brutal-radius);
+  background: var(--chrome-face);
+  box-shadow:
+    inset 0 1px var(--chrome-hi),
+    inset 0 -1px var(--chrome-lo),
+    0 1.4rem 3rem #00000040;
+  overflow: hidden;
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+}
+.win-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem 0.5rem 0.9rem;
+  background: var(--chrome-face-raised);
+  border-bottom: 1px solid var(--portal-line);
+}
+.win-bar__title {
+  color: var(--portal-dim);
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.win-bar__controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: none;
+}
+.win-bar__dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 2px;
+  background: #39ff9d66;
+  box-shadow: inset 0 0 0 1px #39ff9d99;
+}
+.win-bar__chevron,
+.win-bar__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 0;
+  border-radius: 2px;
+  font-size: 0.6rem;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: inset 0 0 0 1px #00000022;
+}
+.win-bar__chevron {
+  background: var(--amber-chip);
+  color: #241705;
+}
+.win-bar__chevron:hover {
+  filter: brightness(1.08);
+}
+.win-bar__close {
+  background: var(--sig-red);
+  color: #2a0508;
+  font-size: 0.75rem;
+}
+.win-bar__close:hover {
+  filter: brightness(1.1);
+}
+[data-win-drag-handle] {
+  cursor: grab;
+  touch-action: none;
+}
+[data-win-drag-handle]:active {
+  cursor: grabbing;
+}
+.os-window.is-collapsed .os-window__body {
+  display: none;
+}
+.os-window.is-hidden {
+  display: none;
+}
+@keyframes win-pulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px var(--chrome-hi),
+      inset 0 -1px var(--chrome-lo),
+      0 1.4rem 3rem #00000040;
+  }
+  50% {
+    box-shadow:
+      inset 0 1px var(--chrome-hi),
+      inset 0 -1px var(--chrome-lo),
+      0 0 0 3px #b9a3f580,
+      0 1.4rem 3rem #00000040;
+  }
+}
+.win-pulse {
+  animation: win-pulse 0.6s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .win-pulse {
+    animation: none;
+  }
+}
+.os-window__body {
+  padding: clamp(1.2rem, 3vw, 2rem) clamp(1.1rem, 3vw, 1.8rem) clamp(1.6rem, 3vw, 2.4rem);
+}
+.page-window {
+  width: min(100%, 62rem);
+  margin: 0 auto clamp(3rem, 6vw, 5rem);
+}
+.post-grid-window .post-grid {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* ---------- Floating widgets row (note / calendar / playlist / terminal) ---------- */
+.widgets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+  margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
+  min-height: 20rem;
+}
+.os-window--widget {
+  flex: 1 1 17rem;
+  min-width: 15.5rem;
+  max-width: 24rem;
+  margin: 0;
+}
+.os-window--widget .os-window__body {
+  padding: 0.9rem 1rem 1.1rem;
+  max-height: 15rem;
+  overflow-y: auto;
+}
+.widget-body--note p {
+  margin: 0;
+  color: var(--portal-muted);
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+.agenda-row {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--portal-line);
+}
+.agenda-row:last-child {
+  border-bottom: 0;
+}
+.agenda-row__title {
+  margin: 0;
+  color: var(--portal-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.agenda-row__meta {
+  margin: 0.2rem 0 0;
+  color: var(--portal-dim);
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+}
+.agenda-row__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--sig-core);
+  font-family: var(--codeFont);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--brutal-radius);
+  padding: 0.06rem 0.35rem;
+}
+.playlist-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--portal-line);
+}
+.playlist-row:last-child {
+  border-bottom: 0;
+}
+.playlist-row__idx {
+  color: var(--sig-core);
+  font-family: var(--codeFont);
+  font-size: 0.64rem;
+  flex: none;
+}
+.playlist-row__name {
+  color: var(--portal-muted);
+  font-family: var(--codeFont);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+}
+.widget-body--term {
+  font-family: var(--codeFont);
+  font-size: 0.76rem;
+  line-height: 1.75;
+}
+.widget-body--term p {
+  margin: 0 0 0.25rem;
+}
+
+/* ---------- Desktop icons (home quick-launch) ---------- */
+.desktop-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.4rem clamp(1.4rem, 4vw, 2.6rem);
+  list-style: none;
+  margin: clamp(2rem, 5vh, 3rem) 0 0;
+  padding: 0;
+}
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 5.4rem;
+  padding: 0.6rem 0.3rem;
+  border-radius: var(--brutal-radius);
+  text-decoration: none;
+  color: var(--portal-muted);
+  background: none;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.desktop-icon__glyph {
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--brutal-radius);
+  background: var(--chrome-face-raised);
+  box-shadow:
+    inset 0 1px var(--chrome-hi),
+    inset 0 -1px var(--chrome-lo);
+  color: var(--sig-core);
+}
+.desktop-icon__glyph svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+.desktop-icon__label {
+  font-family: var(--codeFont);
+  font-size: 0.64rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1.25;
+}
+.desktop-icon:hover,
+.desktop-icon:focus-visible {
+  background: #b9a3f51a;
+  color: var(--portal-text);
+  outline: none;
+}
+.desktop-icon:hover .desktop-icon__glyph {
+  border-color: #b9a3f580;
+  color: var(--portal-accent);
+}
+
+/* ---------- Archive grid: Finder-style filename captions + status bar ---------- */
+.post-card-filename {
+  margin: 0 0 0.15rem;
+  color: var(--sig-core);
+  font-family: var(--codeFont);
+  font-size: 0.62rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.post-grid-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.4rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--portal-line);
+  color: var(--portal-dim);
+  font-family: var(--codeFont);
+  font-size: 0.64rem;
+  letter-spacing: 0.03em;
+}
+
+/* ---------- Boot screen: BIOS/CRT flourish ---------- */
+.boot-sequence {
+  background: #030204;
+}
+.boot-sequence:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg, #fff0 0px, #fff0 2px, #ffffff0d 3px, #fff0 4px);
+  animation: 6s linear infinite boot-scan;
+}
+@keyframes boot-scan {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 120px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .boot-sequence:before {
     animation: none;
   }
 }
